@@ -21,7 +21,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'tanvirmahmudfahim1313@gmail.com' 
-EMAIL_HOST_PASSWORD = 'grfbijfgpnutwtdv' 
+EMAIL_HOST_PASSWORD = 'app password' 
 DEFAULT_FROM_EMAIL = 'tanvirmahmudfahim1313@gmail.com'  
 
 
