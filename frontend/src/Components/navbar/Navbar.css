@@ -1,0 +1,15 @@
+.nav-custom-bg{
+    background-color: #3b3b3b;
+    color: white;
+}
+
+.search-bar{
+    width: 70%;
+    justify-content: center;
+    outline: none;
+    height: auto;
+}
+.input-bg{
+    background-color: #1f1f1f;
+    color: white;
+}

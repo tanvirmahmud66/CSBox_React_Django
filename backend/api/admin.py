@@ -28,7 +28,7 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 
 class SessionDataAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'host', 'details', 'token')
+    list_display = ('id', 'title', 'host', 'details', 'token', 'created')
     list_filter = ('title', 'host', 'details', 'token')
     search_fields = ('title', 'host', 'details', 'token')
 

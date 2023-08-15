@@ -2,13 +2,17 @@ from rest_framework import serializers
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from .utils import Util
+import secrets
+import json
+import string
+from .models import User 
 from django.contrib.sites.shortcuts import get_current_site
 
 from .models import User, UserProfile, SessionData, SessionMember, PostDB, CommentDB
 
 #============================================================== Registration Serializer
 class UserRegistrationSerializer(serializers.ModelSerializer):
-    password2 = serializers.CharField(write_only=True)
+    password2 = serializers.CharField(style={'input_type':'password'}, write_only=True)
 
     class Meta:
         model = User
@@ -25,7 +29,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
 
         # Sending welcome email and email confirmation linke to the user
-        link = f"http://127.0.0.1:8000/api/verify-user/{user.username}/verified/"
+        link = f"http://127.0.0.1:3000/account/{user.id}/{user.username}/verified"
         subject = 'Welcome to Our Website'
         html_message = render_to_string('welcome.html', {'username': user.username, 'link': link})
         body = strip_tags(html_message)
@@ -39,6 +43,18 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return user
 
 
+#========================= User Related Serializer
+class UserRelatedField(serializers.PrimaryKeyRelatedField):
+    def to_representation(self, value):
+        user = User.objects.get(pk=value.pk)
+        user_data = {
+            "id": user.id,
+            "username": user.username,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email
+        }
+        return user_data
 
 
 #========================== User Profile Serializer
@@ -51,21 +67,46 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 
+#-------------------------- Token generate ---------------------- 
+token_set = set()
+def generate_token(length):
+    characters = string.ascii_letters + string.digits
+    token = ''.join(secrets.choice(characters) for _ in range(length))
+    length = len(token_set)
+    token_set.add(token)
+    if len(token_set)==length+1:
+        return token
+    else:
+        generate_token(5)
+
+
 #========================= SessoinData Serializer
 
 class SessionDataSerializer(serializers.ModelSerializer):
+    host = UserRelatedField(queryset=User.objects.all())
     class Meta:
         model = SessionData
-        fields = '__all__'
+        fields = ('id', 'title', 'host', 'details', 'token', 'created')
+
+    # def get_host(self, obj):
+    #     return f"{obj.host.first_name} {obj.host.last_name}"
+    
+    def create(self, validated_data):
+        new_token = generate_token(5)
+        new_session = SessionData.objects.create(**validated_data, token=new_token)
+        return new_session
 
 
 
 #========================= SessionMember Serializer
 
-class SessionMemeberSerializer(serializers.ModelSerializer):
+class SessionMemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = SessionMember
         fields = '__all__'
+    
+    def get_user(self, obj):
+        return obj.user.username
 
 
 

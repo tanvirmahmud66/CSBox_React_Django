@@ -1,0 +1,50 @@
+/* ================================== Custom Button group */
+.btn-custom-group{
+    width: 160px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+/* =================================== Custom Button */
+.btn-custom-green{
+    background-color: #61b841;
+    color: white;
+}
+.btn-custom-green:hover{
+    background-color:#3f8626cf;
+    color: white;
+}
+/* ================================ */
+.btn-custom-danger{
+    background-color: #FF1F35;
+    color: white;
+}
+.btn-custom-danger:hover{
+    background-color:#b32230;
+    color: white;
+}
+/* ================================ */
+.btn-custom2-green{
+    background: none;
+    border: 2px solid #61b841;
+    color: white;
+    transition: all .2s ease;
+}
+.btn-custom2-green:hover{
+    background: #61b841;
+    color: white;
+}
+/* ================================= */
+.btn-custom2-danger{
+    background: none;
+    border: 2px solid #FF1F35;
+    color: white;
+    transition: all .2s ease;
+}
+.btn-custom2-danger:hover{
+    background: #FF1F35;
+    color: white;
+}

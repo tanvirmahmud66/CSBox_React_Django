@@ -73,12 +73,14 @@ class UserProfile(models.Model):
 class SessionData(models.Model):
     title = models.CharField(max_length=300)
     host = models.ForeignKey(User, on_delete=models.CASCADE)
-    details = models.CharField(max_length=300, blank=True, null=True)
-    token = models.CharField(max_length=5)
+    details = models.TextField(blank=True, null=True)
+    token = models.CharField(max_length=5, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = "Session Data"
         verbose_name_plural = "Session Data"
+        ordering = ['-created']
 
     def __str__(self):
         return self.title
@@ -87,7 +89,7 @@ class SessionData(models.Model):
 #======================================================= Session Member
 class SessionMember(models.Model):
     session = models.ForeignKey(SessionData, on_delete=models.CASCADE)
-    member = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    member = models.ForeignKey(User, on_delete=models.CASCADE)
     token = models.CharField(max_length=5, blank=True, null=True)
 
     class Meta:
@@ -95,7 +97,7 @@ class SessionMember(models.Model):
         verbose_name_plural = "Sesson Member"
 
     def __str__(self):
-        return self.member.user.username
+        return self.session.token
     
 
 #======================================================= Post Model

@@ -1,0 +1,366 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    background: #1f1f1f;
+    color: white;
+}
+
+.bg-text{
+  color: #707070;
+}
+
+.vh-100{
+    height: 100vh;
+}
+.vh-95{
+    height: 95vh;
+}
+.vh-90{
+    height: 90vh;
+}
+.vh-85{
+    height: 85vh;
+}
+.vh-80{
+    height: 80vh;
+}
+.vh-75{
+    height: 75vh;
+}
+.vh-50{
+    height: 50vh;
+}
+.vh-25{
+    height: 25vh;
+}
+
+/* Custom CSS */
+.custom-card {
+    padding: 20px;
+    margin: 20px;
+  }
+
+  /* Responsive Styles */
+  /* For small devices (up to 767px) */
+  @media (max-width: 767px) {
+    .custom-card {
+      min-width: 100%;
+    }
+  }
+
+  /* For larger devices (768px and up) */
+  @media (min-width: 768px) {
+    .custom-card {
+      min-width: 550px;
+    }
+  }
+
+
+
+/* ================================== custom color */
+
+
+.text-green{
+    color: #61b841;
+}
+.text-danger{
+  color: #FF1F35;
+}
+.text-blue{
+  color:#3377FF;
+}
+.text-violet{
+  color: #ac85e8;
+}
+
+.bg-custom-dark{
+    background: #1f1f1f;
+    color: white;
+}
+.bg-custom-light-dark{
+    background: #3b3b3b;
+    color: white;
+}
+.bg-custom-green{
+    background: #61b841;
+    color: white;
+}
+.bg-custom-violet{
+  background: #8251CD;
+  color: white;
+}
+.bg-custom-blue{
+  background: #3377FF;
+  color: white;
+}
+.bg-custom-danger{
+    background: #FF1F35;
+    color: white;
+}
+.border-green{
+  border: 2px solid #61b841;
+}
+.border-blue{
+  border: 2px solid #4785FF;
+}
+
+/* ================================== Custom Button group */
+.btn-custom-group{
+    width: 160px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btn-custom-group2{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+
+/* =================================== Custom Button */
+.btn-custom-green{
+    background-color: #61b841;
+    color: white;
+}
+.btn-custom-green:hover{
+    background-color:#3f8626cf;
+    color: white;
+}
+/* ================================ */
+.btn-custom-danger{
+    background-color: #FF1F35;
+    color: white;
+}
+.btn-custom-danger:hover{
+    background-color:#b32230;
+    color: white;
+}
+/* ================================ */
+.btn-custom2-green{
+    background: none;
+    border: 2px solid #61b841;
+    color: white;
+    transition: all .2s ease;
+}
+.btn-custom2-green:hover{
+    background: #61b841;
+    color: white;
+}
+/* ================================= */
+.btn-custom2-danger{
+    background: none;
+    border: 2px solid #FF1F35;
+    color: white;
+    transition: all .2s ease;
+}
+.btn-custom2-danger:hover{
+    background: #FF1F35;
+    color: white;
+}
+
+
+/* ================================== */
+.btn-pip{
+    background: none;
+    border: 1.5px solid #61b841;
+    border-radius: 25px;
+    padding: .3rem .8rem;
+    margin: 0 .5rem;
+    color: white;
+}
+
+
+/* Base styles for the input field */
+input {
+    width: 60%;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #3b3b3b;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #3b3b3b;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Style when the input is focused */
+  input:focus {
+    outline: none;
+    border-color: #61b841;
+    /* box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); */
+  }
+  
+  /* Optional: Style when the input is hovered */
+  input:hover {
+    border-color: #61b841;
+  }
+  
+  /* Optional: Placeholder style */
+  input::placeholder {
+    color: #e2e2e2;
+  }
+  
+  /* Optional: Disabled input style */
+  input:disabled {
+    background-color: #f7f7f7;
+    cursor: not-allowed;
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: #61b841;
+    /* box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); */
+  }
+  
+  /* Optional: Style when the input is hovered */
+  textarea:hover {
+    border-color: #61b841;
+  }
+  
+  /* Optional: Placeholder style */
+  textarea::placeholder {
+    color: #e2e2e2;
+  }
+ 
+  .notification-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .avatar2 {
+    min-width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+  }
+
+  .avatar2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Modal.css */
+/* Custom styles for the modal */
+.modal-overlay {
+    position: fixed; /* Set the position to fixed */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    position: relative; /* Set the position to relative */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .modal-container {
+    max-width: 500px;
+    width: 80%;
+    margin: 10px auto !important; /* Add margin to center the card */
+    background: #3b3b3b;
+    border-radius: 5px;
+    padding: 20px;
+  }
+ 
+
+/* month component */
+.divide{
+  width: 100%;
+}
+.month{
+  width: 10%;
+}
+.circle{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #707070;
+}
+.line{
+  width: 100%;
+  height: 2px;
+  background-color: #707070;
+}
+
+
+.fixed-height-card {
+  height: 160px;
+  transition: all .3s ease; /* Set the desired height */
+}
+.fixed-height-card:hover {
+  background: #61b841;
+  border: 2px solid #61b841;
+  cursor: pointer;
+  scale: 1.07;
+}
+
+.text-title{
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+.text-p{
+  font-size: .8rem;
+  font-weight: 300;
+  /* color: white; */
+}
+
+.sticky-element {
+  position: -webkit-sticky;
+  position: sticky;
+  background-color: transparent;
+  transition: background-color 0.3s ease-in-out;
+  top: 72px;
+  padding-bottom: 10px;
+  z-index: 999;
+}
+.sticky-background {
+  background-color: #252525cd; /* Change to desired color */
+}
+
+.scroll-container {
+  height: 610px;
+  padding:0 30px 20px 20px;/* Set the desired height */
+}
+
+.empty{
+  width: 100%;
+  height: 65vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #7070708a;
+}
