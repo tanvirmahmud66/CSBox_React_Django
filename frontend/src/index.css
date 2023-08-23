@@ -38,7 +38,9 @@ body{
 .vh-25{
     height: 25vh;
 }
-
+.w-auto{
+  width: auto;
+}
 .w-100{
   width: 100%;
 }
@@ -201,7 +203,15 @@ body{
     border-radius: 25px;
     padding: .3rem .8rem;
     margin: 0 .5rem;
+    text-decoration: none;
+    text-align: center;
+    cursor:pointer;
     color: white;
+    transition: all .3s ease;
+}
+.btn-pip:hover{
+  background-color: #61b841;
+  color: white;
 }
 
 
@@ -354,6 +364,12 @@ input {
   cursor: pointer;
   scale: 1.07;
 }
+.fixed-height{
+  height: 350px;
+}
+.fixed-height2{
+  height: 330px;
+}
 
 .text-title{
   font-size: 1.1rem;
@@ -436,4 +452,20 @@ input {
 
 .custom-cursor-pointer {
   cursor: pointer;
+}
+
+.custom-ul{
+  list-style-type: none;
+  /* width: 100%; */
+}
+
+.social-icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px; /* Adjust the gap between icons */
+}
+
+.social-icon {
+  font-size: 15px;
 }

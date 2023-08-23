@@ -20,6 +20,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def validate(self, data):
+        password = data['password']
+        print(password)
+        if len(password) < 8:
+            raise serializers.ValidationError("Password must have at least 8 character")
+        
         if data['password'] != data['password2']:
             raise serializers.ValidationError("Passwords do not match.")
         return data

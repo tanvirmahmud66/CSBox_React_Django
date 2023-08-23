@@ -34,7 +34,7 @@ const Navbar = () => {
                     </>:
                     <div className='nav-item btn-custom-group'>
                         <a className='btn btn-custom2-green' href='/new-user'>Signup</a>
-                        <a className='btn btn-custom2-danger' href='/login'>Signin</a>
+                        <a className='btn btn-custom2-primary' href='/login'>Signin</a>
                     </div>
                     }
                     

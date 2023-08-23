@@ -3,7 +3,7 @@ import React from 'react'
 const Documentation = () => {
   return (
     <>
-        <div className='card bg-custom-light-dark'>
+        <div className='card fixed-height2 bg-custom-light-dark'>
             <div className='card-header text-center'>
                 <h4>Documentation</h4>
             </div>

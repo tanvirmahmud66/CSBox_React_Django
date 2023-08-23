@@ -4,9 +4,17 @@ const RegistrattionPage = () => {
 
   const formRef = useRef();
   let [notificaiton, setNotification] = useState(false)
+  const [usernameErr, setUsernameErr] = useState()
+  const [emailErr, setEmailErr] = useState()
+  const [passwordErr, setPasswordErr] = useState()
+  const [spinner, setSpinner] = useState(false) 
 
   let registration = async(e)=>{
     e.preventDefault()
+    setSpinner(true)
+    setUsernameErr('')
+    setEmailErr('')
+    setPasswordErr('')
     console.log("registration function working")
     let response = await fetch('http://127.0.0.1:8000/api/user-reg/',{
       method: 'POST',
@@ -24,48 +32,71 @@ const RegistrattionPage = () => {
     })
 
     let data = await response.json()
-    console.log(data)
+    console.log("Data: ",data)
+    // console.log("Response: ",response)
     if (response.status===201){
       setNotification(true)
+      setSpinner(false)
       formRef.current.reset();
+    }
+    if(data.username){
+      setUsernameErr(data.username)
+    }
+    if(data.email){
+      setEmailErr(data.email)
+    }
+    if(data.non_field_errors){
+      setPasswordErr(data.non_field_errors)
     }
   }
 
 
   return (
-    <div className='container vh-85 d-flex justify-content-center align-items-center'>
-        <div className="card custom-card bg-custom-light-dark">
-          <div className='card-header text-center'>
+    <div className='container vh-90 d-flex justify-content-center align-items-center'>
+        <div className="card custom-card p-2 bg-custom-light-dark">
+          <div className='card-header p-0 text-center'>
             <h4>Registration Form</h4>
           </div>
           <div className="card-body">
             <form onSubmit={registration} ref={formRef}>
-              <div className="form-group mb-2">
+              <div className="form-group mb-1">
                 <label htmlFor="username">Username</label>
-                <input type="text" name='username' className="form-control bg-dark text-white" id="username" placeholder="Enter username"/>
+                <input type="text" name='username' className="form-control bg-dark text-white" id="username" placeholder="Enter username" required/>
+                {usernameErr && <div className='text-danger'>{usernameErr}</div>}
               </div>
-              <div className="form-group mb-2">
+              <div className="form-group mb-1">
                 <label htmlFor="first_name">First Name</label>
-                <input type="text" name='first_name' className="form-control bg-dark text-white" id="first_name"/>
+                <input type="text" name='first_name' className="form-control bg-dark text-white" id="first_name" required/>
               </div>
-              <div className="form-group mb-2">
+              <div className="form-group mb-1">
                 <label htmlFor="last_name">Last Name</label>
-                <input type="text" name='last_name' className="form-control bg-dark text-white" id="last_name"/>
+                <input type="text" name='last_name' className="form-control bg-dark text-white" id="last_name" required/>
               </div>
-              <div className="form-group mb-2">
+              <div className="form-group mb-1">
                 <label htmlFor="email">Email address</label>
-                <input type="email" name='email' className="form-control bg-dark text-white" id="email"/>
+                <input type="email" name='email' className="form-control bg-dark text-white" id="email" required/>
+                {emailErr && <div className='text-danger'>{emailErr}</div>}
               </div>
-              <div className="form-group mb-2">
+              <div className="form-group mb-1">
                 <label htmlFor="password">Password</label>
-                <input type="password" name='password' className="form-control bg-dark text-white" id="password"/>
+                <input type="password" name='password' className="form-control bg-dark text-white" id="password" required/>
+                {passwordErr && <div className='text-danger'>{passwordErr}</div>}
               </div>
-              <div className="form-group mb-4">
+              <div className="form-group mb-3">
                 <label htmlFor="password2">Confirm Password</label>
-                <input type="password" name='password2' className="form-control bg-dark text-white" id="password2"/>
+                <input type="password" name='password2' className="form-control bg-dark text-white" id="password2" required/>
+                {passwordErr && <div className='text-danger'>{passwordErr}</div>}
               </div>
               <div className='d-flex flex-column justify-content-between align-items-center'>
-                <button type="submit" className="btn btn-custom-green">Confirm Register</button>
+                <button type="submit" className="btn btn-custom-green d-flex alight-items-center">
+                  <div className='text-white me-2 mt-1'>Confirm Register</div>
+                  {spinner && 
+                    <div className="spinner-border text-light" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  }
+                  
+                </button>
                 <a className='text-decoration-none text-white mt-2' href='/login'>Already have an Account?</a>
               </div>
             </form>

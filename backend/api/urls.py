@@ -22,3 +22,4 @@ urlpatterns = [
 
     path('verify-user/<str:id>/<str:username>/verified/', views.create_profile, name='user-verification'),
 ]
+

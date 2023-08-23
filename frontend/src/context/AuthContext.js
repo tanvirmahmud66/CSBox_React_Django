@@ -25,6 +25,7 @@ export const AuthProvider = ({children}) =>{
     let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
     let[auth, setAuth] = useState(false)
     let [loading, setLoading] = useState(true)
+    let [loginError, setLoginError] = useState({})
 
 
     let userLogin = async(e)=>{
@@ -38,14 +39,25 @@ export const AuthProvider = ({children}) =>{
         })
 
         let data = await response.json()
-        console.log(data)
+        // console.log(data)
         if (response.status ===200){
             setAuthTokens(data)
             setUser(jwt_decode(data.access))
             localStorage.setItem('authTokens', JSON.stringify(data))
             setAuth(true)
         }else{
-            alert("Something went wrong")
+            setLoginError({
+                error: true,
+                status: response.status,
+                text: response.statusText
+            })
+            if(data.non_field_errors){
+                setLoginError({
+                    error: true,
+                    status: "NOT VERIFIED",
+                    text: "Please verify your account with provided email address."
+                })
+            }
         }
     }
 
@@ -54,6 +66,7 @@ export const AuthProvider = ({children}) =>{
         setUser(null)
         localStorage.removeItem('authTokens')
         setAuth(false)
+        setLoginError({})
     }
 
     let updateToken = async()=>{
@@ -88,6 +101,7 @@ export const AuthProvider = ({children}) =>{
         auth: auth,
         authTokens: authTokens,
         userLogin:userLogin,
+        loginError: loginError,
         updateToken: updateToken,
         userLogout: userLogout,
     }

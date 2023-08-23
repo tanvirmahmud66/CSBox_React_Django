@@ -28,7 +28,7 @@ const HomePage = () => {
       },
     })
     let data = await response.json()
-    console.log(response.status)
+    // console.log(response.status)
     if (response.status===200){
       setSession(data.data)
       setSessionJoin(data.join)

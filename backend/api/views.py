@@ -5,7 +5,7 @@ from django.http import JsonResponse
 import json
 import base64
 
-
+from rest_framework import serializers
 from rest_framework.parsers import JSONParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -31,6 +31,19 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['last_name'] = user.last_name
         token['email'] = user.email
         return token
+    
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        user = self.user
+        try:
+            profile = UserProfile.objects.get(user=user)
+            if profile is not None:
+                return data
+            else:
+                raise serializers.ValidationError("Not Verified Profile.")
+        except UserProfile.DoesNotExist:
+            raise serializers.ValidationError("Not Verified Profile.")
+        
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
@@ -96,7 +109,7 @@ class UserRegistration(APIView):
 def create_profile(request, id, username):
     print(username)
     user = User.objects.get(id=id,username=username)
-    user_profile = UserProfile.objects.create(user=user, is_verified=True)
+    user_profile = UserProfile.objects.get_or_create(user=user, is_verified=True)
     serializer = UserProfileSerializer(user_profile)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
