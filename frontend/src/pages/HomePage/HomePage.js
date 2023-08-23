@@ -8,7 +8,7 @@ import CreateSession,{EmptySession} from '../../Components/Homepage/EmptySession
 
 const HomePage = () => {
 
-  const {updateToken, authTokens} = useContext(AuthContext);
+  const {authTokens} = useContext(AuthContext);
 
   const[session, setSession] = useState([]);
   const[sessionJoin, setSessionJoin] = useState([]);
@@ -54,7 +54,7 @@ const HomePage = () => {
     if(response.status !==200){
       setNotification(response.statusText)
     }else{
-      setJoinedNotify("Created")
+      setJoinedNotify("Joining Accepted")
       getSession()
     } 
   }
@@ -156,7 +156,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <CustomModal isOpen={isOpen} onRequestClose={closeModal} />
+      <CustomModal isOpen={isOpen} onRequestClose={closeModal} get={getSession} />
     </>
   )
 }

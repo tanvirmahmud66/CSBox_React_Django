@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Modal from 'react-modal';
 import AuthContext from '../../context/AuthContext';
 
-const CustomModal = ({ isOpen, onRequestClose }) => {
+const CustomModal = ({ isOpen, onRequestClose, get }) => {
 
     const {user, authTokens} = useContext(AuthContext)
     // console.log(user)
@@ -15,7 +15,7 @@ const CustomModal = ({ isOpen, onRequestClose }) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                'Authorization': 'Bearer '+ String(authTokens.access)
+                'Authorization': 'Bearer '+ String(authTokens?.access)
             },
             body: JSON.stringify({
                 "title": e.target.title.value,
@@ -25,7 +25,10 @@ const CustomModal = ({ isOpen, onRequestClose }) => {
         })
 
         let data = await response.json()
-        // console.log(data)
+        console.log(data)
+        if(response.status===201){
+          get()
+        }
         onRequestClose()
     }
 

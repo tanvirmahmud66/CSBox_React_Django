@@ -1,12 +1,15 @@
 import React, { useContext } from 'react'
 import AuthContext from '../../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const Session = (props) => {
     const {title, details, created} = props.session;
     const {id,first_name, last_name} = props.session.host;
     const {user} = useContext(AuthContext)
   return (
+    
     <div className='col-6 g-3 mt-3'>
+        <Link to={`/session/${props.session.id}`} className='text-decoration-none'>
         <div className={`card fixed-height-card ${user.user_id===id? 'bg-custom-violet': 'bg-custom-blue'} `}>
             <div className='card-body d-flex flex-column justify-content-between '>
                 <div className="card-text d-flex">
@@ -22,7 +25,9 @@ const Session = (props) => {
                 <h5 className="card-title">{title}</h5>
             </div>
         </div>
+        </Link>
     </div>
+    
   )
 }
 

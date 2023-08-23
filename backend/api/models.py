@@ -1,4 +1,8 @@
 from django.db import models
+import os
+from django.conf import settings
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 # Create your models here.
@@ -84,6 +88,22 @@ class SessionData(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+@receiver(pre_save, sender=SessionData)
+def update_folder_name(sender, instance, **kwargs):
+    if instance.pk:
+        try:
+            old_instance = sender.objects.get(pk=instance.pk)
+        except sender.DoesNotExist:
+            return
+
+        if old_instance.title != instance.title:
+            old_folder_path = os.path.join(settings.MEDIA_ROOT, 'uploads', old_instance.title)
+            new_folder_path = os.path.join(settings.MEDIA_ROOT, 'uploads', instance.title)
+
+            if os.path.exists(old_folder_path):
+                os.rename(old_folder_path, new_folder_path)
 
 
 #======================================================= Session Member
@@ -104,19 +124,40 @@ class SessionMember(models.Model):
 class PostDB(models.Model):
     session = models.ForeignKey(SessionData, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    is_announcement = models.BooleanField(default=False, null=True, blank=True)
     post_body = models.TextField()
-    has_file = models.BooleanField(default=False, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = "Post Database"
         verbose_name_plural = "Post Database"
-        ordering = ['-updated', '-created']
+        ordering = ['-created']
 
     def __str__(self):
-        return self.postBody[0:15]
+        return self.post_body[0:15]
+
+
+#============================================= File Model
+
+def get_file_upload_path(instance, filename):
+    return os.path.join('uploads', instance.session.title, filename)
+
+class FileDB(models.Model):
+    session = models.ForeignKey(SessionData, on_delete=models.CASCADE)
+    post_id = models.IntegerField(null=True, blank=True)
+    file = models.FileField(upload_to=get_file_upload_path)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Documents Model"
+        verbose_name_plural = "Documents Model"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.file.name
+
+    
+
     
 
 #======================================================= Comment Model

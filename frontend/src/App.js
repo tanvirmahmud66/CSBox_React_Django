@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage/HomePage';
 import { useContext, useState } from 'react';
 import AuthContext, { AuthProvider } from './context/AuthContext';
 import VerficationPage from './pages/VerificationPage/VerficationPage';
+import SingleSession from './pages/SingleSession/SingleSession';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
             <Route path='/login' element={!user?<LoginPage/>: <Navigate to='/'/>}/>
             <Route path='/new-user' element={!user?<RegistrattionPage/> : <Navigate to='/'/>}/>
             <Route path='/' element={user?<HomePage/>: <Navigate to='/login'/>}/>
+            <Route path='/session/:id' element={user?<SingleSession/>: <Navigate to='/login'/>}/>
 
             <Route path='/account/:id/:username/verified' element={<VerficationPage/>}/>
           </Routes>

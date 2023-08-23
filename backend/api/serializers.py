@@ -8,7 +8,7 @@ import string
 from .models import User 
 from django.contrib.sites.shortcuts import get_current_site
 
-from .models import User, UserProfile, SessionData, SessionMember, PostDB, CommentDB
+from .models import User, UserProfile, SessionData, SessionMember, PostDB, CommentDB, FileDB
 
 #============================================================== Registration Serializer
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -101,6 +101,7 @@ class SessionDataSerializer(serializers.ModelSerializer):
 #========================= SessionMember Serializer
 
 class SessionMemberSerializer(serializers.ModelSerializer):
+    member = UserRelatedField(queryset=User.objects.all())
     class Meta:
         model = SessionMember
         fields = '__all__'
@@ -113,16 +114,38 @@ class SessionMemberSerializer(serializers.ModelSerializer):
 #=========================== PostDB Serializer
 
 class PostDBSerializer(serializers.ModelSerializer):
+    creator = UserRelatedField(queryset=User.objects.all())
     class Meta:
         model = PostDB
         fields = '__all__'
+    
+    def create(self, validated_data):
+        new_post = PostDB.objects.create(**validated_data)
+        return new_post
 
 
+
+#================================== FileDB Serializer
+
+class FileDBSerializer(serializers.ModelSerializer):
+    file_data = serializers.SerializerMethodField()
+
+    class Meta:
+        model = FileDB
+        fields='__all__'
+
+    def get_file_data(self, obj):
+        try:
+            with obj.file.open('rb') as f:
+                return f.read()
+        except Exception:
+            return None
 
 
 #=========================== CommentDB Serializers
 
 class CommentDBSerializer(serializers.ModelSerializer):
+    commenter = UserRelatedField(queryset=User.objects.all())
     class Meta:
         model = CommentDB
         fields = '__all__'

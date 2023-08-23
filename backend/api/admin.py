@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import User
-from .models import UserProfile, SessionData, SessionMember, PostDB, CommentDB
+from .models import UserProfile, SessionData, SessionMember, PostDB, FileDB,CommentDB
 # Register your models here.
 
 
@@ -40,9 +40,14 @@ class SessionMemberAdmin(admin.ModelAdmin):
 
 
 class PostDBAdmin(admin.ModelAdmin):
-    list_display = ('id', 'session', 'creator', 'is_announcement', 'post_body', 'has_file', 'created', 'updated')
-    list_filter = ('session', 'creator', 'is_announcement', 'post_body', 'has_file', 'created', 'updated')
-    search_fields = ('session', 'creator', 'is_announcement', 'post_body', 'has_file', 'created', 'updated')
+    list_display = ('id', 'session', 'creator',  'post_body',  'created', 'updated')
+    list_filter = ('session', 'creator', 'post_body', 'created', 'updated')
+    search_fields = ('session', 'creator', 'post_body', 'created', 'updated')
+
+class FileDBAdmin(admin.ModelAdmin):
+    list_display=('session','post_id','file','created_at')
+    list_filter = ('session', 'post_id','file', 'created_at')
+    search_fields = ('session','post_id', 'file')
 
 
 class CommentDBAdmin(admin.ModelAdmin):
@@ -58,4 +63,5 @@ admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(SessionData, SessionDataAdmin)
 admin.site.register(SessionMember, SessionMemberAdmin)
 admin.site.register(PostDB, PostDBAdmin)
+admin.site.register( FileDB, FileDBAdmin)
 admin.site.register(CommentDB, CommentDBAdmin)
