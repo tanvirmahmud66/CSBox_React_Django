@@ -8,9 +8,6 @@ const CustomModal = ({ isOpen, onRequestClose, get }) => {
     // console.log(user)
     let createSession = async(e)=>{
         e.preventDefault()
-        console.log(e.target.title.value)
-        console.log(e.target.description.value)
-        console.log(user.user_id)
         let response = await fetch('http://127.0.0.1:8000/api/new-session/',{
             method: "POST",
             headers: {
@@ -40,7 +37,7 @@ const CustomModal = ({ isOpen, onRequestClose, get }) => {
       className="modal-content"
       overlayClassName="modal-overlay"
     >
-      <div className="card text-white modal-container">
+      <div className="text-white modal-container">
         <div className='card-header'>
             <h2 className='text-center'>Create New Session</h2>
         </div>

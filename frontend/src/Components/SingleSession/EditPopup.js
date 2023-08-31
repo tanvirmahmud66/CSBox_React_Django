@@ -48,7 +48,7 @@ function EditPopup({isOpen, onRequestClose, post, session, sessionUpdate}) {
           body: formData
       })
       let data = await response.json()
-      console.log("data: ",data)
+      // console.log("data: ",data)
       if(response.status===200){
         sessionUpdate()
         formRef.current.reset();

@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 const VerficationPage = () => {
     const{id, username} = useParams()
@@ -26,9 +28,9 @@ const VerficationPage = () => {
 
   return (
     <div className="notification-container">
-        <div className="alert bg-custom-light-dark text-center" role="alert">
-            <h4 className="alert-heading text-green">Verified</h4>
-            <p className='mt-4'>Dear {username}, your account is Verified. Now! please <a className='btn btn-custom2-green' href='/login'>login</a> again.</p>
+        <div class="alert alert-success" role="alert">
+            <h4 className="alert-heading">Verified <FontAwesomeIcon icon={faCheckCircle} /></h4>
+            <p className='mt-4'>Dear {username}, your account is Verified. Now! please <a className='' href='/login'>login</a> again.</p>
         </div>
   </div>
   )

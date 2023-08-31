@@ -6,6 +6,7 @@ import AuthContext from '../../context/AuthContext';
 import DeletePopup from './DeletePopup';
 import EditPopup from './EditPopup';
 import Comment from './Comment';
+import DefaultPic from '../../assets/defaultPic.jpeg'
 
 const SinglePost = ({post, session ,files, sessionUpdate}) => {
 
@@ -112,7 +113,7 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
           <div className="media d-flex justify-content-between align-items-center">
             <div className='d-flex align-items-center'>
                 <img
-                src="https://via.placeholder.com/50"
+                src={DefaultPic}
                 className="mr-1 rounded-circle avatar"
                 alt="User Avatar"
                 />
@@ -148,22 +149,7 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
             <div>{comments.length} comments</div>
           </div>
           {commentShow && comments.map((comment, index) => (
-                    <Comment key={index} comment={comment}/>
-                
-                // <div className="bg-custom-dark w-auto" key={index}>
-                //     <div className="">
-                //         <div className="">
-                //         <img
-                //             src="https://via.placeholder.com/40"
-                //             className="mr-3 rounded-circle"
-                //             alt="User Image"
-                //         />
-                //         <div className="">
-                //             <p className=""> <span className=''>{comment.commenter.first_name} {comment.commenter.last_name}</span> {comment.comment_body}</p>
-                //         </div>
-                //         </div>
-                //     </div>
-                // </div>
+               <Comment key={index} comment={comment}/>
           ))}
 
         </div>

@@ -37,6 +37,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         user = self.user
         try:
             profile = UserProfile.objects.get(user=user)
+
             if profile is not None:
                 return data
             else:
@@ -114,7 +115,34 @@ def create_profile(request, id, username):
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-#============================================== Home Page Session Creating
+
+#============================================== Profile page view
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, user_id):
+        user = User.objects.get(id=user_id)
+        profile = UserProfile.objects.get(user=user)
+        profile_serializer = UserProfileSerializer(profile)
+        return Response(profile_serializer.data, status=status.HTTP_200_OK)
+    
+    def put(self, request, user_id):
+        user = User.objects.get(id=user_id)
+        profile = UserProfile.objects.get(user=user)
+        serializer = UserProfileSerializer(instance=profile, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status": 'ok'}, status=status.HTTP_200_OK)
+        
+        if 'profile_pic' in request.FILES:
+            profile.profile_pic = request.FILES['profile_pic']
+            profile.save()
+            return Response({"status":"Profile save"},status=status.HTTP_200_OK)
+
+        return Response({"status": 'not ok'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+#============================================== Home Page SessionView
 class SessionView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -126,7 +154,7 @@ class SessionView(APIView):
         if SessionMember.objects.filter(member=request.user).exists():
             member_session = SessionMember.objects.filter(member=request.user)
             for each in member_session:
-                join_session.append(SessionData.objects.get(token=each))
+                join_session.append(SessionData.objects.get(token=each.token))
             join_session_serializer = SessionDataSerializer(join_session, many=True)
             data = {
                 "user":{
@@ -151,6 +179,7 @@ class SessionView(APIView):
             "data": serializer.data,
         }
         return Response(data, status=status.HTTP_200_OK)
+    
     
     def post(self, request):
         serializer = SessionDataSerializer(data=request.data)
@@ -183,6 +212,13 @@ class JoinSessionView(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as E:
             return Response({"message":"Not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class LeaveSessionView(APIView):
+    def delete(self, request, session_id, token):
+        session_member_model = SessionMember.objects.get(session=session_id, member=request.user, token=token)
+        session_member_model.delete()
+        return Response({"status": "Leave session successfull"}, status=status.HTTP_200_OK)
 
 
 
@@ -242,6 +278,27 @@ class SingleSessionView(APIView):
             return Response({'message': 'Post and files created successfully'}, status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response({'message': 'Error creating post and files', 'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def put(self, request, id):
+        session_data = json.loads(request.data.get('session_data'))
+        edited_title = session_data.get('title')
+        edited_details = session_data.get('details')
+        target_session = SessionData.objects.get(id=id)
+        serializer = SessionDataSerializer(instance=target_session, data={'title':edited_title, 'details':edited_details, 'host': request.user.id})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def delete(self, reqeust, id):
+        session = SessionData.objects.get(id=id)
+        session.delete()
+        return Response({"status":"Session Deleted"}, status=status.HTTP_200_OK)
+
+
+
 
 
 

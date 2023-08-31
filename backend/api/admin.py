@@ -22,13 +22,13 @@ class UserAdmin(UserAdmin):
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'bio', 'gender', 'profession', 'work_at', 'study_at', 'college', 'school')
+    list_display = ('id', 'user', 'profile_pic','bio', 'gender', 'profession', 'work_at', 'study_at', 'college', 'school', 'linkedIn', 'github', 'website')
     list_filter = ('bio', 'gender', 'profession', 'work_at', 'study_at', 'college', 'school')
     search_fields = ('bio', 'gender', 'profession', 'work_at', 'study_at', 'college', 'school')
 
 
 class SessionDataAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'host', 'details', 'token', 'created')
+    list_display = ('id', 'title', 'host','details', 'token', 'created')
     list_filter = ('title', 'host', 'details', 'token')
     search_fields = ('title', 'host', 'details', 'token')
 

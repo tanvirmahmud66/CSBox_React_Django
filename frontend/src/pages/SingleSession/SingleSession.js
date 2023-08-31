@@ -32,7 +32,7 @@ const SingleSession = () => {
         })
         let data = await response.json()
         if (response.status === 200){
-            // console.log(data)
+            console.log(data)
             setSession(data.session)
             setSessionTitle(data.session.title)
             setHost(data.session.host.username)
@@ -76,7 +76,10 @@ const SingleSession = () => {
                     <h5 className="mb-3">List of Session Member</h5>
                     <ul className="list-group">
                         {member.map((each,index)=>(
-                            <li key={index} className="list-group-item bg-custom-light-dark">{each.member.first_name} {each.member.last_name}</li>
+                            <li key={index} className="list-group-item bg-custom-light-dark d-flex justify-content-between align-items-center">
+                                <div>{each.member.first_name} {each.member.last_name}</div>
+                                <a href={`/profile/${each.member.id}`}>profile</a>
+                            </li>
                         ))}
                     </ul>
                 </div>

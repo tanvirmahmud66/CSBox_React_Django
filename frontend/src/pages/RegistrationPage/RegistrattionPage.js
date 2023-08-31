@@ -41,12 +41,15 @@ const RegistrattionPage = () => {
     }
     if(data.username){
       setUsernameErr(data.username)
+      setSpinner(false)
     }
     if(data.email){
       setEmailErr(data.email)
+      setSpinner(false)
     }
     if(data.non_field_errors){
       setPasswordErr(data.non_field_errors)
+      setSpinner(false)
     }
   }
 

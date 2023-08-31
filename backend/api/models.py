@@ -55,8 +55,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 #================================== User Profile Model
 class UserProfile(models.Model):
+
+    DEFAULT_PROFILE_PIC = 'default_profile_pic.webp'
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_verified = models.BooleanField(default=False)
+    profile_pic = models.ImageField(upload_to='profilePic/',default=DEFAULT_PROFILE_PIC,null=True, blank=True)
     bio = models.CharField(max_length=300, null=True, blank=True)
     gender = models.CharField(max_length=10, null=True, blank=True)
     profession = models.CharField(max_length=300, null=True, blank=True)
@@ -64,10 +68,18 @@ class UserProfile(models.Model):
     study_at = models.CharField(max_length=300, null=True, blank=True)
     college = models.CharField(max_length=300, null=True, blank=True)
     school = models.CharField(max_length=300, null=True, blank=True)
+    linkedIn = models.CharField(max_length=300,null=True, blank=True)
+    github = models.CharField(max_length=300,null=True, blank=True)
+    website = models.CharField(max_length=300,null=True, blank=True)
 
     class Meta:
         verbose_name = "User Profile"
         verbose_name_plural = "User Profile"
+    
+    def profile_pic_url(self):
+        if self.profile_pic:
+            return self.profile_pic.url
+        return settings.STATIC_URL + self.DEFAULT_PROFILE_PIC
     
     def __str__(self):
         return self.user.username

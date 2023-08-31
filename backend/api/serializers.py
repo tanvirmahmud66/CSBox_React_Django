@@ -46,25 +46,45 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         Util.send_email(data)
 
         return user
+# ==============================================================================================================
 
 
-#========================= User Related Serializer
+
+#----------------------------------------------------------- User Related Serializer
 class UserRelatedField(serializers.PrimaryKeyRelatedField):
     def to_representation(self, value):
         user = User.objects.get(pk=value.pk)
+        profile = UserProfile.objects.get(user=user)
+
         user_data = {
             "id": user.id,
             "username": user.username,
             "first_name": user.first_name,
             "last_name": user.last_name,
-            "email": user.email
+            "email": user.email,
+            "profile": {
+                "is_verified": profile.is_verified,
+                "profile_pic": profile.profile_pic_url(),
+                "bio": profile.bio,
+                "gender": profile.gender,
+                "profession": profile.profession,
+                "work_at": profile.work_at,
+                "study_at": profile.study_at,
+                "college": profile.college,
+                "school": profile.school,
+                "linkedIn": profile.linkedIn,
+                "github": profile.github,
+                "website": profile.website,
+            }
         }
         return user_data
+
 
 
 #========================== User Profile Serializer
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    user = UserRelatedField(queryset=User.objects.all())
     class Meta:
         model = UserProfile
         fields = '__all__'
@@ -89,17 +109,34 @@ def generate_token(length):
 
 class SessionDataSerializer(serializers.ModelSerializer):
     host = UserRelatedField(queryset=User.objects.all())
+    hostProfile = serializers.SerializerMethodField()
+
     class Meta:
         model = SessionData
-        fields = ('id', 'title', 'host', 'details', 'token', 'created')
-
-    # def get_host(self, obj):
-    #     return f"{obj.host.first_name} {obj.host.last_name}"
+        fields = '__all__'
     
     def create(self, validated_data):
         new_token = generate_token(5)
         new_session = SessionData.objects.create(**validated_data, token=new_token)
         return new_session
+    
+    def get_hostProfile(self, obj):
+        profile = UserProfile.objects.get(user=obj.host)
+        profile_data = {
+            "is_verified": profile.is_verified,
+            "profile_pic": profile.profile_pic.url if profile.profile_pic else None,
+            "bio": profile.bio,
+            "gender": profile.gender,
+            "profession": profile.profession,
+            "work_at": profile.work_at,
+            "study_at": profile.study_at,
+            "college": profile.college,
+            "school": profile.school,
+            "linkedIn": profile.linkedIn,
+            "github": profile.github,
+            "website": profile.website,
+        }
+        return profile_data
 
 
 
