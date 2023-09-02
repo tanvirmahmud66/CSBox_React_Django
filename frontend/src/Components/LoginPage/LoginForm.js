@@ -8,7 +8,7 @@ const LoginForm = () => {
 
   return (
     <>
-        <div className="card fixed-height mw-50 bg-custom-light-dark">
+        <div className="card fixed-height mw-50">
             <div className="card-header p-0 text-center">
                 {(loginError.error && loginError.status==='NOT VERIFIED') &&
                     <div className="alert mb-0 alert-warning" role="alert">
@@ -30,11 +30,11 @@ const LoginForm = () => {
                 <form onSubmit={userLogin}>
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
-                        <input type="text" name='username' className="form-control bg-dark text-white" id="username" placeholder="Enter username" required/>
+                        <input type="text" name='username' className="form-control" id="username" placeholder="username" required/>
                     </div>
                     <div className="form-group mt-2">
                         <label htmlFor="password">Password</label>
-                        <input type="password" name='password' className="form-control bg-dark text-white" id="password" placeholder="Password" required/>
+                        <input type="password" name='password' className="form-control" id="password" placeholder="password" required/>
                     </div>
                     <button type='submit' className='btn w-100 mt-4 btn-custom-green'>Login</button>
                     <div className='d-flex flex-column mt-2'>

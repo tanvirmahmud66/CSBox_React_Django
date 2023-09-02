@@ -60,6 +60,22 @@ body{
   width: 25%;
 }
 
+.fw-200{
+  font-weight: 200;
+}
+.fw-300{
+  font-weight: 300;
+}
+.fw-400{
+  font-weight: 400;
+}
+.fw-500{
+  font-weight: 500;
+}
+.fw-600{
+  font-weight: 600;
+}
+
 /* Custom CSS */
 .custom-card {
     padding: 20px;
@@ -97,6 +113,13 @@ body{
 }
 .text-violet{
   color: #ac85e8;
+}
+
+.text-custom-black{
+  color: black;
+}
+.text-custom-black:hover{
+  color: rgb(25, 105, 243);
 }
 
 .bg-custom-dark{
@@ -228,7 +251,7 @@ body{
     text-decoration: none;
     text-align: center;
     cursor:pointer;
-    color: white;
+    /* color: #61b841; */
     transition: all .3s ease;
 }
 .btn-pip:hover{
@@ -382,7 +405,7 @@ input {
     max-width: 500px;
     width: 80%;
     margin: 10px auto !important; /* Add margin to center the card */
-    background: #3b3b3b;
+    background: #ffffff;
     border-radius: 5px;
     padding: 20px;
   }
@@ -471,7 +494,17 @@ input {
 
 
 
+.text-small{
+  font-size: .8rem;
+}
 
+.bg-offwhite{
+  background: rgba(25, 32, 40, 0.872);
+}
+.bg-comment{
+  background: rgb(255, 255, 255);
+  /* color: white; */
+}
 
 
 
@@ -539,4 +572,35 @@ input {
   text-decoration: none;
   color: black;
   width: 100%;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.timeline-height{
+  height: 91vh;
+}
+.timeline-container {
+  height: 100%;
+  overflow: scroll; /* Enable scrolling */
+  scrollbar-width: none; /* Hide the scrollbar for Firefox */
+  -ms-overflow-style: none; /* Hide the scrollbar for Internet Explorer and Edge */
+}
+
+.timeline-container::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar for Webkit-based browsers (Chrome, Safari, etc.) */
+}
+
+.member-height{
+  height: 52vh;
+}
+.member-container{
+  height: 100%;
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.member-container::-webkit-scrollbar{
+  display: none;
 }

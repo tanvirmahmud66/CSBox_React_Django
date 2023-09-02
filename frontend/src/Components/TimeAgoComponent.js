@@ -27,11 +27,18 @@ const TimeAgoComponent = ({ dateString }) => {
         result = `${hours} hour${hours > 1 ? 's' : ''}`;
       } else if (minutes > 0) {
         result = `${minutes} minute${minutes > 1 ? 's' : ''}`;
-      } else {
+      } else if (seconds > 0) {
         result = `${seconds} second${seconds !== 1 ? 's' : ''}`;
+      } else {
+        result = 'Just now';
       }
 
-      setTimeAgo(result + ' ago');
+      if (result==="Just now"){
+        setTimeAgo(result)
+      }else{
+        setTimeAgo(result + ' ago');
+      }
+      
     };
 
     calculateTimeAgo();

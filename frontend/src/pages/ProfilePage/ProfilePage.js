@@ -136,7 +136,7 @@ const ProfilePage = () => {
         {profile &&
         <>
         <div className='col-3 p-0'>
-            <div className='d-flex rounded bg-custom-light-dark flex-column justify-content-center align-items-center p-3'>
+            <div className='d-flex rounded flex-column justify-content-center align-items-center p-3'>
                 <div className='profile-avatar '>
                     <img src={profilePictrue} alt='profile pic position-relative'/>
                     {(user.user_id===profile.user.id) &&
@@ -144,7 +144,7 @@ const ProfilePage = () => {
                         <button onClick={openModal} className="btn text-green">Change</button>
                     </div>}
                 </div>
-                <h3 className='mt-2'>{profile.user.first_name} {profile.user.last_name}</h3>
+                <h3 className='mt-2 text-center'>{profile.user.first_name} {profile.user.last_name}</h3>
                 <p className='mt-1'>{profile.bio}</p>
                 {(user.user_id===profile.user.id) &&
                 <button onClick={()=> setEditProfile(!editProfile)} className='btn btn-custom2-green'>Edit Profile</button>}
@@ -155,7 +155,7 @@ const ProfilePage = () => {
         </div>
 
         <div className='col-9 p-0'>
-            <div className='ms-4 align-items-center rounded bg-custom-light-dark p-3'>
+            <div className='ms-4 align-items-center rounded p-3'>
                 <div className='p-2 mb-2 text-center'>Basic Information</div>
 
                 {profile.profession &&

@@ -2,7 +2,7 @@ import React from 'react'
 
 const About = () => {
   return (
-    <div className='card fixed-height bg-custom-light-dark'>
+    <div className='card fixed-height'>
         <div className='card-header text-center'>
             <h4>About CSBox</h4>
         </div>

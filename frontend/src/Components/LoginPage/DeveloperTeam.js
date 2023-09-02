@@ -6,7 +6,7 @@ import { faGithub } from '@fortawesome/fontawesome-free';
 
 const DeveloperTeam = () => {
   return (
-    <div className='card fixed-height2 bg-custom-light-dark'>
+    <div className='card fixed-height2'>
         <div className='card-header text-center'>
             <h4>Developer Team</h4>
         </div>
@@ -18,7 +18,7 @@ const DeveloperTeam = () => {
                 <div className='ms-1'>tanvirmahmud.cse66@gmail.com</div>
             </div>
             <div className="social-icons mt-5 container">
-                <a href="https://github.com/tanvirmahmud66" target='_blank' className="social-icon"><i className="fab fa-github fa-3x" style={{color: 'white'}}></i></a>
+                <a href="https://github.com/tanvirmahmud66" target='_blank' className="social-icon"><i className="fab fa-github fa-3x"></i></a>
                 <a href="https://www.linkedin.com/in/tanvirmahmud61" target='_blank' className="social-icon"><i className="fab fa-linkedin fa-3x"></i></a>
                 <a href="https://www.facebook.com/tanvir.mahmud.520357" target='_blank' className="social-icon"><i className="fab fa-facebook fa-3x"></i></a>
             </div>

@@ -17,7 +17,7 @@ function openFile(url) {
 // =========================================== Main file functional Component
 function FileDownloadComponent({ files, post,sessionUpdate }) {
 
-  console.log(files)
+  // console.log(files)
 
     const {user, authTokens} = useContext(AuthContext)
 
@@ -40,11 +40,11 @@ function FileDownloadComponent({ files, post,sessionUpdate }) {
         <div className='container mt-2'>
           {files.map(file => (
             <div className='d-flex mb-2 justify-content-between align-items-center alert alert-primary custom-alert' key={file.id}>
-              <div className='text-primary w-100'>{getFileNameFromUrl(file.file)}</div>
+              <div onClick={()=>openFile(file.file)} className='text-primary cursor-pointer w-100'>{getFileNameFromUrl(file.file)}</div>
               <Dropdown>
                 <Dropdown.Toggle
                  size='sm' 
-                 variant="secondary" 
+                 variant="" 
                  id="dropdown-basic"
                  ></Dropdown.Toggle>
                 <Dropdown.Menu>

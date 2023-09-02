@@ -50,7 +50,7 @@ const EditModal = ({ isOpen, onRequestClose, session, sessionUpdate}) => {
       className="modal-content"
       overlayClassName="modal-overlay"
     >
-      <div className="text-white modal-container">
+      <div className="card w-50">
         <div className='card-header'>
             <h2 className='text-center'>Edit Session</h2>
         </div>
@@ -61,7 +61,7 @@ const EditModal = ({ isOpen, onRequestClose, session, sessionUpdate}) => {
                 <input 
                     type="text" 
                     name='title' 
-                    className="form-control bg-dark text-white" 
+                    className="form-control" 
                     id="title"
                     value={sessionTitle}
                     onChange={handleSessionTitle}
@@ -70,19 +70,19 @@ const EditModal = ({ isOpen, onRequestClose, session, sessionUpdate}) => {
               </div>
               <div className="form-group">
                  <label htmlFor="description">Description:</label>
-                 <textarea 
+                 <input 
                     name='description' 
-                    className="form-control form-control-sm bg-dark text-white" 
+                    className="form-control" 
                     id="description" 
                     rows="4"
                     value={sessionDetails}
                     onChange={handleSessionDetails}
-                ></textarea>
+                ></input>
              </div>
               
-              <div className='d-flex justify-content-between align-items-center mt-3'>
-                <button className='btn btn-custom2-danger' onClick={onRequestClose}>Close</button>
-                <button type="submit" className="btn btn-custom-green">Edit Session</button>
+              <div className='d-flex justify-content-end align-items-center mt-3'>
+                <button className='btn btn-custom-danger' onClick={onRequestClose}>Cancel</button>
+                <button type="submit" className="btn btn-custom-green ms-2">Edit Session</button>
               </div>
             </form>
         </div>

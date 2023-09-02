@@ -68,9 +68,9 @@ function EditPopup({isOpen, onRequestClose, post, session, sessionUpdate}) {
     className="modal-content"
     overlayClassName="modal-overlay custom-backdrop"
     >
-      <div className="card bg-custom-light-dark modal-container">
+      <div className="card w-50">
         <div className="card-body">
-          <h2 className="card-title text-center mb-3">Edit Post</h2>
+          <h2 className="card-title text-center text-green mb-3">Edit Post</h2>
           <form onSubmit={updatePost} ref={formRef}>
             <div className="form-group">
               <textarea
@@ -111,9 +111,9 @@ function EditPopup({isOpen, onRequestClose, post, session, sessionUpdate}) {
               </div>
 
             </div>
-            <div className='d-flex justify-content-between align-items-center mt-3'>
-                <button className='btn btn-custom2-danger' onClick={onRequestClose}>Close</button>
-                <button type="submit" className="btn btn-custom-green">Update</button>
+            <div className='d-flex justify-content-end align-items-center mt-3'>
+                <button className='btn btn-custom-danger' onClick={onRequestClose}>Cancel</button>
+                <button type="submit" className="btn btn-custom-green ms-2">Update</button>
             </div>
           </form>
         </div>

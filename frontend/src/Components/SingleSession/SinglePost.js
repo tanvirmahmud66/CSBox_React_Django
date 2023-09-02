@@ -7,20 +7,25 @@ import DeletePopup from './DeletePopup';
 import EditPopup from './EditPopup';
 import Comment from './Comment';
 import DefaultPic from '../../assets/defaultPic.jpeg'
+import TimeAgoComponent from '../TimeAgoComponent';
 
 const SinglePost = ({post, session ,files, sessionUpdate}) => {
 
+
+  const baseUrl = 'http://127.0.0.1:8000';
   const {user, authTokens} = useContext(AuthContext)
   const formRef = useRef()
   const session_id = session.id
-  const {id,post_body, creator} = post
+  const {id,post_body, creator, created} = post
   const {first_name, last_name} = post.creator
+  const {profile_pic} = post.creator.profile
   const [comments, setComments] = useState([]);
   const [show, setShow] = useState(false)
   const [commentShow, setCommentShow] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
 
+  // console.log(post)
     
 
   const filesArray = files.filter((file)=>file.post_id===id)
@@ -82,6 +87,13 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
   useEffect(()=>{
     getPostComment()
   }, [])
+
+  useEffect(()=>{
+    let interval = setInterval(() => {
+        getPostComment()
+    },1000);
+    return ()=> clearInterval(interval)
+},[])
   
   const handleShow = ()=>{
     setShow(!show)
@@ -108,22 +120,28 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
 
 
   return (
-      <div className="card mt-4">
-        <div className="card-header">
+      <div className="card mt-3 mb-3">
+        <div className="p-2">
           <div className="media d-flex justify-content-between align-items-center">
             <div className='d-flex align-items-center'>
                 <img
-                src={DefaultPic}
-                className="mr-1 rounded-circle avatar"
+                src={baseUrl+profile_pic}
+                className="avatar2"
                 alt="User Avatar"
                 />
                 <div className="media-body">
-                <h5 className="mb-0 ms-2">{first_name} {last_name}</h5>
+                  <a href={`/profile/${post.creator.id}`} className='text-decoration-none text-custom-black'>
+                    <h5 className="mb-0">{first_name} {last_name}</h5>
+                  </a>
+                  
+                  <div className='text-primary text-small'>
+                    <TimeAgoComponent dateString={created}/>
+                  </div> 
                 </div>
             </div>
             {(user.user_id===session.host.id || user.user_id===creator.id) &&
-                <Dropdown className='p-2'>
-                    <Dropdown.Toggle variant="secondary" id="dropdown-basic">Options</Dropdown.Toggle>
+                <Dropdown>
+                    <Dropdown.Toggle variant="" id="dropdown-basic"></Dropdown.Toggle>
                     <Dropdown.Menu>
                         {user.user_id===creator.id && <Dropdown.Item onClick={openModal} href="#">Edit</Dropdown.Item>}
                         <Dropdown.Item onClick={openModal2} href="#">Delete</Dropdown.Item>
@@ -134,26 +152,27 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
           </div>
         </div>
         <div className="card-body">
-          <div className={`card-text ${post_body.length<150? 'fs-3': ''}`}>
+          <div className={`card-text ${post_body.length<150? 'fs-3 fw-300': ''}`}>
             {post_body}
           </div>
         </div>
 
         {show && <FileDownloadComponent files={filesArray} post={post} sessionUpdate={sessionUpdate} />}
-        {filesArray.length!==0 && <button className='btn btn-secondary' onClick={handleShow}>{show? "Hide files":`${filesArray.length} files show`}</button> }
+        {filesArray.length!==0 && <button className='btn btn-custom-green' onClick={handleShow}>{show? "Hide files":`${filesArray.length} files show`}</button> }
         
-        
-        <div className="card-footer bg-custom-light-white mt-2">
-          <div className='d-flex justify-content-between align-items-center mb-2'>
+        {comments && 
+        <div className="card-footer bg-offwhite mt-2">
+          <div className='d-flex justify-content-between align-items-center'>
             <div onClick={commentsButtonHandle} className="custom-cursor-pointer text-primary">{!commentShow?`All comments`: "Hide comments"} </div>
-            <div>{comments.length} comments</div>
+            <div className='text-white'>{comments.length} comments</div>
           </div>
           {commentShow && comments.map((comment, index) => (
                <Comment key={index} comment={comment}/>
           ))}
+        </div>}
 
-        </div>
-        <div className="card-footer bg-custom-light-white">
+
+        <div className="card-footer bg-offwhite">
           <form onSubmit={handleCommentSubmit} className="input-group" ref={formRef}>
             <input 
                 type="text" 
@@ -168,11 +187,10 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
                 type="submit" 
                 id="button-addon2"
             >Add Comment</button>
-
           </form>
         </div>
 
-            <DeletePopup isOpen2={isOpen2} onRequestClose={closeModal2} Delete={postDelete}/>
+            <DeletePopup isOpen2={isOpen2} onRequestClose={closeModal2} Delete={postDelete} post={post}/>
             <EditPopup isOpen={isOpen} onRequestClose={closeModal} post={post} session={session} sessionUpdate={sessionUpdate}/>
       </div>
   );

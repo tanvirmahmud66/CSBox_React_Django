@@ -89,7 +89,7 @@ class UserProfile(models.Model):
 class SessionData(models.Model):
     title = models.CharField(max_length=300)
     host = models.ForeignKey(User, on_delete=models.CASCADE)
-    details = models.TextField(blank=True, null=True)
+    details = models.CharField( max_length=300, blank=True, null=True)
     token = models.CharField(max_length=5, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
 

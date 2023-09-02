@@ -61,9 +61,8 @@ function PostComponent({isOpen, onRequestClose, session_id, session_update}) {
     className="modal-content"
     overlayClassName="modal-overlay custom-backdrop"
     >
-      <div className="bg-custom-light-dark modal-container">
+      <div className="card w-40">
         <div className="card-body">
-          <h2 className="card-title mb-3">Create a New Post</h2>
           <form onSubmit={createPost} ref={formRef}>
             <div className="form-group">
               <textarea
@@ -105,8 +104,8 @@ function PostComponent({isOpen, onRequestClose, session_id, session_update}) {
 
             </div>
             <div className='d-flex justify-content-between align-items-center mt-3'>
-                <button className='btn btn-custom2-danger' onClick={onRequestClose}>Close</button>
-                <button type="submit" className="btn btn-custom-green">Create</button>
+                <button className='btn btn-custom-danger' onClick={onRequestClose}>Cancel</button>
+                <button type="submit" className="btn btn-custom-green">Post</button>
             </div>
           </form>
         </div>
