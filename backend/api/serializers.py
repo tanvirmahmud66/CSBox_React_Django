@@ -8,7 +8,7 @@ import string
 from .models import User 
 from django.contrib.sites.shortcuts import get_current_site
 
-from .models import User, UserProfile, SessionData, SessionMember, PostDB, CommentDB, FileDB
+from .models import User, UserProfile, SessionData, SessionMember, PostDB, CommentDB, FileDB, AssignmentPostDB, AssignmentSubmissionDB
 
 #============================================================== Registration Serializer
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -182,6 +182,27 @@ class FileDBSerializer(serializers.ModelSerializer):
                 return f.read()
         except Exception:
             return None
+        
+
+
+#========================== AssignmentPostDB Serializers
+class AssignmentPostDBSerializer(serializers.ModelSerializer):
+    creator = UserRelatedField(queryset=User.objects.all())
+    file_data = serializers.SerializerMethodField()
+
+    class Meta:
+        model = AssignmentPostDB
+        fields = '__all__'
+
+    def get_file_data(self, obj):
+        return obj.get_file_data()
+
+
+#============================ AssignmentSubmissionDB Serializer
+class AssignmentSubmissionDBSerializer(serializers.ModelSerializer): 
+    class Meta:
+        model = AssignmentSubmissionDB
+        fields = '__all__'
 
 
 #=========================== CommentDB Serializers

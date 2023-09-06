@@ -4,7 +4,7 @@ import string
 from django.http import JsonResponse
 import json
 import base64
-
+from datetime import datetime
 from rest_framework import serializers
 from rest_framework.parsers import JSONParser, MultiPartParser
 from rest_framework.response import Response
@@ -16,8 +16,8 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .models import User
-from .models import UserProfile, SessionData, SessionMember, PostDB, FileDB, CommentDB
-from .serializers import UserProfileSerializer, UserRegistrationSerializer, SessionDataSerializer, SessionMemberSerializer, PostDBSerializer, FileDBSerializer, CommentDBSerializer
+from .models import UserProfile, SessionData, SessionMember, PostDB, FileDB, CommentDB, AssignmentPostDB, AssignmentSubmissionDB
+from .serializers import UserProfileSerializer, UserRegistrationSerializer, SessionDataSerializer, SessionMemberSerializer, PostDBSerializer, FileDBSerializer, CommentDBSerializer, AssignmentPostDBSerializer, AssignmentSubmissionDBSerializer
 
 # Create your views here.
 #------------------------- Json web token access token and refresh token-------------------
@@ -233,9 +233,11 @@ class SingleSessionView(APIView):
             session_members = SessionMember.objects.filter(session=session)
             posts = PostDB.objects.filter(session=session)
             files = FileDB.objects.filter(session=session)
+            assignments = AssignmentPostDB.objects.filter(session=session)
             serializer_posts = PostDBSerializer(posts, many=True)
             serializer_session = SessionDataSerializer(session)
             serializer_members = SessionMemberSerializer(session_members, many=True)
+            serializer_assignments = AssignmentPostDBSerializer(assignments, many=True)
 
             serialized_files = []
             for file in files:
@@ -243,11 +245,13 @@ class SingleSessionView(APIView):
                 with file.file.open('rb') as f:
                     serialized_file['file_data'] = base64.b64encode(f.read()).decode('utf-8')
                 serialized_files.append(serialized_file)
+
             data = {
                 "session": serializer_session.data,
                 "posts": serializer_posts.data,
                 "files": serialized_files,
                 "members": serializer_members.data,
+                "assignments": serializer_assignments.data,
             }
             return Response(data, status=status.HTTP_200_OK)
         except Exception:
@@ -258,18 +262,22 @@ class SingleSessionView(APIView):
         try:
             post_data = json.loads(request.data.get('post_data'))
             session = post_data.get('session')
-            post_body = post_data.get('post_body')
-            creator = post_data.get('creator')
-            
-            post_serializer = PostDBSerializer(data={'session': session, 'post_body': post_body, 'creator': creator})
-            if post_serializer.is_valid():
-                post = post_serializer.save()
-            else:
-                return Response({'message': 'Error creating post', 'errors': post_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+            if post_data.get('post_body') and post_data.get('creator'):
+                post_body = post_data.get('post_body')
+                creator = post_data.get('creator')
+                post_serializer = PostDBSerializer(data={'session': session, 'post_body': post_body, 'creator': creator})
+                if post_serializer.is_valid():
+                    post = post_serializer.save()
+                else:
+                    return Response({'message': 'Error creating post', 'errors': post_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
             file_serializer = FileDBSerializer()
             for file in request.FILES.getlist('files'):
-                file_serializer = FileDBSerializer(data={'session':session , 'post_id': post.id , 'file': file})
+                if post_data.get('post_body') and post_data.get('creator'):
+                    file_serializer = FileDBSerializer(data={'session':session , 'post_id': post.id , 'file': file})
+                else:
+                    file_serializer = FileDBSerializer(data={'session':session, 'file': file})
+
                 if file_serializer.is_valid():
                     file_serializer.save()
                 else:
@@ -299,6 +307,14 @@ class SingleSessionView(APIView):
 
 
 
+
+#==================================== Session Member CRUD View
+class SessionMemberView(APIView):
+    def delete(self, request, session_id, token, user_id):
+        target_session_member = SessionMember.objects.get(session=session_id, member=user_id, token=token)
+        target_session_member.delete()
+        return Response({"status": "Remove Member clicked"}, status=status.HTTP_204_NO_CONTENT)
+    
 
 
 
@@ -364,3 +380,67 @@ class SingleFileView(APIView):
         file = FileDB.objects.get(id=file_id)
         file.delete()
         return Response({"status": "File Deleted"}, status=status.HTTP_204_NO_CONTENT)
+    
+
+
+#======================================= Assignment View
+class AssignmentView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, session_id):
+        post_data = json.loads(request.data.get('post_data'))
+        session = post_data.get('session')
+        creator = post_data.get('creator')
+        title = post_data.get('title')
+        body = post_data.get('body')
+        deadline = post_data.get('deadline')
+        file = request.FILES.get('file')
+
+        serializer = AssignmentPostDBSerializer(data={
+            "session": session,
+            "creator": creator,
+            "title": title,
+            "body": body,
+            "files": file,
+            "deadline": datetime.fromisoformat(deadline)
+        })
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AssignmentCRUD(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, session_id, assignment_id):
+        post_data = json.loads(request.data.get('post_data'))
+        print(post_data)
+        session = post_data.get('session')
+        creator = post_data.get('creator')
+        title = post_data.get('title')
+        body = post_data.get('body')
+        deadline = post_data.get('deadline')
+        file = request.FILES.get('file')
+
+        target_assignment = AssignmentPostDB.objects.get(id=assignment_id, session=session_id)
+        print(target_assignment)
+        serializer = AssignmentPostDBSerializer(instance=target_assignment, data={
+            "session": session,
+            "creator": creator,
+            "title": title,
+            "body": body,
+            "files": file,
+            "deadline": datetime.fromisoformat(deadline)
+        })
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status": "edited success"}, status=status.HTTP_200_OK)
+        return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, session_id, assignment_id):
+        target_assignment = AssignmentPostDB.objects.get(id=assignment_id, session=session_id)
+        target_assignment.delete()
+        return Response({"status": "Assignment Deleted"}, status=status.HTTP_204_NO_CONTENT)
+    

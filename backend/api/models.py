@@ -1,5 +1,6 @@
 from django.db import models
 import os
+import base64
 from django.conf import settings
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
@@ -147,6 +148,54 @@ class PostDB(models.Model):
 
     def __str__(self):
         return self.post_body[0:15]
+    
+
+
+#======================================================= Assignment Model
+class AssignmentPostDB(models.Model):
+    session = models.ForeignKey(SessionData, on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=400)
+    body = models.TextField(blank=True, null=True)
+    files = models.FileField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    deadline = models.DateTimeField()
+
+    class Meta:
+        verbose_name = "Assignments Post Model"
+        verbose_name_plural = "Assignments Post Model"
+        ordering = ['-created']
+
+    def get_file_data(self):
+        try:
+            with self.files.open('rb') as f:
+                file_data = f.read()
+                return base64.b64encode(file_data).decode('utf-8')
+        except Exception:
+            return None
+
+    def __str__(self):
+        return self.title
+    
+
+#====================================================== Assignment Submission Model
+class AssignmentSubmissionDB(models.Model):
+    session = models.ForeignKey(SessionData, on_delete=models.CASCADE)
+    assignment = models.ForeignKey(AssignmentPostDB, on_delete=models.CASCADE)
+    member = models.ForeignKey(SessionMember, on_delete=models.CASCADE)
+    file = models.FileField()
+    submitted = models.BooleanField(default=False)
+    submit_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Assignment Submission DB"
+        verbose_name_plural = "Assignment Submission DB"
+        ordering = ['-submit_at']
+    
+    def __str__(self):
+        return self.file.name
+    
+    
 
 
 #============================================= File Model

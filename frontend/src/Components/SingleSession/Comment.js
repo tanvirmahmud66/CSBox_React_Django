@@ -28,7 +28,9 @@ const Comment = ({comment}) => {
             </div>
             <div className="action d-flex justify-content-between mt-2 align-items-center">
               <div className="reply px-4">
-                <small>Remove</small>
+                <small>Edit</small>{" "}
+                <div className='dots'></div>{" "}
+                <small>delete</small>
               </div>
             </div>
           </div>

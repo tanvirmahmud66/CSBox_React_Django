@@ -61,7 +61,7 @@ function PostComponent({isOpen, onRequestClose, session_id, session_update}) {
     className="modal-content"
     overlayClassName="modal-overlay custom-backdrop"
     >
-      <div className="card w-40">
+      <div className="card w-50">
         <div className="card-body">
           <form onSubmit={createPost} ref={formRef}>
             <div className="form-group">
@@ -69,7 +69,7 @@ function PostComponent({isOpen, onRequestClose, session_id, session_update}) {
                 className="form-control"
                 name='post_body'
                 id="post_body"
-                rows="4"
+                rows="10"
                 // value={postBody}
                 // onChange={handlePostBodyChange}
                 placeholder="What's on your mind?"
@@ -86,7 +86,7 @@ function PostComponent({isOpen, onRequestClose, session_id, session_update}) {
               <div className="mt-2" id="selectedFiles">
                 {files.map(file => (
                   <div
-                    className="alert alert-secondary d-flex justify-content-between align-items-center mb-2"
+                    className="alert alert-secondary p-0 d-flex justify-content-between align-items-center mb-2"
                     key={file.name}
                   >
                     <span>{file.name}</span>

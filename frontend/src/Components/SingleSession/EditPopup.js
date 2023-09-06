@@ -77,7 +77,7 @@ function EditPopup({isOpen, onRequestClose, post, session, sessionUpdate}) {
                 className="form-control"
                 name='post_body'
                 id="post_body"
-                rows="4"
+                rows="10"
                 value={postBody}
                 onChange={handlePostBodyChange}
                 placeholder="What's on your mind?"

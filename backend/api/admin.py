@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import User
-from .models import UserProfile, SessionData, SessionMember, PostDB, FileDB,CommentDB
+from .models import UserProfile, SessionData, SessionMember, PostDB, FileDB,CommentDB, AssignmentPostDB, AssignmentSubmissionDB
 # Register your models here.
 
 
@@ -50,11 +50,22 @@ class FileDBAdmin(admin.ModelAdmin):
     search_fields = ('session','post_id', 'file')
 
 
+class AssignmentPostDBAdmin(admin.ModelAdmin):
+    list_display=('id','session','creator','title','body','files','created','deadline')
+    list_filter = ('session','creator','title','created','deadline')
+    search_fields=('session','creator','title','created','deadline')
+
+
 class CommentDBAdmin(admin.ModelAdmin):
     list_display = ('id', 'commenter', 'post_id', 'session', 'comment_body', 'created', 'updated')
     list_filter = ('session', 'comment_body', 'created', 'updated')
     search_fields = ('commenter', 'post_id', 'session', 'comment_body', 'created', 'updated')
 
+
+class AssignmentSubmissionDBAdmin(admin.ModelAdmin):
+    list_display = ('id','session','assignment','member','file','submitted','submit_at')
+    list_filter = ('session','assignment','member')
+    search_fields = ('session','assignment','member')
 
 
 #=============== Model Registration
@@ -65,3 +76,5 @@ admin.site.register(SessionMember, SessionMemberAdmin)
 admin.site.register(PostDB, PostDBAdmin)
 admin.site.register( FileDB, FileDBAdmin)
 admin.site.register(CommentDB, CommentDBAdmin)
+admin.site.register(AssignmentPostDB, AssignmentPostDBAdmin)
+admin.site.register(AssignmentSubmissionDB, AssignmentSubmissionDBAdmin)

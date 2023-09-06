@@ -15,9 +15,9 @@ function openFile(url) {
 
 
 // =========================================== Main file functional Component
-function FileDownloadComponent({ files, post,sessionUpdate }) {
+function FileDownloadComponent({ files, post, session, sessionUpdate }) {
 
-  // console.log(files)
+  console.log(session)
 
     const {user, authTokens} = useContext(AuthContext)
 
@@ -29,7 +29,7 @@ function FileDownloadComponent({ files, post,sessionUpdate }) {
           'Authorization': 'Bearer '+ String(authTokens?.access)
         }
       })
-      // let data = await response.json()
+
       console.log(response.status)
       if(response.status===204){
         sessionUpdate()
@@ -57,8 +57,8 @@ function FileDownloadComponent({ files, post,sessionUpdate }) {
                         Download
                     </Dropdown.Item>
                     <Dropdown.Item onClick={() => openFile(file.file)}>Open</Dropdown.Item>
-                    {user.user_id===post.creator.id && <Dropdown.Item onClick={()=> fileRemove(file.id)} className='text-danger'>Remove</Dropdown.Item>}
-                    
+                    {(post && (user.user_id===post.creator.id)) && <Dropdown.Item onClick={()=> fileRemove(file.id)} className='text-danger'>Remove</Dropdown.Item>}
+                    {(!post && (user.user_id===session.host.id)) && <Dropdown.Item onClick={()=> fileRemove(file.id)} className='text-danger'>Remove</Dropdown.Item>}
                 </Dropdown.Menu>
               </Dropdown>
             </div>

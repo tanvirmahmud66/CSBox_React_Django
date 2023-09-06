@@ -579,7 +579,7 @@ input {
 }
 
 .timeline-height{
-  height: 91vh;
+  height: 93vh;
 }
 .timeline-container {
   height: 100%;
@@ -603,4 +603,56 @@ input {
 }
 .member-container::-webkit-scrollbar{
   display: none;
+}
+
+.list-btn{
+  transition: all .3s ease;
+}
+.list-btn:hover{
+  padding-left:2rem;
+}
+
+.uploaded-container{
+  height: 82vh;
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.uploaded-container::-webkit-scrollbar{
+  display: none;
+}
+
+.sticky-element2 {
+  position: -webkit-sticky;
+  position: sticky;
+  background-color: transparent;
+  transition: background-color 0.3s ease-in-out;
+  top: 0px;
+  padding-bottom: 10px;
+  z-index: 999;
+}
+
+#selectedFiles{
+  max-height: 25vh;
+  overflow: scroll;
+}
+
+.no-post{
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  color: rgba(134, 134, 134, 0.414);
+  font-weight: bold;
+}
+
+.no-files{
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  color: rgba(134, 134, 134, 0.414);
+  font-weight: bold;
 }
