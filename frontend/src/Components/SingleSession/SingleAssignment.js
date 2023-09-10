@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import TimeAgoComponent from '../TimeAgoComponent';
-import DateTimeComponent from '../DateTimeComponent';
 import AssginDeletePopup from './AssignDeletePopup';
 import AssignEditPopup from './AssignEditPopup';
+import AssignmentExpend from './AssignmentExpend';
+import DeadlineComponent from '../DeadlineComponent';
+import { useContext } from 'react';
+import AuthContext from '../../context/AuthContext';
+import DateTimeComponent from '../DateTimeComponent';
+import { format, isBefore } from 'date-fns';
 
 
 // ===================================== Get File name
@@ -19,11 +24,16 @@ function openFile(url) {
 }
 
 
-const SingleAssignment = ({assignment, session, updateSession}) => {
+const SingleAssignment = ({assignment, submissions ,session, updateSession, submitted}) => {
 
-  const {title ,body, created, deadline, files, file_data} = assignment
+  const {user} = useContext(AuthContext)
+  const {id,title ,body, created, deadline, files, file_data} = assignment
   const [isOpen, setIsOpen] = useState(false)
   const [isOpen2, setIsOpen2] = useState(false)
+  const [expend, setExpend] = useState(false)
+  const [isExpired, setIsExpired] = useState(false)
+
+  const submissionsArray = submissions.filter((submission)=> submission.assignment===id)
 
   const baseUrl = 'http://127.0.0.1:8000';
 
@@ -36,6 +46,10 @@ const SingleAssignment = ({assignment, session, updateSession}) => {
     setIsOpen2(true);
   };
 
+  const openExpend = ()=>{
+    setExpend(true);
+  }
+
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -43,7 +57,25 @@ const SingleAssignment = ({assignment, session, updateSession}) => {
   const closeModal2 = () => {
     setIsOpen2(false);
   };
+  
+  const closeExpend = ()=>{
+    setExpend(false);
+  }
 
+  const expired = (dateTimeString)=>{
+    const parsedDate = new Date(dateTimeString);
+    const currentDate = new Date();
+    const isDeadlineExpired = isBefore(parsedDate, currentDate);
+    if(isDeadlineExpired){
+        setIsExpired(true)
+    }else{
+        setIsExpired(false)
+    }
+  }
+
+  useEffect(()=>{
+    expired(deadline);
+  }, [])
 
   return (
       <div className="card mt-3 mb-3">
@@ -55,18 +87,20 @@ const SingleAssignment = ({assignment, session, updateSession}) => {
                 </div> 
             </div>
             <div className='d-flex align-items-center'>
-                <DateTimeComponent dateTimeString={deadline}/>
+              {submitted ?<div className='text-green'>Sumitted</div>:<DeadlineComponent dateTimeString={deadline}/>}
+                
+                {user.user_id===session.host.id &&
                 <Dropdown className='ms-1'>
                     <Dropdown.Toggle variant="" id="dropdown-basic"></Dropdown.Toggle>
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={openModal2}  href="#">Edit</Dropdown.Item>
                         <Dropdown.Item onClick={openModal}  href="#">Delete</Dropdown.Item>
                     </Dropdown.Menu>
-                </Dropdown>
+                </Dropdown>}
             </div>
         </div>
-        <div className="card-body">
-            {body}
+        <div className="card-body pb-0">
+            <div className='p-2 mb-2'>{body}</div>
             {files &&
             <div className='d-flex mt-3 justify-content-between align-items-center alert alert-primary custom-alert'>
               <div onClick={()=>openFile(baseUrl+files)} className='text-primary cursor-pointer w-100'>{getFileNameFromUrl(files)}</div>
@@ -90,8 +124,12 @@ const SingleAssignment = ({assignment, session, updateSession}) => {
               </Dropdown>
             </div>}
         </div>
+        <div className='card-footer'>
+            <button onClick={openExpend} className='w-100 btn btn-custom-green'>Submission</button>
+        </div>
         <AssginDeletePopup isOpen={isOpen} onRequestClose={closeModal} assignment={assignment} session={session} updateSession={updateSession}/>
         <AssignEditPopup isOpen={isOpen2} onRequestClose={closeModal2} assignment={assignment} session={session} updateSession={updateSession}/>
+        <AssignmentExpend isOpen={expend} onRequestClose={closeExpend} assignment={assignment} session={session} updateSession={updateSession} allSubmission={submissionsArray} expired={isExpired}/>
       </div>
   );
 };

@@ -199,10 +199,16 @@ class AssignmentPostDBSerializer(serializers.ModelSerializer):
 
 
 #============================ AssignmentSubmissionDB Serializer
-class AssignmentSubmissionDBSerializer(serializers.ModelSerializer): 
+class AssignmentSubmissionDBSerializer(serializers.ModelSerializer):
+    submit_by = UserRelatedField(queryset=User.objects.all())
+    file_data = serializers.SerializerMethodField()
+
     class Meta:
         model = AssignmentSubmissionDB
         fields = '__all__'
+    
+    def get_file_data(self, obj):
+        return obj.get_file_data()
 
 
 #=========================== CommentDB Serializers

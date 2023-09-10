@@ -22,8 +22,8 @@ function LeavePopup({isOpen, onRequestClose, title,leaveSession}) {
            "{title}" - Are You want to leave this Session?
         </div>
         <div className='d-flex justify-content-end align-items-center mt-3'>
-            <button className='btn btn-custom2-primary' onClick={onRequestClose}>cancel</button>
-            <button onClick={leaveButtonHandle} className="btn btn-custom2-danger ms-2">Leave Session</button>
+            <button className='btn btn-custom-danger' onClick={onRequestClose}>cancel</button>
+            <button onClick={leaveButtonHandle} className="btn btn-warning ms-2">Leave Session</button>
         </div>
       </div>
       </Modal>

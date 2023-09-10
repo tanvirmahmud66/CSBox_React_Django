@@ -17,7 +17,7 @@ function openFile(url) {
 // =========================================== Main file functional Component
 function FileDownloadComponent({ files, post, session, sessionUpdate }) {
 
-  console.log(session)
+  // console.log(session)
 
     const {user, authTokens} = useContext(AuthContext)
 

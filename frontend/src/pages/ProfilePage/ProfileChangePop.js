@@ -42,7 +42,7 @@ const ProfileChangePop = ({ isOpen, onRequestClose, profileID, getProfile}) => {
       className="modal-content"
       overlayClassName="modal-overlay"
     >
-      <div className="text-white modal-container">
+      <div className="card w-30">
         <div className='card-header'>
             <h2 className='text-center'>Change Profile</h2>
         </div>
@@ -53,15 +53,16 @@ const ProfileChangePop = ({ isOpen, onRequestClose, profileID, getProfile}) => {
                 <input 
                     type="file" 
                     name='profile' 
-                    className="form-control bg-dark text-white" 
+                    className="form-control" 
                     id="profile"
                     onChange={handleImageChange}
+                    required
                 />
               </div>
               
-              <div className='d-flex justify-content-between align-items-center mt-3'>
-                <button className='btn btn-custom2-danger' onClick={onRequestClose}>Close</button>
-                <button type="submit" className="btn btn-custom-green">Change Profile</button>
+              <div className='d-flex justify-content-end align-items-center mt-3'>
+                <button className='btn btn-custom-danger' onClick={onRequestClose}>Close</button>
+                <button type="submit" className="btn btn-custom-green ms-2">Change Profile</button>
               </div>
             </form>
         </div>

@@ -32,6 +32,15 @@ body{
 .vh-75{
     height: 75vh;
 }
+.vh-70{
+  height: 70vh;
+}
+.vh-65{
+  height: 65vh;
+}
+.vh-60{
+  height: 60vh;
+}
 .vh-50{
     height: 50vh;
 }
@@ -44,8 +53,26 @@ body{
 .w-100{
   width: 100%;
 }
+.w-95{
+  width: 95%;
+}
+.w-90{
+  width: 90%;
+}
+.w-85{
+  width: 85%;
+}
+.w-80{
+  width: 80%;
+}
 .w-75{
   width: 75%;
+}
+.w-70{
+  width: 70%;
+}
+.w-60{
+  width: 60%;
 }
 .w-50{
   width: 50%;
@@ -655,4 +682,48 @@ input {
   font-size: 3rem;
   color: rgba(134, 134, 134, 0.414);
   font-weight: bold;
+}
+
+.submission-container{
+  height: 65vh;
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.submission-container::-webkit-scrollbar{
+  display: none;
+}
+
+.submission-container2{
+  height: 52vh;
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.submission-container2::-webkit-scrollbar{
+  display: none;
+}
+
+.custom-list-item{
+  text-decoration: none;
+  list-style: none;
+  list-style-type: none;
+  background: #0f407425;
+  padding: .5rem;
+  margin: .5rem 0;
+  border: 1.5px solid black;
+}
+.custom-list-item2{
+  text-decoration: none;
+  list-style: none;
+  list-style-type: none;
+  background: #22ae495f;
+  padding: .5rem;
+  margin: .5rem 0;
+  border: 1.5px solid black;
+}
+
+.custom-alert-primary{
+  padding: .4rem;
+  background: #087ff73d;
 }

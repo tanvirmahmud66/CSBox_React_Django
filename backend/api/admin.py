@@ -63,9 +63,9 @@ class CommentDBAdmin(admin.ModelAdmin):
 
 
 class AssignmentSubmissionDBAdmin(admin.ModelAdmin):
-    list_display = ('id','session','assignment','member','file','submitted','submit_at')
-    list_filter = ('session','assignment','member')
-    search_fields = ('session','assignment','member')
+    list_display = ('id','session','assignment','submit_by','file','submitted','submit_at')
+    list_filter = ('session','assignment','submit_by')
+    search_fields = ('session','assignment','submit_by')
 
 
 #=============== Model Registration

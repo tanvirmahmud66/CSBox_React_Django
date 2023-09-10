@@ -9,7 +9,8 @@ import MemberListItem from '../../Components/SingleSession/MemberListItem'
 import ManualFileUplaod from '../../Components/SingleSession/ManualFileUpload'
 import CreateAssignmentPopup from '../../Components/SingleSession/CreateAssignment'
 import SingleAssignment from '../../Components/SingleSession/SingleAssignment'
-import DateTimeComponent from '../../Components/DateTimeComponent'
+import DeadlineComponent from '../../Components/DeadlineComponent'
+
 
 const SingleSession = () => {
 
@@ -22,7 +23,9 @@ const SingleSession = () => {
     const [files, setFiles] = useState([])
     const [member, setMember] = useState([])
     const [assignments, setAssignments] = useState([])
-
+    const [submissions, setSubmissions] = useState([])
+    const [submittedAssignments, setSubmittedAssignments] = useState([])
+    const [unsubmittedAssignments, setUnsubmittedAssignments] = useState([])
     
     const [postSection, setPostSection] = useState(true)
     const [uploadedFilesSection, setUploadedFilesSection] = useState(false)
@@ -31,6 +34,9 @@ const SingleSession = () => {
     const [fileUploadOpen, setFileUploadOpen] = useState(false)
     const [createAssignmentOpen, setCreateAssignmentOpen] = useState(false)
 
+    const [due, setDue] = useState(true)
+    const [submitted, setSubmitted] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     let targetSession = async()=>{
         let response = await fetch(`http://127.0.0.1:8000/api/single-session/${id}/`, {
@@ -48,13 +54,20 @@ const SingleSession = () => {
             setFiles(data.files)
             setMember(data.members)
             setAssignments(data.assignments)
+            setSubmissions(data.submissions)
+            setSubmittedAssignments(data.submitted_assignment)
+            setUnsubmittedAssignments(data.unsubmitted_assignment)
+            setLoading(false)
         }
     }
- 
+
+
 
     useEffect(()=>{
         targetSession()
     },[])
+
+
 
     // useEffect(()=>{
     //     let interval = setInterval(() => {
@@ -91,10 +104,28 @@ const SingleSession = () => {
         setCreateAssignmentOpen(false)
     }
 
-    // console.log(posts)
+    const dueButtonHandle = ()=>{
+        setDue(true)
+        setSubmitted(false)
+    }
+    const submitButtonHandle = ()=>{
+        setSubmitted(true)
+        setDue(false)
+    }
+
+    
+
+    console.log('all: ', assignments)
+    console.log("submitted: ",submittedAssignments)
+    console.log("unsubmitted: ",unsubmittedAssignments)
+    
 
   return (
     <>  
+        {loading? 
+        <div className='w-100 vh-80 d-flex justify-content-center align-items-center'>
+            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        </div>:
         <div className='row timeline-height'>
 
             {/* ==========================left sidebar===================== */}
@@ -159,7 +190,39 @@ const SingleSession = () => {
                 }
 
                 {/* ------------------------ Assignment Section */}
-                {assignmentSection &&
+                {(assignmentSection && user.user_id!==session.host.id) &&
+                    <div className='mt-3'>
+                        {user.user_id===session.host.id ?
+                            <button onClick={openCreateAssignmentModal} className='btn btn-custom-green w-100'>Create Assignment</button>:
+                            <div className='w-100 row bg-custom-light-dark ms-0 pt-2 ps-2 pe-2 rounded'>
+                                <div onClick={dueButtonHandle} className={`col text-center cursor-pointer p-2 ${due?"bg-custom-dark text-danger":""}`}>Due ({unsubmittedAssignments.length})</div>
+                                <div onClick={submitButtonHandle} className={`col text-center cursor-pointer p-2 ${submitted?"bg-custom-dark text-success":""}`}>Submitted ({submittedAssignments.length})</div>
+                            </div>
+                        }
+                        {(due && unsubmittedAssignments.length!==0)&&
+                            <>
+                                {unsubmittedAssignments.map((each, index)=>{
+                                    return(
+                                        <SingleAssignment key={index} assignment={each} submissions={submissions} session={session} updateSession={targetSession}/>
+                                    )
+                                })}
+                                
+                            </>
+                        }
+                        {(submitted && submittedAssignments.length!==0)&&
+                            <>
+                                {submittedAssignments.map((each, index)=>{
+                                    return(
+                                        <SingleAssignment key={index} assignment={each} submissions={submissions} session={session} updateSession={targetSession} submitted={true}/>
+                                    )
+                                })}
+                                
+                            </>
+                        }
+                    </div> 
+                }
+
+                {(assignmentSection && user.user_id===session.host.id) &&
                     <div className='mt-3'>
                         {user.user_id===session.host.id &&
                             <button onClick={openCreateAssignmentModal} className='btn btn-custom-green w-100'>Create Assignment</button>
@@ -168,13 +231,13 @@ const SingleSession = () => {
                             <>
                                 {assignments.map((each, index)=>{
                                     return(
-                                        <SingleAssignment key={index} assignment={each} session={session} updateSession={targetSession}/>
+                                        <SingleAssignment key={index} assignment={each} submissions={submissions} session={session} updateSession={targetSession}/>
                                     )
                                 })}
                                 
                             </>
                         :
-                            <div>No assignment</div>
+                            <div className='no-post'>No assignment</div>
                         }
                     </div> 
                 }
@@ -199,26 +262,38 @@ const SingleSession = () => {
                         setPostSection(false)
                         setUploadedFilesSection(false)
                         setAssignmentSection(true)
-                    }} className={`list-group-item cursor-pointer list-btn ${assignmentSection && "active"}`}>Assingments</div>
+                    }} className={`list-group-item cursor-pointer list-btn ${assignmentSection && "active"}`}>Assingments {(user && session &&(user.user_id!==session.host.id)) ? `(${unsubmittedAssignments.length})`:""}</div>
                 </div>
 
                 <div className='mt-4'>
                     <h5>Calendar</h5>
-                    {assignments &&
+                    {((assignments && user && session) && user.user_id===session.host.id) &&
                         <ul className='list-group'>
                             {assignments.map((each, index)=>{
                                 return(
                                     <li className='list-group-item' key={index}>
                                         <div>{each.title}</div>
-                                        <DateTimeComponent dateTimeString={each.deadline}/>
+                                        <DeadlineComponent dateTimeString={each.deadline}/>
                                     </li>
                                 )
                             })}
                         </ul>
                     }
+                    {((unsubmittedAssignments && user && session) && user.user_id!==session.host.id)&&
+                        <ul className='list-group'>
+                        {unsubmittedAssignments.map((each, index)=>{
+                            return(
+                                <li className='list-group-item' key={index}>
+                                    <div>{each.title}</div>
+                                    <DeadlineComponent dateTimeString={each.deadline}/>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                    }
                 </div>
             </div>
-        </div>
+        </div>}
         <PostComponent isOpen={isOpen} onRequestClose={closeModal} session_id={id} session_update={targetSession}/>
         <ManualFileUplaod isOpen={fileUploadOpen} onRequestClose={closeFileUplaodModal} session_id={id} session_update={targetSession}/>
         <CreateAssignmentPopup isOpen={createAssignmentOpen} onRequestClose={closeCreateAssignmentModal} session_id={id} session_update={targetSession}/>

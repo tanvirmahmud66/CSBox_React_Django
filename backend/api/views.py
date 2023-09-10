@@ -234,10 +234,12 @@ class SingleSessionView(APIView):
             posts = PostDB.objects.filter(session=session)
             files = FileDB.objects.filter(session=session)
             assignments = AssignmentPostDB.objects.filter(session=session)
+            submissions = AssignmentSubmissionDB.objects.filter(session=session)
             serializer_posts = PostDBSerializer(posts, many=True)
             serializer_session = SessionDataSerializer(session)
             serializer_members = SessionMemberSerializer(session_members, many=True)
             serializer_assignments = AssignmentPostDBSerializer(assignments, many=True)
+            serializer_submissions = AssignmentSubmissionDBSerializer(submissions, many=True)
 
             serialized_files = []
             for file in files:
@@ -245,13 +247,29 @@ class SingleSessionView(APIView):
                 with file.file.open('rb') as f:
                     serialized_file['file_data'] = base64.b64encode(f.read()).decode('utf-8')
                 serialized_files.append(serialized_file)
+            
 
+            submitted_assignment_array=[]
+            unsubmitted_assignment_array = []
+            if session.host.id!=request.user.id:
+                for each in assignments:
+                    try:
+                        target = AssignmentSubmissionDB.objects.get(session=session, assignment=each, submit_by=request.user)
+                        serializer = AssignmentPostDBSerializer(each)
+                        submitted_assignment_array.append(serializer.data)
+                    except Exception:
+                        serializer = AssignmentPostDBSerializer(each)
+                        unsubmitted_assignment_array.append(serializer.data)
+            
             data = {
                 "session": serializer_session.data,
                 "posts": serializer_posts.data,
                 "files": serialized_files,
                 "members": serializer_members.data,
                 "assignments": serializer_assignments.data,
+                "submitted_assignment":submitted_assignment_array,
+                "unsubmitted_assignment": unsubmitted_assignment_array,
+                "submissions": serializer_submissions.data,
             }
             return Response(data, status=status.HTTP_200_OK)
         except Exception:
@@ -443,4 +461,41 @@ class AssignmentCRUD(APIView):
         target_assignment = AssignmentPostDB.objects.get(id=assignment_id, session=session_id)
         target_assignment.delete()
         return Response({"status": "Assignment Deleted"}, status=status.HTTP_204_NO_CONTENT)
+
+
+
+class AssignmentSubmitView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, session_id, assignment_id):
+        submissions = AssignmentSubmissionDB.objects.filter(session=session_id)
+        serializer = AssignmentSubmissionDBSerializer(submissions, many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+    def post(self, request, session_id, assignment_id):
+        post_data = json.loads(request.data.get('post_data'))
+        session= post_data.get('session')
+        assignment = post_data.get('assignment')
+        submit_by = post_data.get('submit_by')
+        file = request.FILES.get('file')
+
+        try:
+            submit = AssignmentSubmissionDB.objects.get(assignment=assignment,submit_by=submit_by)
+            return Response(status=status.HTTP_302_FOUND)
+        except Exception:
+            serializer = AssignmentSubmissionDBSerializer(data={
+                "session":session,
+                "assignment":assignment,
+                "submit_by": submit_by,
+                "file":file,
+            })
+            if serializer.is_valid():
+                serializer.save()
+                return Response({"status":"Assignment Submitted"}, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# class SubmittedAssignmentView(APIView):
+#     def get(self, request):
+#         pass
     

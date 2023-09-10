@@ -3,14 +3,16 @@ import { format } from 'date-fns';
 
 function DateTimeComponent({ dateTimeString }) {
   const parsedDate = new Date(dateTimeString);
-  const formattedDate = format(parsedDate, 'dd-MM-yy');
-  const formattedTime = format(parsedDate, 'hh:mm a');
+  const formattedDate = format(parsedDate, 'do MMM yyyy');
+  const formattedTime = format(parsedDate, 'h:mm a'); // 'h:mm a' represents Hour:Minute AM/PM
 
   return (
-    <div>
-      <div className='text-danger'>Deadline: {formattedDate} ({formattedTime})</div>
+    <div className='d-flex'>
+      <div className='text-success'>{formattedDate}</div>
+      <div className=' ms-2 text-primary'>{formattedTime}</div>
     </div>
   );
 }
 
 export default DateTimeComponent;
+

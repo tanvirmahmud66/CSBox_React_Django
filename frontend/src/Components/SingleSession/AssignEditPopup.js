@@ -149,7 +149,7 @@ function AssignEditPopup({isOpen, onRequestClose, assignment, session, updateSes
                     onChange={handleDateChange}
                     showTimeSelect
                     timeFormat="HH:mm"
-                    timeIntervals={15}
+                    timeIntervals={1}
                     timeCaption="Time"
                     dateFormat="MMMM d, yyyy h:mm aa"
                     className="form-control"

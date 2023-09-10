@@ -88,12 +88,12 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
     getPostComment()
   }, [])
 
-  useEffect(()=>{
-    let interval = setInterval(() => {
-        getPostComment()
-    },1000);
-    return ()=> clearInterval(interval)
-},[])
+//   useEffect(()=>{
+//     let interval = setInterval(() => {
+//         getPostComment()
+//     },1000);
+//     return ()=> clearInterval(interval)
+// },[])
   
   const handleShow = ()=>{
     setShow(!show)
@@ -152,16 +152,16 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
           </div>
         </div>
         <div className="card-body">
-          <div className={`card-text ${post_body.length<150? 'fs-3 fw-300': ''}`}>
+          <div className={`card-text ${post_body.length<50? 'fs-3 fw-300': ''}`}>
             {post_body}
           </div>
         </div>
 
         {show && <FileDownloadComponent files={filesArray} post={post} sessionUpdate={sessionUpdate} />}
-        {filesArray.length!==0 && <button className='btn btn-custom-green' onClick={handleShow}>{show? "Hide files":`${filesArray.length} files show`}</button> }
+        {filesArray.length!==0 && <button className='btn btn-secondary' onClick={handleShow}>{show? "Hide files":`${filesArray.length} files show`}</button> }
         
         {comments && 
-        <div className="card-footer bg-offwhite mt-2">
+        <div className="card-footer bg-offwhite ">
           <div className='d-flex justify-content-between align-items-center'>
             <div onClick={commentsButtonHandle} className="custom-cursor-pointer text-primary">{!commentShow?`All comments`: "Hide comments"} </div>
             <div className='text-white'>{comments.length} comments</div>

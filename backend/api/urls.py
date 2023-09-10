@@ -23,7 +23,8 @@ urlpatterns = [
     path('single-file/<int:file_id>/', views.SingleFileView.as_view(), name='single-file'),
     path('session/assignment/<int:session_id>/', views.AssignmentView.as_view(), name='assignment'),
     path('session/single-assignment/<int:session_id>/<int:assignment_id>/', views.AssignmentCRUD.as_view(), name='assignment-delete'),
-
-    
+    path('submission/<int:session_id>/<int:assignment_id>/', views.AssignmentSubmitView.as_view(), name='assignment-submit'),
+    # path('submitted/assignment-list/<int:session_id>/<int:assignment>/', views.SubmittedAssignmentView.as_view, name='submitted assignment')
+ 
 ]
 

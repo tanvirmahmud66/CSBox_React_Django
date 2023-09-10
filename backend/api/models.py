@@ -182,7 +182,7 @@ class AssignmentPostDB(models.Model):
 class AssignmentSubmissionDB(models.Model):
     session = models.ForeignKey(SessionData, on_delete=models.CASCADE)
     assignment = models.ForeignKey(AssignmentPostDB, on_delete=models.CASCADE)
-    member = models.ForeignKey(SessionMember, on_delete=models.CASCADE)
+    submit_by = models.ForeignKey(User, on_delete=models.CASCADE)
     file = models.FileField()
     submitted = models.BooleanField(default=False)
     submit_at = models.DateTimeField(auto_now_add=True)
@@ -192,6 +192,14 @@ class AssignmentSubmissionDB(models.Model):
         verbose_name_plural = "Assignment Submission DB"
         ordering = ['-submit_at']
     
+    def get_file_data(self):
+        try:
+            with self.file.open('rb') as f:
+                file_data = f.read()
+                return base64.b64encode(file_data).decode('utf-8')
+        except Exception:
+            return None
+
     def __str__(self):
         return self.file.name
     
