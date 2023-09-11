@@ -1,4 +1,5 @@
 import './App.css';
+
 import Navbar from './Components/navbar/Navbar';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from './pages/LoginPage/LoginPage';
@@ -17,7 +18,7 @@ function App() {
 
   return (
       <Router>
-        <UserProfileProvider>
+        <UserProfileProvider className="">
           <Navbar/>
           <div className='container'>
             <Routes>

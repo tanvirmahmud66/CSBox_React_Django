@@ -220,7 +220,7 @@ const HomePage = () => {
       {settings && 
         <div className='mt-2 vh-80 row'>
           {/* =============================== operation button list */}
-          <div className='col-3 bg-custom-dark'>
+          <div className='col-3'>
             <div className='card fs-5 text-danger text-center p-2 mb-3'>Settings</div>
             <ul className="list-group">
               <li onClick={()=>setBtnHandle("profile")} className={`mb-3 text-white btn ${profile?"btn-custom-green border-green":"btn-custom2-primary"}`}>Profile</li>

@@ -13,6 +13,8 @@ import './index.css';
 import App from './App';
 import { AuthProvider } from './context/AuthContext';
 
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 Modal.setAppElement('#root');
 root.render(

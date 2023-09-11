@@ -177,7 +177,7 @@ const SingleSession = () => {
 
                 {/* ----------------------- all files and upload file manually */}
                 {uploadedFilesSection &&
-                    <div className='mt-3 card p-2 '>
+                    <div className='mt-3'>
                         <button onClick={openFileUplaodModal} className='w-100 btn btn-custom-green'>Upload Files Manually</button>
                         <div className='uploaded-container'>
                             {files.length!==0?
@@ -194,9 +194,9 @@ const SingleSession = () => {
                     <div className='mt-3'>
                         {user.user_id===session.host.id ?
                             <button onClick={openCreateAssignmentModal} className='btn btn-custom-green w-100'>Create Assignment</button>:
-                            <div className='w-100 row bg-custom-light-dark ms-0 pt-2 ps-2 pe-2 rounded'>
-                                <div onClick={dueButtonHandle} className={`col text-center cursor-pointer p-2 ${due?"bg-custom-dark text-danger":""}`}>Due ({unsubmittedAssignments.length})</div>
-                                <div onClick={submitButtonHandle} className={`col text-center cursor-pointer p-2 ${submitted?"bg-custom-dark text-success":""}`}>Submitted ({submittedAssignments.length})</div>
+                            <div className='w-100 row ms-0'>
+                                <div onClick={dueButtonHandle} className={`col btn  ${due?"btn-custom-danger":"btn-custom2-danger"}`}>Due ({unsubmittedAssignments.length})</div>
+                                <div onClick={submitButtonHandle} className={`col btn ms-1 ${submitted?"btn-custom-green":"btn-custom2-green"}`}>Submitted ({submittedAssignments.length})</div>
                             </div>
                         }
                         {(due && unsubmittedAssignments.length!==0)&&
