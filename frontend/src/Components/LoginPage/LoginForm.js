@@ -1,5 +1,6 @@
 import React, { useContext} from 'react'
 import AuthContext from '../../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
 
@@ -37,8 +38,8 @@ const LoginForm = () => {
                         <input type="password" name='password' className="form-control" id="password" placeholder="password" required/>
                     </div>
                     <button type='submit' className='btn w-100 mt-4 btn-custom-green'>Login</button>
-                    <div className='d-flex flex-column mt-2'>
-                        <a href='#' className='text-decoration-none text-center'>Forget password?</a>
+                    <div className='d-flex justify-content-between align-items-center mt-2'>
+                        <Link to='/forget-password' className='text-decoration-none text-center'>Forget password?</Link>
                         <a href='/new-user' className='text-decoration-none text-center'>Don't have an account?</a>
                     </div>
                     

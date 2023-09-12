@@ -192,7 +192,7 @@ const HomePage = () => {
               <div className="row">
                   <div className='col'>
                     <h4 className='text-violet'>Created</h4>
-                    <div className='scroll-container overflow-scroll'>
+                    <div className='scroll-container'>
                       <div className='row'>
                         {session && session.map((each)=>{return (<Session key={each.id} session={each}/>)})}
                         {session.length===0 && <CreateSession/>}
@@ -201,7 +201,7 @@ const HomePage = () => {
                   </div>
                   <div className='col'>
                     <h4 className='text-blue'>Joined</h4>
-                    <div className='col scroll-container overflow-scroll'>
+                    <div className='col scroll-container'>
                       <div className='row'>
                         
                         {sessionJoin!==undefined? sessionJoin.map((each)=>{

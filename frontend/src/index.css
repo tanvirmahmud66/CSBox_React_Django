@@ -11,7 +11,7 @@ body{
 }
 
 body {
-  background: linear-gradient(211deg,#172056,#033142,#02213e,#000000ac);
+  background: linear-gradient(220deg,#051570,#032959,#024a65,#0b6d02fd);
   background-size: 240% 240%;
   animation: gradient-animation 20s ease infinite;
 }
@@ -518,8 +518,15 @@ input {
 }
 
 .scroll-container {
-  height: 610px;
-  padding:0 30px 20px 20px;/* Set the desired height */
+  height: 640px;
+  padding:0 30px 20px 20px;
+  overflow: scroll;/* Set the desired height */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar for Webkit-based browsers (Chrome, Safari, etc.) */
 }
 
 .empty{

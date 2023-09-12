@@ -11,6 +11,7 @@ import VerficationPage from './pages/VerificationPage/VerficationPage';
 import SingleSession from './pages/SingleSession/SingleSession';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { UserProfileProvider } from './context/ProfileContext';
+import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <div className='container'>
             <Routes>
               <Route path='/login' element={!user?<LoginPage/>: <Navigate to='/'/>}/>
+              <Route path='/forget-password' element={!user?<ForgetPassword/>:<Navigate to='/'/>}/>
               <Route path='/new-user' element={!user?<RegistrattionPage/> : <Navigate to='/'/>}/>
               <Route path='/' element={user?<HomePage/>: <Navigate to='/login'/>}/>
               <Route path='/session/:id' element={user?<SingleSession/>: <Navigate to='/login'/>}/>

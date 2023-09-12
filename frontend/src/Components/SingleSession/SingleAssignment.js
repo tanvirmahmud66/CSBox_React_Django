@@ -100,7 +100,7 @@ const SingleAssignment = ({assignment, submissions ,session, updateSession, subm
             </div>
         </div>
         <div className="card-body pb-0">
-            <div className='p-2 mb-2'>{body}</div>
+            <div className='p-2 mb-2 ps-0'>{body}</div>
             {files &&
             <div className='d-flex mt-3 justify-content-between align-items-center alert alert-primary custom-alert'>
               <div onClick={()=>openFile(baseUrl+files)} className='text-primary cursor-pointer w-100'>{getFileNameFromUrl(files)}</div>

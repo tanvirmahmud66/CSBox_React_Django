@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('api-overview/', views.api_overview, name='api-overview'),
     path('user-reg/', views.UserRegistration.as_view(), name='user-registration'),
+    path('forget-password/check-email/', views.CheckEmailView.as_view(), name='forget-password'),
     path('profile/<int:user_id>/', views.ProfileView.as_view(), name='profile'),
     path('new-session/', views.SessionView.as_view(), name='new-session'),
     path('join-session/', views.JoinSessionView.as_view(), name='join-session'),

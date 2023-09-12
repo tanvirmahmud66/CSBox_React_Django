@@ -15,6 +15,9 @@ from rest_framework import status
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from .utils import Util
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from .models import User
 from .models import UserProfile, SessionData, SessionMember, PostDB, FileDB, CommentDB, AssignmentPostDB, AssignmentSubmissionDB
 from .serializers import UserProfileSerializer, UserRegistrationSerializer, SessionDataSerializer, SessionMemberSerializer, PostDBSerializer, FileDBSerializer, CommentDBSerializer, AssignmentPostDBSerializer, AssignmentSubmissionDBSerializer
@@ -54,7 +57,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 #-------------------------- Token generate ---------------------- 
 token_set = set()
 def generate_token(length):
-    characters = string.ascii_letters + string.digits
+    characters = string.digits
     token = ''.join(secrets.choice(characters) for _ in range(length))
     length = len(token_set)
     token_set.add(token)
@@ -103,6 +106,38 @@ class UserRegistration(APIView):
                 "status": status.HTTP_201_CREATED,
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+#============================================= Forget Password
+class CheckEmailView(APIView):
+    def put(self, request):
+        email = request.data['email']
+        try:
+            user = User.objects.get(email=email)
+            token = generate_token(5)
+            code = f"{token}"
+            subject = 'Forget Password Recovery Email | CSBox'
+            html_message = render_to_string('forgetpassword.html', {'username': user.username, 'code': code})
+            body = strip_tags(html_message)
+            data = {
+                'subject':subject,
+                'body':body,
+                'to_email':user.email
+            }
+            Util.send_email(data)
+            return_data = {
+                "email":user.email,
+                "code": code
+            }
+            json_data = json.dumps(return_data)
+            return Response(json_data, status=status.HTTP_302_FOUND)
+        except Exception:
+            return_data = {
+                "email":'',
+                "code":'',
+            }
+            json_data = json.dumps(return_data)
+            return Response(json_data,status=status.HTTP_404_NOT_FOUND)
 
 
 #============================================= Verify User and create Profile
