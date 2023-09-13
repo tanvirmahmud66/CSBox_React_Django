@@ -129,15 +129,42 @@ class CheckEmailView(APIView):
                 "email":user.email,
                 "code": code
             }
-            json_data = json.dumps(return_data)
-            return Response(json_data, status=status.HTTP_302_FOUND)
+            return Response(return_data, status=status.HTTP_302_FOUND)
         except Exception:
             return_data = {
                 "email":'',
                 "code":'',
             }
-            json_data = json.dumps(return_data)
-            return Response(json_data,status=status.HTTP_404_NOT_FOUND)
+            return Response(return_data,status=status.HTTP_404_NOT_FOUND)
+
+
+#============================================ Check forget password verify code
+class CheckVerifyCodeView(APIView):
+    def post(self, request):
+        code = request.data['code']
+        token = request.data['token']
+        if code==token:
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+
+#============================================ Reset Password View
+class ResetPasswordView(APIView):
+    def put(self, request):
+        print(request.data)
+        email = request.data['email']
+        password = request.data['password']
+        password2 = request.data['password2']
+        
+        if password == password2:
+            user = User.objects.get(email=email)
+            user.set_password(password)
+            user.save()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        
 
 
 #============================================= Verify User and create Profile
@@ -421,6 +448,24 @@ class PostCommentView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+
+#====================================== Post Comment View
+class PostCommentCRUD(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, session_id, post_id, comment_id):
+        comment_body = request.data['comment_body']
+        comment = CommentDB.objects.get(session=session_id, post_id=post_id, id=comment_id)
+        comment.comment_body = comment_body
+        comment.save()
+        return Response(status=status.HTTP_200_OK)
+
+    def delete(self, request, session_id, post_id, comment_id):
+        comment = CommentDB.objects.get(session=session_id, post_id=post_id, id=comment_id)
+        comment.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
     
 
 

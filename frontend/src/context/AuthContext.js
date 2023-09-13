@@ -16,7 +16,7 @@ import jwt_decode from "jwt-decode";
 
 // ====================================== Main AuthContext
 const AuthContext = createContext()
-export default AuthContext
+export default AuthContext;
 
 
 export const AuthProvider = ({children}) =>{

@@ -167,7 +167,7 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
             <div className='text-white'>{comments.length} comments</div>
           </div>
           {commentShow && comments.map((comment, index) => (
-               <Comment key={index} comment={comment}/>
+               <Comment key={index} comment={comment} getPostComment={getPostComment}/>
           ))}
         </div>}
 
