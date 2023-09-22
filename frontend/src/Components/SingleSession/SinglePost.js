@@ -86,14 +86,19 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
   
   useEffect(()=>{
     getPostComment()
-  }, [])
+  }, [post.id])
 
-//   useEffect(()=>{
-//     let interval = setInterval(() => {
-//         getPostComment()
-//     },1000);
-//     return ()=> clearInterval(interval)
-// },[])
+
+
+  // useEffect(()=>{
+  //   let interval = setInterval(() => {
+  //     getPostComment()
+  //   },8000);
+  //   return ()=> clearInterval(interval)
+  // }, [comments])
+
+
+
   
   const handleShow = ()=>{
     setShow(!show)
@@ -167,7 +172,7 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
             <div className='text-white'>{comments.length} comments</div>
           </div>
           {commentShow && comments.map((comment, index) => (
-               <Comment key={index} comment={comment} getPostComment={getPostComment}/>
+               <Comment key={index} comment={comment} getPostComment={getPostComment} session={session}/>
           ))}
         </div>}
 

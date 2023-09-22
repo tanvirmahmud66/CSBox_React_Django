@@ -22,6 +22,7 @@ urlpatterns = [
     path('join-session/', views.JoinSessionView.as_view(), name='join-session'),
     path('leave-session/<int:session_id>/<str:token>/', views.LeaveSessionView.as_view(), name='leave-session'),
     path('remove-member/<int:session_id>/<str:token>/<int:user_id>/', views.SessionMemberView.as_view(), name='remove-member'),
+    path('block-member/<int:session_id>/<str:token>/<int:user_id>/', views.SessionMemberBlacklistView.as_view(), name='session_member_block'),
     path('single-session/<int:id>/', views.SingleSessionView.as_view(), name='single-session'),
     path('single-post/<int:session_id>/<int:post_id>/', views.SinglePostView.as_view(), name='single-post-crud'),
     path('post-comment/<int:session_id>/<int:post_id>/', views.PostCommentView.as_view(), name='post-comment'),

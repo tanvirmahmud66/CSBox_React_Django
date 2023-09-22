@@ -223,9 +223,9 @@ const HomePage = () => {
           <div className='col-3'>
             <div className='card fs-5 text-danger text-center p-2 mb-3'>Settings</div>
             <ul className="list-group">
-              <li onClick={()=>setBtnHandle("profile")} className={`mb-3 text-white btn ${profile?"btn-custom-green border-green":"btn-custom2-primary"}`}>Profile</li>
+              {/* <li onClick={()=>setBtnHandle("profile")} className={`mb-3 text-white btn ${profile?"btn-custom-green border-green":"btn-custom2-primary"}`}>Profile</li>
               <li onClick={()=>setBtnHandle("account")} className={`mb-3 text-white btn ${account?"btn-custom-green border-green":"btn-custom2-primary"}`}>Account</li>
-              <li onClick={()=>setBtnHandle("conversation")} className={`mb-3 text-white btn ${conversation?"btn-custom-green border-green":"btn-custom2-primary"}`}>Conversation</li>
+              <li onClick={()=>setBtnHandle("conversation")} className={`mb-3 text-white btn ${conversation?"btn-custom-green border-green":"btn-custom2-primary"}`}>Conversation</li> */}
               <li onClick={()=>setBtnHandle("createdSession")} className={`mb-3 text-white btn ${createdSession?"btn-custom-green border-green":"btn-custom2-primary"}`}>Created Session</li>
               <li onClick={()=>setBtnHandle("joinedSession")} className={`mb-3 text-white btn ${joinedSession?"btn-custom-green border-green":"btn-custom2-primary"}`}>Joined Session</li>
             </ul>

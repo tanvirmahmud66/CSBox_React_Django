@@ -244,3 +244,17 @@ class CommentDB(models.Model):
     
     def __str__(self):
         return self.comment_body
+    
+
+#===================================================== Session Member Blacklist
+class SessionMemberBlockList(models.Model):
+    session = models.ForeignKey(SessionData, on_delete=models.CASCADE)
+    member = models.ForeignKey(User, on_delete=models.CASCADE)
+    token = models.CharField(max_length=5)
+
+    class Meta:
+        verbose_name = "Session Member Blocklist"
+        verbose_name_plural = "Session Member Blocklist"
+
+    def __str__(self):
+        return self.token

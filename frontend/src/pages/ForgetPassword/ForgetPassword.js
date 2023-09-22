@@ -55,6 +55,7 @@ const ForgetPassword = () => {
             setVerifySection(false)
             setCheckMail(false)
             setResetSection(true)
+            setInvalid(false)
         }else if(response.status===400){
             setInvalid(true)
         }

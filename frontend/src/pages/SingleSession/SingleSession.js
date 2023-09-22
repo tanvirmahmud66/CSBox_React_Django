@@ -22,11 +22,13 @@ const SingleSession = () => {
     const [posts, setPosts] = useState([])
     const [files, setFiles] = useState([])
     const [member, setMember] = useState([])
+    const [blockList, setBlockedList] = useState([])
     const [assignments, setAssignments] = useState([])
     const [submissions, setSubmissions] = useState([])
     const [submittedAssignments, setSubmittedAssignments] = useState([])
     const [unsubmittedAssignments, setUnsubmittedAssignments] = useState([])
     
+    const [blocked, setBlocked] = useState(false)
     const [postSection, setPostSection] = useState(true)
     const [uploadedFilesSection, setUploadedFilesSection] = useState(false)
     const [assignmentSection, setAssignmentSection] = useState(false)
@@ -48,7 +50,7 @@ const SingleSession = () => {
         })
         let data = await response.json()
         if (response.status === 200){
-            console.log(data)
+            // console.log(data)
             setSession(data.session)
             setPosts(data.posts)
             setFiles(data.files)
@@ -61,20 +63,39 @@ const SingleSession = () => {
         }
     }
 
+    let getBlockMember = async()=>{
+        let response = await fetch(`http://127.0.0.1:8000/api/block-member/${session?.id}/${session?.token}/${user.user_id}/`, {
+            method: "GET",
+            headers:{
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer '+ String(authTokens?.access)
+            },
+        })
+        let data = await response.json()
+        if (response.status===200){
+            console.log(data)
+            setBlockedList(data)
+        }
+    }
+
 
 
     useEffect(()=>{
         targetSession()
     },[])
 
+    useEffect(()=>{
+        getBlockMember()
+    },[session])
 
 
     // useEffect(()=>{
     //     let interval = setInterval(() => {
     //         targetSession()
-    //     },4000);
+    //     },12000);
     //     return ()=> clearInterval(interval)
     // },[])
+
 
 
 
@@ -113,18 +134,13 @@ const SingleSession = () => {
         setDue(false)
     }
 
-    
-
-    console.log('all: ', assignments)
-    console.log("submitted: ",submittedAssignments)
-    console.log("unsubmitted: ",unsubmittedAssignments)
-    
+    // console.log(session)
 
   return (
     <>  
         {loading? 
         <div className='w-100 vh-80 d-flex justify-content-center align-items-center'>
-            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
         </div>:
         <div className='row timeline-height'>
 
@@ -145,14 +161,28 @@ const SingleSession = () => {
                         </div>
                     </>}
                 </div>
+
                 <div className='mt-4 member-height'>
-                    <h5>Session Members</h5>
-                    <ul className="list-group member-container">
-                        {member.map((each,index)=>(
-                            <MemberListItem key={index} each={each} session={session} sessionUpdate={targetSession}/>
-                        ))}
-                    </ul>
+                    <div className='d-flex justify-content-between mb-1'>
+                        <div onClick={()=>setBlocked(false)} className={`cursor-pointer ${!blocked && "text-green"}`}>Session Member</div>
+                        <div onClick={()=>setBlocked(true)} className={`cursor-pointer ${blocked && "text-danger"}`}>Blocked Member ({blockList.length})</div>
+                    </div>
+                    {blocked? 
+                        <ul className="list-group member-container">
+                            {blockList.map((each,index)=>(
+                                <MemberListItem key={index} each={each} session={session} sessionUpdate={targetSession} blocked={blocked}/>
+                            ))}
+                        </ul>:
+                        <ul className="list-group member-container">
+                            {member.map((each,index)=>(
+                                <MemberListItem key={index} each={each} session={session} sessionUpdate={targetSession}/>
+                            ))}
+                        </ul>
+                    }
+                    
                 </div>
+                
+                
             </div>
 
             {/* ======================================= Middle TimeLine side bar */}
@@ -179,7 +209,7 @@ const SingleSession = () => {
                 {uploadedFilesSection &&
                     <div className='mt-3'>
                         <button onClick={openFileUplaodModal} className='w-100 btn btn-custom-green'>Upload Files Manually</button>
-                        <div className='uploaded-container'>
+                        <div className='uploaded-container card'>
                             {files.length!==0?
                                 <FileDownloadComponent files={files} session={session} sessionUpdate={targetSession}/>:
                                 <div className='no-files'>Upload files</div>

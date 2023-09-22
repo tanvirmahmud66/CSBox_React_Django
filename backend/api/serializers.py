@@ -8,7 +8,7 @@ import string
 from .models import User 
 from django.contrib.sites.shortcuts import get_current_site
 
-from .models import User, UserProfile, SessionData, SessionMember, PostDB, CommentDB, FileDB, AssignmentPostDB, AssignmentSubmissionDB
+from .models import User, UserProfile, SessionData, SessionMember, PostDB, CommentDB, FileDB, AssignmentPostDB, AssignmentSubmissionDB, SessionMemberBlockList
 
 #============================================================== Registration Serializer
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -219,3 +219,12 @@ class CommentDBSerializer(serializers.ModelSerializer):
         model = CommentDB
         fields = '__all__'
 
+
+
+#============================ Session Member Blacklist Serializer
+class SessionMemberBlocklistSerializer(serializers.ModelSerializer):
+    member = UserRelatedField(queryset=User.objects.all())
+
+    class Meta:
+        model = SessionMemberBlockList
+        fields = '__all__'

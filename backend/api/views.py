@@ -19,8 +19,8 @@ from .utils import Util
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from .models import User
-from .models import UserProfile, SessionData, SessionMember, PostDB, FileDB, CommentDB, AssignmentPostDB, AssignmentSubmissionDB
-from .serializers import UserProfileSerializer, UserRegistrationSerializer, SessionDataSerializer, SessionMemberSerializer, PostDBSerializer, FileDBSerializer, CommentDBSerializer, AssignmentPostDBSerializer, AssignmentSubmissionDBSerializer
+from .models import UserProfile, SessionData, SessionMember, PostDB, FileDB, CommentDB, AssignmentPostDB, AssignmentSubmissionDB, SessionMemberBlockList
+from .serializers import UserProfileSerializer, UserRegistrationSerializer, SessionDataSerializer, SessionMemberSerializer, PostDBSerializer, FileDBSerializer, CommentDBSerializer, AssignmentPostDBSerializer, AssignmentSubmissionDBSerializer, SessionMemberBlocklistSerializer
 
 # Create your views here.
 #------------------------- Json web token access token and refresh token-------------------
@@ -262,6 +262,9 @@ class JoinSessionView(APIView):
         token = request.data['token']
         try:
             session = SessionData.objects.get(token=token)
+            is_blacklisted = SessionMemberBlockList.objects.get(token=token, session=session, member=request.user.id)
+            if is_blacklisted is not None:
+                return Response({"message":"Not Acceptable"}, status=status.HTTP_406_NOT_ACCEPTABLE)
             if session.host.id==request.user.id:
                 return Response({"message":"Not Acceptable"}, status=status.HTTP_406_NOT_ACCEPTABLE)
             try:
@@ -575,7 +578,29 @@ class AssignmentSubmitView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# class SubmittedAssignmentView(APIView):
-#     def get(self, request):
-#         pass
+#================================================ Session Member Blacklist View
+class SessionMemberBlacklistView(APIView):
+    
+    def post(self, request, session_id, token, user_id):
+        serializer = SessionMemberBlocklistSerializer(data={
+            "session": session_id,
+            "token": token,
+            "member": user_id
+        })
+        if serializer.is_valid():
+            serializer.save()
+            member = SessionMember.objects.get(session=session_id, token=token, member=user_id)
+            member.delete()
+            return Response({"status":"User Blocked"}, status=status.HTTP_200_OK)
+        return Response({"status": "User Not Blocked. Caught Error"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request, session_id, token, user_id):
+        block_list_member = SessionMemberBlockList.objects.filter(session=session_id)
+        serializer = SessionMemberBlocklistSerializer(block_list_member, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def delete(self, request, session_id, token, user_id):
+        unblock_member = SessionMemberBlockList.objects.get(session=session_id, token=token, member=user_id)
+        unblock_member.delete()
+        return Response(status=status.HTTP_200_OK)
     

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import User
-from .models import UserProfile, SessionData, SessionMember, PostDB, FileDB,CommentDB, AssignmentPostDB, AssignmentSubmissionDB
+from .models import UserProfile, SessionData, SessionMember, PostDB, FileDB,CommentDB, AssignmentPostDB, AssignmentSubmissionDB, SessionMemberBlockList
 # Register your models here.
 
 
@@ -67,6 +67,11 @@ class AssignmentSubmissionDBAdmin(admin.ModelAdmin):
     list_filter = ('session','assignment','submit_by')
     search_fields = ('session','assignment','submit_by')
 
+class SessionMemberBlocklistAdmin(admin.ModelAdmin):
+    list_display = ('id', 'session', 'member', 'token')
+    list_filter = ('session', 'member', 'token')
+    search_fields = ('session', 'member', 'token')
+
 
 #=============== Model Registration
 admin.site.register(User, UserAdmin)
@@ -78,3 +83,4 @@ admin.site.register( FileDB, FileDBAdmin)
 admin.site.register(CommentDB, CommentDBAdmin)
 admin.site.register(AssignmentPostDB, AssignmentPostDBAdmin)
 admin.site.register(AssignmentSubmissionDB, AssignmentSubmissionDBAdmin)
+admin.site.register(SessionMemberBlockList, SessionMemberBlocklistAdmin)

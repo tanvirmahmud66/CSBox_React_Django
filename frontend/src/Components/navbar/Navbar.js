@@ -24,14 +24,14 @@ const Navbar = () => {
                 <div className='w-100 d-flex justify-content-between'>
                     {user?
                      <>
-                        {/* search bar */}
+                        {/* search bar
                         <div className='w-40 d-flex align-items-center'>
                             <div className="w-100 input-group">
                                 <input type="search" className="input-bg w-75" placeholder="search" aria-label="search" aria-describedby="button-addon2"/>
                                 <button className="btn btn-outline-secondary w-25" type="button" id="button-addon2">Search</button>
                             </div>
-                        </div>
-                        
+                        </div> */}
+                        <div className='w-40'></div>
 
                         {/* user toggle button */}
                         <Dropdown className='p-1'>

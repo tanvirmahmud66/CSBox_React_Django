@@ -6,7 +6,7 @@ import AuthContext from '../../context/AuthContext';
 import CommentDeletePopup from './CommentDelete';
 import CommentEditPopup from './CommentEdit';
 
-const Comment = ({comment, getPostComment}) => {
+const Comment = ({comment, getPostComment, session}) => {
 
   const {user} = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState(false);
@@ -55,11 +55,14 @@ const Comment = ({comment, getPostComment}) => {
                   <TimeAgoComponent dateString={comment.created}/>
                 </div>
             </div>
-            {user.user_id===comment.commenter.id &&
+            {((user.user_id===comment.commenter.id) || (user.user_id===session.host.id)) &&
             <div className="action d-flex justify-content-between mt-2 align-items-center">
               <div className="reply px-4">
+                {user.user_id===comment.commenter.id &&
+                <>
                 <small onClick={openModal}>Edit</small>{" "}
                 <div className='dots'></div>{" "}
+                </>}
                 <small onClick={openModal2}>delete</small>
               </div>
             </div>}
