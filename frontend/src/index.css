@@ -5,7 +5,7 @@
 }
 body{
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     background: #1f1f1f;
     color: white;
 }
@@ -491,7 +491,7 @@ input {
   height: 350px;
 }
 .fixed-height2{
-  height: 330px;
+  min-height: 330px;
 }
 
 .text-title{
@@ -603,11 +603,11 @@ input {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  gap: 10px; /* Adjust the gap between icons */
+  /* gap: 5px;  */
 }
 
 .social-icon {
-  font-size: 15px;
+  font-size: 12px;
 }
 
 .border-left{

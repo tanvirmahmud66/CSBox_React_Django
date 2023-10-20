@@ -89,9 +89,8 @@ const ForgetPassword = () => {
     },[notfound])
 
   return (
-    <>
-        <div className='d-flex justify-content-center align-items-center vh-70'>
-            <div className={`card  ${resetSection? "w-50":"w-60"} mt-5`}>
+        <div className='vh-90 d-flex justify-content-center align-items-center'>
+            <div className={`card ${resetSection? "w-100":""}`}>
                 <div className='card-header text-primary fs-4'>Forget Password</div>
 
                     {eamilSection &&
@@ -99,14 +98,14 @@ const ForgetPassword = () => {
                             <div className='mb-3'>Enter your email address, and we'll send a verification code to your inbox. Paste the code, create a new password, and you're back in control of your account.</div>
                             
                             <form onSubmit={sendcode} className=''>
-                                <div className="form-group d-flex justify-content-between align-items-center">
-                                    <input type="email" name='email' className="form-control w-80" id="email" placeholder="Email" required/>
+                                <div className="form-group">
+                                    <input type="email" name='email' className="form-control mb-3" id="email" placeholder="Email" required/>
                                     {spinner ?
-                                        <button className="btn btn-primary ms-1 w-30" type="button" disabled>
+                                        <button className="btn btn-primary ms-1" type="button" disabled>
                                             <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                             <span className="visually-hidden">Loading...</span>
                                         </button>:
-                                        <button className='btn btn-primary ms-1 w-30'>Send Code</button>
+                                        <button className='btn btn-primary'>Send Code</button>
                                     }
                                 </div>
                             </form>
@@ -167,9 +166,7 @@ const ForgetPassword = () => {
                     
 
             </div>
-            
         </div>
-    </>
   )
 }
 

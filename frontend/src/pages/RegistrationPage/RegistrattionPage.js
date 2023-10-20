@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const RegistrattionPage = () => {
 
@@ -100,7 +101,7 @@ const RegistrattionPage = () => {
                   }
                   
                 </button>
-                <a className='text-decoration-none mt-2' href='/login'>Already have an Account?</a>
+                <Link className='text-decoration-none mt-2' to='/login'>Already have an Account?</Link>
               </div>
             </form>
           </div>

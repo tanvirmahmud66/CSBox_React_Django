@@ -260,23 +260,24 @@ class JoinSessionView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
         token = request.data['token']
-        try:
-            session = SessionData.objects.get(token=token)
-            is_blacklisted = SessionMemberBlockList.objects.get(token=token, session=session, member=request.user.id)
-            if is_blacklisted is not None:
-                return Response({"message":"Not Acceptable"}, status=status.HTTP_406_NOT_ACCEPTABLE)
-            if session.host.id==request.user.id:
-                return Response({"message":"Not Acceptable"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        if SessionMemberBlockList.objects.filter(member=request.user, token=token).exists():
+            return Response({"message":"Not Acceptable"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        else:
             try:
-                is_session_member = SessionMember.objects.get(session=session, member=request.user, token=token)
-                if is_session_member is not None:
-                    return Response({"message":"Not Acceptable"}, status=status.HTTP_208_ALREADY_REPORTED)
+                session = SessionData.objects.get(token=token)
+                if session.host.id==request.user.id:
+                    return Response({"message":"Not Acceptable"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+                try:
+                    is_session_member = SessionMember.objects.get(session=session, member=request.user, token=token)
+                    if is_session_member is not None:
+                        return Response({"message":"Not Acceptable"}, status=status.HTTP_208_ALREADY_REPORTED)
+                except Exception as E:
+                    new_member = SessionMember.objects.create(session=session, member=request.user, token=token)
+                    serializer = SessionMemberSerializer(new_member)
+                    return Response(serializer.data, status=status.HTTP_200_OK)
             except Exception as E:
-                new_member = SessionMember.objects.create(session=session, member=request.user, token=token)
-                serializer = SessionMemberSerializer(new_member)
-                return Response(serializer.data, status=status.HTTP_200_OK)
-        except Exception as E:
-            return Response({"message":"Not found"}, status=status.HTTP_404_NOT_FOUND)
+                print(E)
+                return Response({"message":"Not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
 class LeaveSessionView(APIView):

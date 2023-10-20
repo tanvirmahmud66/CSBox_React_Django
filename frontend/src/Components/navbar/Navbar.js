@@ -50,8 +50,8 @@ const Navbar = () => {
                     <>
                     <div></div>
                     <div className='nav-item btn-custom-group'>
-                        <a className='btn btn-custom2-green' href='/new-user'>Signup</a>
-                        <a className='btn btn-custom2-primary' href='/login'>Login</a>
+                        <Link className='btn btn-custom2-green' to='/new-user'>Signup</Link>
+                        <Link className='btn btn-custom2-primary' to='/login'>Login</Link>
                     </div>
                     </>
                     }

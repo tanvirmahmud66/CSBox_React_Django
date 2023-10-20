@@ -9,7 +9,7 @@ const LoginForm = () => {
 
   return (
     <>
-        <div className="card fixed-height mw-50">
+        <div className="card fixed-height2 mw-50">
             <div className="card-header p-0 text-center">
                 {(loginError.error && loginError.status==='NOT VERIFIED') &&
                     <div className="alert mb-0 alert-warning" role="alert">
@@ -40,7 +40,7 @@ const LoginForm = () => {
                     <button type='submit' className='btn w-100 mt-4 btn-custom-green'>Login</button>
                     <div className='d-flex justify-content-between align-items-center mt-2'>
                         <Link to='/forget-password' className='text-decoration-none text-center'>Forget password?</Link>
-                        <a href='/new-user' className='text-decoration-none text-center'>Don't have an account?</a>
+                        <Link to='/new-user' className='text-decoration-none text-center'>Don't have an account?</Link>
                     </div>
                     
                 </form>
