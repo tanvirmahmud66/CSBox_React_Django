@@ -40,8 +40,8 @@ const Navbar = () => {
                                 <div className='me-1'>{user.first_name}</div>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href={`/profile/${user.user_id}`}>
-                                        Profile
+                                <Dropdown.Item>
+                                    <Link className='text-decoration-none' to={`/profile/${user.user_id}`}>Profile</Link>
                                 </Dropdown.Item>
                                 <Dropdown.Item onClick={userLogout}>Logout</Dropdown.Item>
                             </Dropdown.Menu>

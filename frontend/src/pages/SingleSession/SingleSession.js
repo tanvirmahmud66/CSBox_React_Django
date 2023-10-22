@@ -153,9 +153,9 @@ const SingleSession = () => {
                             <h3>{session.title}</h3>
                         </div>
                         <div className='card-body'>
-                            <h6>Details: {session.details}</h6>
+                            <h6>{session.details}</h6>
                             <Link to={`/profile/${session.host.id}`} className='text-decoration-none'>
-                                <h6>Host: {session.host.first_name} {session.host.last_name}</h6>
+                                <h6 className='text-primary'>{session.host.first_name} {session.host.last_name} <span className='text-black'>(Admin)</span></h6>
                             </Link>
                             <h6 className='mt-3'>Token: <span className='ms-2 token text-white'>{session.token}</span></h6>
                         </div>
@@ -208,7 +208,7 @@ const SingleSession = () => {
                 {/* ----------------------- all files and upload file manually */}
                 {uploadedFilesSection &&
                     <div className='mt-3'>
-                        <button onClick={openFileUplaodModal} className='w-100 btn btn-custom-green'>Upload Files Manually</button>
+                        <button onClick={openFileUplaodModal} className='w-100 btn btn-custom-green mb-3'>Upload Files Manually</button>
                         <div className='uploaded-container card'>
                             {files.length!==0?
                                 <FileDownloadComponent files={files} session={session} sessionUpdate={targetSession}/>:

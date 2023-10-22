@@ -23,6 +23,8 @@ export const AuthProvider = ({children}) =>{
 
     let [authTokens, setAuthTokens] = useState(()=> localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
     let [user, setUser] = useState(()=> localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
+    const [userProfile, setUserProfile] = useState()
+    const [userProfilePic, setUserProfilePic] = useState()
     let[auth, setAuth] = useState(false)
     let [loading, setLoading] = useState(true)
     let [loginError, setLoginError] = useState({})
@@ -44,6 +46,7 @@ export const AuthProvider = ({children}) =>{
             setAuthTokens(data)
             setUser(jwt_decode(data.access))
             localStorage.setItem('authTokens', JSON.stringify(data))
+            getUserProfile()
             setAuth(true)
         }else{
             setLoginError({
@@ -59,6 +62,26 @@ export const AuthProvider = ({children}) =>{
                 })
             }
         }
+    }
+
+    let getUserProfile = async()=>{
+        if(user){
+            let response = await fetch(`http://127.0.0.1:8000/api/profile/${user.user_id}/`,{
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+ String(authTokens?.access)
+                }
+            })
+            let data = await response.json()
+            // console.log(data)
+            if (response.status===200){
+                setUserProfile(data)
+                const baseUrl = 'http://127.0.0.1:8000';
+                setUserProfilePic(baseUrl+data.profile_pic)
+            }
+        }
+
     }
 
     let userLogout = ()=>{
@@ -104,6 +127,8 @@ export const AuthProvider = ({children}) =>{
         loginError: loginError,
         updateToken: updateToken,
         userLogout: userLogout,
+        userProfile:userProfile,
+        userProfilePic:userProfilePic
     }
 
     useEffect(()=>{
