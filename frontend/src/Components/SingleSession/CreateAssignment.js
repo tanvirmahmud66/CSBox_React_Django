@@ -56,14 +56,12 @@ function CreateAssignmentPopup({isOpen, onRequestClose, session_id, session_upda
       if(response.status===201){
         session_update()
         formRef.current.reset();
-        onRequestClose()
-        setSelectedFile(null);
-        setDeadline('')
+        
       }
 
-      // onRequestClose()
-      // setSelectedFile(null);
-      // setDeadline('')
+      onRequestClose()
+      setSelectedFile(null);
+      setDeadline('')
       
   };
 
