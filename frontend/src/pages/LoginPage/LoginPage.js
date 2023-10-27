@@ -7,9 +7,9 @@ import DeveloperTeam from '../../Components/LoginPage/DeveloperTeam'
 
 const LoginPage = () => {
 
-    useEffect(()=>{
-        alert("Easy Access\nUsername: fahim\nPassword: 12345678")
-    },[])
+    // useEffect(()=>{
+    //     alert("Easy Access\nUsername: fahim\nPassword: 12345678")
+    // },[])
 
   return (
     <div className='row'>

@@ -15,7 +15,7 @@ const Session = (props) => {
 
   return (
     
-    <div className='col-6 g-3 mt-3'>
+    <div className='col-xxl-6 g-3 mt-3'>
         <Link to={`/session/${props.session.id}`} className='text-decoration-none'>
         <div className={`card fixed-height-card ${user.user_id===id? 'bg-custom-violet': 'bg-custom-blue'} `}>
             <div className='card-body d-flex flex-column justify-content-between '>

@@ -90,7 +90,7 @@ const ForgetPassword = () => {
 
   return (
         <div className='vh-90 d-flex justify-content-center align-items-center'>
-            <div className={`card ${resetSection? "w-100":""}`}>
+            <div className={`card my-card ${resetSection? "w-100":""}`}>
                 <div className='card-header text-primary fs-4'>Forget Password</div>
 
                     {eamilSection &&

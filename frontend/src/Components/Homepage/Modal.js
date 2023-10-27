@@ -37,7 +37,7 @@ const CustomModal = ({ isOpen, onRequestClose, get }) => {
       className="modal-content"
       overlayClassName="modal-overlay"
     >
-      <div className="card w-50">
+      <div className="card my-card">
         <div className='card-header'>
             <h2 className=''>New Session</h2>
         </div>

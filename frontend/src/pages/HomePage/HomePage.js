@@ -159,6 +159,7 @@ const HomePage = () => {
 
   return (
     <>
+    <div className='d-none-991'>
       <div className={`row p-2 d-flex justify-content-between align-items-center sticky-element  ${isSticky ? 'sticky-background' : ''}`}>
         <div className='d-flex justify-content-between align-items-center'>
           {!settings && 
@@ -279,7 +280,41 @@ const HomePage = () => {
         </div>
       }
 
+    </div>
+    <div className='responsive-div'>
+      <div className='d-flex justify-content-between aling-items-center mt-2'>
+            <form className='d-flex me-2' onSubmit={joinSession}>
+              <div className='from-group '>
+                <input type='text' name='token' className='form-control position-relative' id='token' placeholder='token' required></input>
+                {notificaiton!==null &&
+                  <div className="position-absolute pt-0 pb-0 ps-0 pe-0 top-1 text-danger start-2 p-3">
+                    {notificaiton}
+                  </div>
+                }
+                {joinNotify &&
+                  <div className="position-absolute pt-0 pb-0 ps-0 pe-0 top-1 text-green start-2 p-3">
+                    {joinNotify}
+                  </div>
+                }
+              </div>
+              <button type='submit' className='btn bg-primary text-white ms-2'>Join</button>
+            </form>
+            <button onClick={openModal} className='btn btn-custom2-green'>Create</button>
+      </div>
+      
+      <div>
+        <div className='mt-4 mb-4'>
+          <h4 className='text-white text-center'>Created Session</h4>
+            <div className=''>
+              <div className=''>
+                {session && session.map((each)=>{return (<Session key={each.id} session={each}/>)})}
+                {session.length===0 && <CreateSession/>}
+              </div>
+            </div>
+        </div>
+      </div>
 
+    </div>
       <CustomModal isOpen={isOpen} onRequestClose={closeModal} get={getSession} />
     </>
   )

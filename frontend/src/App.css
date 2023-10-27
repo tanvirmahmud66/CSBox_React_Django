@@ -85,3 +85,28 @@
       transform: rotate(360deg);
     }
   }
+
+
+  @media (max-width: 991px) {
+    .d-none-991 {
+      display: none;
+    }
+  }
+
+  @media (min-width: 991px) {
+    .responsive-div {
+      display: none; /* Show the div when the viewport width is 991px or less */
+    }
+  }
+
+
+  .my-card {
+    width: 80%;
+    max-width: 650px; /* You can set a maximum width to prevent it from getting too wide. */
+  }
+
+  @media screen and (max-width: 991px) {
+    .my-card {
+      width: 90%;
+    }
+  }
