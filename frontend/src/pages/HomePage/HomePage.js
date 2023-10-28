@@ -4,6 +4,7 @@ import AuthContext from '../../context/AuthContext';
 import Session from '../../Components/Homepage/Session';
 import CreateSession,{EmptySession} from '../../Components/Homepage/EmptySession';
 import SessionListItem from '../../Components/Homepage/SessionListItem';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 
 
@@ -22,6 +23,51 @@ const HomePage = () => {
   let [joinNotify, setJoinedNotify] = useState(null)
 
   let [settings, setSettings] = useState(false)
+
+  const[createdSession, setCreatedSession] = useState(true)
+  const[joinedSession, setJoinedSession] = useState(false)
+  const[conversation, setConversation] = useState(false)
+  const[profile, setProfile] = useState(false)
+  const[account, setAccount] = useState(false)
+
+  let [created, setCreated] = useState(true)
+  let [joined, setJoined] = useState(false)
+  let [createdSetting, setCreatedSetting] = useState(false)
+  let [joinedSetting, setJoinedSetting] = useState(false)
+
+  let createdHandle = ()=>{
+    setCreated(true)
+    setJoined(false)
+    setCreatedSetting(false)
+    setJoinedSetting(false)
+  }
+  
+  let joinedHandle = ()=>{
+    setJoined(true)
+    setCreated(false)
+    setCreatedSetting(false)
+    setJoinedSetting(false)
+  }
+
+  let joinedSettingHandle = ()=>{
+    setJoined(false)
+    setCreated(false)
+    setCreatedSetting(false)
+    setJoinedSetting(true)
+    setSettings(true)
+    setJoinedSession(true)
+    setCreatedSession(false)
+  }
+
+  let createdSettingHandle = ()=>{
+    setJoined(false)
+    setCreated(false)
+    setCreatedSetting(true)
+    setSettings(true)
+    setCreatedSession(true)
+    setJoinedSession(false)
+    setJoinedSetting(false)
+  }
 
   
 
@@ -111,35 +157,9 @@ const HomePage = () => {
 
   // ============================= Settings
 
-  const[createdSession, setCreatedSession] = useState(true)
-  const[joinedSession, setJoinedSession] = useState(false)
-  const[conversation, setConversation] = useState(false)
-  const[profile, setProfile] = useState(false)
-  const[account, setAccount] = useState(false)
+  
 
   let setBtnHandle = (buttonName)=>{
-    if (buttonName==='profile'){
-      setProfile(true)
-      setAccount(false)
-      setConversation(false)
-      setJoinedSession(false)
-      setCreatedSession(false)
-    }
-    if (buttonName==='account'){
-      setProfile(false)
-      setAccount(true)
-      setConversation(false)
-      setJoinedSession(false)
-      setCreatedSession(false)
-      
-    }
-    if (buttonName==='conversation'){
-      setProfile(false)
-      setAccount(false)
-      setConversation(true)
-      setJoinedSession(false)
-      setCreatedSession(false)
-    }
     if (buttonName==='joinedSession'){
       setProfile(false)
       setAccount(false)
@@ -304,12 +324,66 @@ const HomePage = () => {
       
       <div>
         <div className='mt-4 mb-4'>
-          <h4 className='text-white text-center'>Created Session</h4>
+          <div className='d-flex justify-content-between align-items-center'>
+            <Dropdown>
+              <Dropdown.Toggle className='btn btn-custom2-gray d-flex justify-content-center align-items-center p-1' variant="secondary" id="dropdown-basic">
+                <div className='me-1'>{created?"Created Session": "Joined Session"}</div>
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={createdHandle}>Created Session</Dropdown.Item>
+                <Dropdown.Item onClick={joinedHandle}>Joined Session</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            <Dropdown>
+              <Dropdown.Toggle className='btn btn-custom2-danger d-flex justify-content-center align-items-center p-1' variant="secondary" id="dropdown-basic">
+                <div className='me-1'>Settings</div>
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={createdSettingHandle}>Created</Dropdown.Item>
+                <Dropdown.Item onClick={joinedSettingHandle}>Joined</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+          
             <div className=''>
-              <div className=''>
-                {session && session.map((each)=>{return (<Session key={each.id} session={each}/>)})}
-                {session.length===0 && <CreateSession/>}
-              </div>
+              {created &&
+                <div>
+                  {session && session.map((each)=>{return (<Session key={each.id} session={each}/>)})}
+                  {session.length===0 && <CreateSession/>}
+                </div>
+              }
+
+              {joined &&
+                <div>
+                  {sessionJoin!==undefined? sessionJoin.map((each)=>{
+                      return (
+                          <Session key={each.id} session={each}/>
+                      )
+                  }): <EmptySession/>}
+                </div>
+              }
+
+              {createdSetting &&
+                <>
+                  <div className='mt-2 mb-2 p-2 text-center fs-3 text-danger bg-white'>Created Session Setting</div>
+                  <div className='mt-2'>
+                    {session && session.map((each)=>{return (<SessionListItem key={each.id} session={each} updateSession={getSession}/>)})}
+                    {session.length===0 && <CreateSession/>}
+                  </div>
+                </>
+              }
+
+              {joinedSetting &&
+                <>
+                  <div className='mt-2 mb-2 p-2 text-center fs-3 text-danger bg-white'>Joined Session Setting</div>
+                  <div className='mt-2'>
+                    {sessionJoin!==undefined?
+                      sessionJoin.map((each)=>{return (<SessionListItem key={each.id} session={each} updateSession={getSession}/>)}):
+                      <EmptySession/>
+                    }
+                  </div>
+                </>
+              }
             </div>
         </div>
       </div>

@@ -110,3 +110,21 @@
       width: 90%;
     }
   }
+
+  @media (max-width: 770px) {
+    .settings-element {
+      display: none;
+    }
+  }
+
+  @media (max-width: 770px) {
+    .settings-element-responsive {
+      display: block;
+    }
+  }
+  @media (min-width: 771px) {
+    .settings-element-responsive {
+      display: none;
+    }
+  }
+  

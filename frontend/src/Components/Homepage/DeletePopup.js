@@ -17,7 +17,10 @@ function DeletePopup({isOpen, onRequestClose, title, deleteSession}) {
     className="modal-content"
     overlayClassName="modal-overlay custom-backdrop"
     >
-      <div className="card w-40 p-2">
+      <div className="card my-card p-2">
+        <div className='card-header'>
+            <h2 className='text-center'>Delete Session</h2>
+        </div>
         <div className="alert alert-success text-center text-danger" role="alert">
            "{title}" - Are You want to Delete this Session?
         </div>

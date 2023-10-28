@@ -77,16 +77,24 @@ const SessionListItem = ({session, updateSession}) => {
         {/* <Link to={`/session/${props.session.id}`} className='text-decoration-none'> */}
         <div className={`card ${user.user_id===id? 'bg-custom-violet': 'bg-custom-blue'} `}>
             <div className='card-body d-flex justify-content-between align-items-center'>
-                <div className="col-5">
+                <div className="col-md-5 settings-element">
                     <h5>{title}</h5>
                     <h6 className='text-p'>{details} </h6>
                 </div>
-
-                <div className='text-center'>
+                <div className='text-center settings-element'>
                     <h5 className='text-title'>{first_name} {last_name}</h5>
                     <h6 className='text-p'>Created: {created.substring(0, 10)}</h6>
                 </div>
 
+                <div className='settings-element-responsive'>
+                    <div>
+                        <h5>{title}</h5>
+                        <h6 className='text-p'>{details}</h6>
+                        <h6 className='text-p'>{first_name} {last_name}</h6>
+                        <h6 className='text-p'>Created: {created.substring(0,10)}</h6>
+                    </div>
+                </div>
+                
                 {(user.user_id===id)?
                     <div className='btn-group'>
                         <button onClick={editOpenModal} className='btn btn-warning'>Edit</button>

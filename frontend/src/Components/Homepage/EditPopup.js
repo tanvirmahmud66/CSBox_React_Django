@@ -50,7 +50,7 @@ const EditModal = ({ isOpen, onRequestClose, session, sessionUpdate}) => {
       className="modal-content"
       overlayClassName="modal-overlay"
     >
-      <div className="card w-50">
+      <div className="card my-card">
         <div className='card-header'>
             <h2 className='text-center'>Edit Session</h2>
         </div>

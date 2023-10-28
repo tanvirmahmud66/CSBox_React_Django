@@ -17,7 +17,10 @@ function LeavePopup({isOpen, onRequestClose, title,leaveSession}) {
     className="modal-content"
     overlayClassName="modal-overlay custom-backdrop"
     >
-      <div className="modal-container">
+      <div className="modal-container card my-card">
+        <div className='card-header'>
+            <h2 className='text-center'>Leave Session</h2>
+        </div>
         <div className="alert alert-success text-center text-danger" role="alert">
            "{title}" - Are You want to leave this Session?
         </div>
