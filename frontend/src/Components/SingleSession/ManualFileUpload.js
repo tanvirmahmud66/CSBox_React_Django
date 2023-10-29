@@ -59,7 +59,7 @@ function ManualFileUplaod({isOpen, onRequestClose, session_id, session_update}) 
     className="modal-content"
     overlayClassName="modal-overlay custom-backdrop"
     >
-      <div className="card w-50">
+      <div className="card my-card">
         <div className="card-body">
           <form onSubmit={uploadFiles} ref={formRef}>
             <div className="from-group mt-2">

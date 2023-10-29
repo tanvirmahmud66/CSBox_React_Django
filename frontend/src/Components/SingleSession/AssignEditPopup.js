@@ -94,8 +94,9 @@ function AssignEditPopup({isOpen, onRequestClose, assignment, session, updateSes
     className="modal-content"
     overlayClassName="modal-overlay custom-backdrop"
     >
-      <div className="card w-50">
+      <div className="card my-card">
         <div className="card-body">
+          <h2 className="card-title text-center text-green mb-3">Edit Assignment</h2>
           <form onSubmit={editAssignment} ref={formRef}>
             <div className="form-group">
                 <input 

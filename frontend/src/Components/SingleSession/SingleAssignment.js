@@ -125,7 +125,7 @@ const SingleAssignment = ({assignment, submissions ,session, updateSession, subm
             </div>}
         </div>
         <div className='card-footer'>
-            <button onClick={openExpend} className='w-100 btn btn-custom-green'>Submission</button>
+            <button onClick={openExpend} className='w-100 btn btn-custom-green'>Expend</button>
         </div>
         <AssginDeletePopup isOpen={isOpen} onRequestClose={closeModal} assignment={assignment} session={session} updateSession={updateSession}/>
         <AssignEditPopup isOpen={isOpen2} onRequestClose={closeModal2} assignment={assignment} session={session} updateSession={updateSession}/>

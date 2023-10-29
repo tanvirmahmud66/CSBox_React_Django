@@ -61,7 +61,7 @@ function PostComponent({isOpen, onRequestClose, session_id, session_update}) {
     className="modal-content"
     overlayClassName="modal-overlay custom-backdrop"
     >
-      <div className="card w-50">
+      <div className="card my-card">
         <div className="card-body">
           <form onSubmit={createPost} ref={formRef}>
             <div className="form-group">

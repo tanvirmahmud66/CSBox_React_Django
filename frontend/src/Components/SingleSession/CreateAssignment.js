@@ -75,7 +75,7 @@ function CreateAssignmentPopup({isOpen, onRequestClose, session_id, session_upda
     className="modal-content"
     overlayClassName="modal-overlay custom-backdrop"
     >
-      <div className="card w-50">
+      <div className="card my-card">
         <div className="card-body">
           <form onSubmit={createAssignment} ref={formRef}>
             <div className="form-group">

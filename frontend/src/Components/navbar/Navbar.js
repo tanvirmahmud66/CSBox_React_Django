@@ -65,11 +65,14 @@ const Navbar = () => {
                                 <input type="search" className="input-bg w-75" placeholder="search" aria-label="search" aria-describedby="button-addon2"/>
                                 <button className="btn btn-secondary w-25" type="button" id="button-addon2">Search</button>
                             </div>
-                            <ul class="list-group mb-2">
-                                <li class="list-group-item text-center">
-                                    <Link className='text-decoration-none' to={`/profile/${user.user_id}`}>Profile</Link>
+                            <ul className="list-group mb-2">
+                                <li className='list-group-item text-center'>
+                                    <a className='text-decoration-none text-black' href='/'>Home</a>
                                 </li>
-                                <li class="list-group-item text-center">
+                                <li className="list-group-item text-center">
+                                    <Link className='text-decoration-none text-black' to={`/profile/${user.user_id}`}>Profile</Link>
+                                </li>
+                                <li className="list-group-item text-center text-danger">
                                     <Dropdown.Item onClick={userLogout}>Logout</Dropdown.Item>
                                 </li>
                             </ul>

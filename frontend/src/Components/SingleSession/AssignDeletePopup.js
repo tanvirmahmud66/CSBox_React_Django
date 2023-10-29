@@ -28,7 +28,8 @@ function AssginDeletePopup({isOpen, onRequestClose, assignment, session, updateS
     className="modal-content"
     overlayClassName="modal-overlay custom-backdrop"
     >
-      <div className="card w-40 p-2">
+      <div className="card my-card p-2">
+        <h2 className="card-title text-center text-danger mb-3">Delete Assignment</h2>
         <div className="alert alert-warning text-center text-danger" role="alert">
             Are You want to Delete this <span className='text-primary'>{assignment.title}</span> ?
         </div>
@@ -36,7 +37,7 @@ function AssginDeletePopup({isOpen, onRequestClose, assignment, session, updateS
 
         <div className='d-flex justify-content-end align-items-center mt-3'>
             <button className='btn btn-secondary' onClick={onRequestClose}>Cancel</button>
-            <button onClick={deleteAssignment} className="btn btn-custom-danger ms-2">Delete</button>
+            <button onClick={deleteAssignment} className="btn btn-custom-danger ms-2">Confirm</button>
         </div>
       </div>
       </Modal>

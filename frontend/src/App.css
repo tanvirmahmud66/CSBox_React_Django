@@ -128,3 +128,28 @@
     }
   }
   
+
+  
+  @media (max-width: 1400px) {
+    .d-none-1400{
+      display: none;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .d-block-1400 {
+      display: none; /* Show the div when the viewport width is 991px or less */
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .d-none-1200{
+      display: none;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .d-block-1200 {
+      display: none; /* Show the div when the viewport width is 991px or less */
+    }
+  }

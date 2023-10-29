@@ -68,7 +68,7 @@ function EditPopup({isOpen, onRequestClose, post, session, sessionUpdate}) {
     className="modal-content"
     overlayClassName="modal-overlay custom-backdrop"
     >
-      <div className="card w-50">
+      <div className="card my-card">
         <div className="card-body">
           <h2 className="card-title text-center text-green mb-3">Edit Post</h2>
           <form onSubmit={updatePost} ref={formRef}>

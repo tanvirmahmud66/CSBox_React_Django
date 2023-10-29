@@ -23,11 +23,8 @@ function DeletePopup({isOpen2, onRequestClose, Delete, post}) {
     className="modal-content"
     overlayClassName="modal-overlay custom-backdrop"
     >
-      <div className="card w-40 p-2">
-        <div className="alert alert-warning text-center text-danger" role="alert">
-            Are You want to Delete this post?
-        </div>
-
+      <div className="card my-card p-2">
+        <h2 className="card-title text-center text-danger mb-3">Delete Post</h2>
         <div className='card p-2'>
           <div className="media d-flex justify-content-between align-items-center">
               <div className='d-flex align-items-center'>
@@ -55,10 +52,13 @@ function DeletePopup({isOpen2, onRequestClose, Delete, post}) {
             </div>
         </div>
         
+        <div className="mt-2 alert alert-warning text-center text-danger" role="alert">
+            Are You want to Delete this post?
+        </div>
 
         <div className='d-flex justify-content-end align-items-center mt-3'>
             <button className='btn btn-secondary' onClick={onRequestClose}>Cancel</button>
-            <button onClick={DeleteButtonHandle} className="btn btn-custom-danger ms-2">Delete</button>
+            <button onClick={DeleteButtonHandle} className="btn btn-custom-danger ms-2">Confirm</button>
         </div>
       </div>
       </Modal>
