@@ -135,129 +135,126 @@ const ProfilePage = () => {
     <div className='row mt-4'>
         {profile &&
         <>
-        <div className='col-3 p-0'>
-            <div className='d-flex rounded flex-column justify-content-center align-items-center p-3'>
-                <div className='profile-avatar '>
-                    <img src={profilePictrue} alt='profile pic position-relative'/>
+            <div className='col-xxl-3 p-0'>
+                <div className='d-flex rounded flex-column justify-content-center align-items-center p-3'>
+                    <div className='profile-avatar '>
+                        <img src={profilePictrue} alt='profile pic position-relative'/>
+                        {(user.user_id===profile.user.id) &&
+                        <div className="change-button">
+                            <button onClick={openModal} className="btn text-green">Change</button>
+                        </div>}
+                    </div>
+                    <h3 className='mt-2 text-center'>{profile.user.first_name} {profile.user.last_name}</h3>
+                    <p className='mt-1'>{profile.bio}</p>
                     {(user.user_id===profile.user.id) &&
-                    <div className="change-button">
-                        <button onClick={openModal} className="btn text-green">Change</button>
+                    <button onClick={()=> setEditProfile(!editProfile)} className='btn btn-custom2-green'>Edit Profile</button>}
+                </div>
+            </div>
+
+            <div className='col-xxl-9 p-0'>
+                <div className='align-items-center rounded p-3'>
+                    <div className='p-2 mb-2 text-center'>Basic Information</div>
+
+                    {profile.profession &&
+                    <div className='d-flex justify-content-start align-items-center row mb-3'>
+                        <div className='col-md-3 fs-5 '>Profession:</div>
+                        <div className='col-md-9 value-div p-2'>
+                            <div className='text-green'>{profile.profession}</div>
+                        </div>
+                    </div>}
+
+                    {profile.gender &&
+                    <div className='d-flex justify-content-between align-items-center row mb-3'>
+                        <div className='col-md-3 fs-5 '>Gender</div>
+                        <div className='col-md-9 value-div'>
+                            <div className='text-green'>{profile.gender}</div>
+                        </div>
+                    </div>}
+
+                    {profile.work_at &&
+                    <div className='d-flex justify-content-between align-items-center row mb-3'>
+                        <div className='col-md-3 fs-5 '>Currently Working:</div>
+                        <div className='col-md-9 value-div'>
+                            <div className='text-green'>{profile.work_at}</div>
+                        </div>
+                    </div>}
+
+                    {profile.study_at &&
+                    <div className='d-flex justify-content-between align-items-center row mb-3'>
+                        <div className='col-md-3 fs-5 '>University: </div>
+                        <div className='col-md-9 value-div'>
+                            <div className='text-green'>{profile.study_at}</div>
+                        </div>
+                    </div>}
+                    
+                    {profile.college && 
+                    <div className='d-flex justify-content-between align-items-center row mb-3'>
+                        <div className='col-md-3 fs-5 '>College: </div>
+                        <div className='col-md-9 value-div'>
+                            <div className='text-green'>{profile.college}</div>
+                        </div>
+                    </div>}
+
+                    {profile.school &&
+                    <div className='d-flex justify-content-between align-items-center row mb-3'>
+                        <div className='col-md-3 fs-5 '>School:</div>
+                        <div className='col-md-9 value-div p-2'>
+                            <div className='text-green'>{profile.school}</div>
+                        </div>
+                    </div>}
+
+                    {profile.user.email &&
+                    <div className='d-flex justify-content-between align-items-center row mb-3'>
+                        <div className='col-md-3 fs-5'>Email</div>
+                        <div className='col-md-9 value-div bg-white'>
+                            <div className='text-primary'>{profile.user.email}</div>
+                        </div>
+                    </div>}
+
+                    {profile.linkedIn && 
+                    <div className='d-flex justify-content-between align-items-center row mb-3'>
+                        <div className='col-md-3 fs-5'>LinkedIn:</div>
+                        <div className='col-md-9 value-div bg-white'>
+                            <div className='text-primary'>
+                                <a href={profile.linkedIn} target='_blank'>
+                                    {profile.linkedIn}
+                                </a>
+                            </div>
+                        </div>
+                    </div>}
+
+                    {profile.github &&
+                    <div className='d-flex justify-content-between align-items-center row mb-3'>
+                        <div className='col-md-3 fs-5 '>Github: </div>
+                        <div className='col-md-9 value-div bg-white'>
+                            <div className='text-primary'>
+                                <a href={profile.github} target='_blank'>
+                                    {profile.github}
+                                </a>
+                            </div>
+                        </div>
+                    </div>}
+
+                    {profile.website &&
+                    <div className='d-flex justify-content-between align-items-center row mb-3'>
+                        <div className='col-md-3 fs-5'>Website: </div>
+                        <div className='col-md-9 value-div bg-white'>
+                            <div className='text-primary'>
+                                <a href={profile.website} target='_blank'>
+                                    {profile.website}
+                                </a>
+                            </div>
+                        </div>
                     </div>}
                 </div>
-                <h3 className='mt-2 text-center'>{profile.user.first_name} {profile.user.last_name}</h3>
-                <p className='mt-1'>{profile.bio}</p>
-                {(user.user_id===profile.user.id) &&
-                <button onClick={()=> setEditProfile(!editProfile)} className='btn btn-custom2-green'>Edit Profile</button>}
             </div>
-            {/* <div className='d-flex rounded mt-3 flex-column justify-content-center align-items-center bg-custom-light-dark p-3'>
-                Expertise In
-            </div> */}
-        </div>
-
-        <div className='col-9 p-0'>
-            <div className='ms-4 align-items-center rounded p-3'>
-                <div className='p-2 mb-2 text-center'>Basic Information</div>
-
-                {profile.profession &&
-                <div className='d-flex justify-content-start align-items-center row mb-3'>
-                    <div className='col-3 fs-5 '>Profession:</div>
-                    <div className='col-9 value-div bg-custom-dark p-2'>
-                        <div className='text-green'>{profile.profession}</div>
-                    </div>
-                </div>}
-
-                {profile.gender &&
-                <div className='d-flex justify-content-between align-items-center row mb-3'>
-                    <div className='col-3 fs-5 '>Gender</div>
-                    <div className='col-9 value-div bg-custom-dark'>
-                        <div className='text-green'>{profile.gender}</div>
-                    </div>
-                </div>}
-
-                {profile.work_at &&
-                <div className='d-flex justify-content-between align-items-center row mb-3'>
-                    <div className='col-3 fs-5 '>Currently Working:</div>
-                    <div className='col-9 value-div bg-custom-dark'>
-                        <div className='text-green'>{profile.work_at}</div>
-                    </div>
-                </div>}
-
-                {profile.study_at &&
-                <div className='d-flex justify-content-between align-items-center row mb-3'>
-                    <div className='col-3 fs-5 '>University: </div>
-                    <div className='col-9 value-div bg-custom-dark'>
-                        <div className='text-green'>{profile.study_at}</div>
-                    </div>
-                </div>}
-                
-                {profile.college && 
-                <div className='d-flex justify-content-between align-items-center row mb-3'>
-                    <div className='col-3 fs-5 '>College: </div>
-                    <div className='col-9 value-div bg-custom-dark'>
-                        <div className='text-green'>{profile.college}</div>
-                    </div>
-                </div>}
-
-                {profile.school &&
-                <div className='d-flex justify-content-between align-items-center row mb-3'>
-                    <div className='col-3 fs-5 '>School:</div>
-                    <div className='col-9 value-div bg-custom-dark p-2'>
-                        <div className='text-green'>{profile.school}</div>
-                    </div>
-                </div>}
-
-                {profile.user.email &&
-                <div className='d-flex justify-content-between align-items-center row mb-3'>
-                    <div className='col-3 fs-5'>Email</div>
-                    <div className='col-9 value-div bg-custom-dark'>
-                        <div className='text-primary'>{profile.user.email}</div>
-                    </div>
-                </div>}
-
-                {profile.linkedIn && 
-                <div className='d-flex justify-content-between align-items-center row mb-3'>
-                    <div className='col-3 fs-5'>LinkedIn:</div>
-                    <div className='col-9 value-div bg-custom-dark'>
-                        <div className='text-primary'>
-                            <a href={profile.linkedIn} target='_blank'>
-                                {profile.linkedIn}
-                            </a>
-                        </div>
-                    </div>
-                </div>}
-
-                {profile.github &&
-                <div className='d-flex justify-content-between align-items-center row mb-3'>
-                    <div className='col-3 fs-5 '>Github: </div>
-                    <div className='col-9 value-div bg-custom-dark'>
-                        <div className='text-primary'>
-                            <a href={profile.github} target='_blank'>
-                                {profile.github}
-                            </a>
-                        </div>
-                    </div>
-                </div>}
-
-                {profile.website &&
-                <div className='d-flex justify-content-between align-items-center row mb-3'>
-                    <div className='col-3 fs-5'>Website: </div>
-                    <div className='col-9 value-div bg-custom-dark'>
-                        <div className='text-primary'>
-                            <a href={profile.website} target='_blank'>
-                                {profile.website}
-                            </a>
-                        </div>
-                    </div>
-                </div>}
-            </div>
-        </div>
         </>}
     </div>:
-    <div className='mt-3'>
+    <div className='mt-3 mb-3'>
         <div className='card p-3'>
             <form onSubmit={editProfileApi}>
                 <div className='row'>
-                    <div className='col'>
+                    <div className='col-xxl-6'>
                         <div className='form-group mb-3'>
                             <label htmlFor="bio" className="form-label">Bio</label>
                             <input className="form-control" type="text" name='bio' id="bio" value={bio} onChange={bioChange}/>
@@ -279,7 +276,7 @@ const ProfilePage = () => {
                             <input className="form-control" type="text" name='university' id="university" value={university} onChange={universityChange}/>
                         </div>
                     </div>
-                    <div className='col'>
+                    <div className='col-xxl-6'>
                         <div className='form-group mb-3'>
                             <label htmlFor="college" className="form-label">College</label>
                             <input className="form-control" type="text" name='college' id="college" value={college} onChange={collegeChange}/>

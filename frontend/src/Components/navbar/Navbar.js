@@ -69,9 +69,6 @@ const Navbar = () => {
                                 <li class="list-group-item text-center">
                                     <Link className='text-decoration-none' to={`/profile/${user.user_id}`}>Profile</Link>
                                 </li>
-                                <li className='list-group-item text-center'>Created Session</li>
-                                <li className='list-group-item text-center'>Joined Session</li>
-                                <li className='list-group-item text-center'>Settings</li>
                                 <li class="list-group-item text-center">
                                     <Dropdown.Item onClick={userLogout}>Logout</Dropdown.Item>
                                 </li>

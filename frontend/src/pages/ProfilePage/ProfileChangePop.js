@@ -42,7 +42,7 @@ const ProfileChangePop = ({ isOpen, onRequestClose, profileID, getProfile}) => {
       className="modal-content"
       overlayClassName="modal-overlay"
     >
-      <div className="card w-30">
+      <div className="card my-card">
         <div className='card-header'>
             <h2 className='text-center'>Change Profile</h2>
         </div>
