@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const LoginForm = () => {
 
-    let {loginError,userLogin} = useContext(AuthContext)
+    let {auth,loginError,userLogin} = useContext(AuthContext)
     const [spinner, setSpinner] = useState(false)
     
     const handleSubmit =(e)=>{
@@ -14,10 +14,13 @@ const LoginForm = () => {
     }
 
     useEffect(()=>{
-        setTimeout(()=>{
-            setSpinner(false)
-        },1000)
-    },[spinner, loginError.error])
+        if(!auth){
+            setTimeout(()=>{
+                setSpinner(false)
+            },1000)
+        }
+        
+    },[spinner,loginError.error])
 
   return (
     <>
