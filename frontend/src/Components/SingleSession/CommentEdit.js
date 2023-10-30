@@ -42,7 +42,7 @@ function CommentEditPopup({isOpen, onRequestClose, comment, getPostComment}) {
     className="modal-content"
     overlayClassName="modal-overlay custom-backdrop"
     >
-      <div className="card w-40 p-2">
+      <div className="card my-card p-2">
         <div className='card-header fs-4'>Edit Comment</div>
 
         <div className="comment-card mt-3 bg-comment p-2">

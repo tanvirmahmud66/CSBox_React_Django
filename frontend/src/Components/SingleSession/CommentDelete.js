@@ -33,7 +33,8 @@ function CommentDeletePopup({isOpen2, onRequestClose, comment, getPostComment}) 
     className="modal-content"
     overlayClassName="modal-overlay custom-backdrop"
     >
-      <div className="card w-40 p-2">
+      <div className="card my-card p-2">
+        <h2 className="card-title text-center text-danger mb-3">Delete Comment</h2>
         <div className="alert alert-warning text-center text-danger" role="alert">
             Are You want to Delete this Comment?
         </div>
