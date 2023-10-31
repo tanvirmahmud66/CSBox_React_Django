@@ -1,8 +1,7 @@
 import Modal from 'react-modal';
-import React, { useContext, useState , useRef} from 'react';
-import AuthContext from '../../context/AuthContext';
+import React from 'react';
 
-function DeletePopup({isOpen, onRequestClose, title, deleteSession}) {
+function DeletePopup({isOpen, onRequestClose, title, deleteSession, spinner}) {
    
     const DeleteButtonHandle = ()=>{
         deleteSession()
@@ -26,7 +25,14 @@ function DeletePopup({isOpen, onRequestClose, title, deleteSession}) {
         </div>
         <div className='d-flex justify-content-end align-items-center mt-3'>
             <button className='btn btn-primary' onClick={onRequestClose}>Cancel</button>
-            <button onClick={DeleteButtonHandle} className="btn btn-custom-danger ms-2">Delete</button>
+            {/* <button onClick={DeleteButtonHandle} className="btn btn-custom-danger ms-2">Delete</button> */}
+            {spinner ?
+                <button className="btn btn-danger ms-2" type="button" disabled>
+                  <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  <span className="">Deleteing...</span>
+                </button>:
+                <button onClick={DeleteButtonHandle} className="btn btn-custom-danger ms-2">Delete</button>
+            }
         </div>
       </div>
       </Modal>

@@ -13,6 +13,7 @@ function CreateAssignmentPopup({isOpen, onRequestClose, session_id, session_upda
   
   const [selectedFile, setSelectedFile] = useState();
   const [deadline, setDeadline] = useState();
+  let [spinner, setSpinner] = useState(false);
 
 
   const handleFileChange = (event) => {
@@ -31,6 +32,7 @@ function CreateAssignmentPopup({isOpen, onRequestClose, session_id, session_upda
 
   let createAssignment = async(e)=>{
       e.preventDefault()
+      setSpinner(true)
       const formData = new FormData();
       const postPayload = {
         session: session_id,
@@ -55,6 +57,7 @@ function CreateAssignmentPopup({isOpen, onRequestClose, session_id, session_upda
     //   console.log("data: ",data)
       if(response.status===201){
         session_update()
+        setSpinner(false)
         formRef.current.reset();
         
       }
@@ -136,7 +139,14 @@ function CreateAssignmentPopup({isOpen, onRequestClose, session_id, session_upda
 
             <div className='d-flex justify-content-end align-items-center mt-3'>
                 <button className='btn btn-custom-danger' onClick={onRequestClose}>Cancel</button>
-                <button type="submit" className="btn btn-custom-green ms-2">Create Assignment</button>
+                {/* <button type="submit" className="btn btn-custom-green ms-2">Create Assignment</button> */}
+                {spinner ?
+                  <button className="btn btn-success ms-2" type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span className="">Creating...</span>
+                  </button>:
+                  <button type="submit" className="btn btn-custom-green ms-2">Create Assignment</button>
+                }
             </div>
           </form>
         </div>

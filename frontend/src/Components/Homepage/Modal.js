@@ -1,13 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Modal from 'react-modal';
 import AuthContext from '../../context/AuthContext';
 
 const CustomModal = ({ isOpen, onRequestClose, get }) => {
 
     const {user, authTokens} = useContext(AuthContext)
+    const [spinner, setSpinner] = useState(false)
     // console.log(user)
     let createSession = async(e)=>{
         e.preventDefault()
+        setSpinner(true)
         let response = await fetch('http://127.0.0.1:8000/api/new-session/',{
             method: "POST",
             headers: {
@@ -25,6 +27,7 @@ const CustomModal = ({ isOpen, onRequestClose, get }) => {
         console.log(data)
         if(response.status===201){
           get()
+          setSpinner(false)
         }
         onRequestClose()
     }
@@ -52,7 +55,14 @@ const CustomModal = ({ isOpen, onRequestClose, get }) => {
               
               <div className='d-flex justify-content-end align-items-center mt-3'>
                 <button className='btn btn-custom-danger' onClick={onRequestClose}>Close</button>
-                <button type="submit" className="btn btn-custom-green ms-2">Create</button>
+                {/* <button type="submit" className="btn btn-custom-green ms-2">Create</button> */}
+                {spinner ?
+                  <button className="btn btn-primary ms-1" type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span className="">Creating..</span>
+                  </button>:
+                  <button type='submit' className='btn btn-custom-green ms-2'>Create</button>
+                }
               </div>
             </form>
         </div>

@@ -6,7 +6,6 @@ import AuthContext from '../../context/AuthContext';
 import DeletePopup from './DeletePopup';
 import EditPopup from './EditPopup';
 import Comment from './Comment';
-import DefaultPic from '../../assets/defaultPic.jpeg'
 import TimeAgoComponent from '../TimeAgoComponent';
 
 const SinglePost = ({post, session ,files, sessionUpdate}) => {
@@ -24,6 +23,7 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
   const [commentShow, setCommentShow] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
+  let [spinner, setSpinner] = useState(false);
 
   // console.log(post)
     
@@ -32,6 +32,7 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
   
 
   let postDelete = async()=>{
+    setSpinner(true)
     let response = await fetch(`http://127.0.0.1:8000/api/single-post/${session_id}/${id}/`, {
         method: "DELETE",
         headers: {
@@ -39,10 +40,11 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
             'Authorization': 'Bearer '+ String(authTokens?.access)
         }
     })
-    let data = await response.json()
+    // let data = await response.json()
     // console.log("Delete: ",data)
     if(response.status===200){
         sessionUpdate()
+        setSpinner(false)
     }
   }
 
@@ -63,6 +65,7 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault()
+    setSpinner(true)
     let response = await fetch(`http://127.0.0.1:8000/api/post-comment/${session_id}/${id}/`, {
         method: "POST",
         headers: {
@@ -76,11 +79,13 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
             'comment_body': e.target.comment.value,
         })
     })
-    let data = await response.json()
-    formRef.current.reset();
-    getPostComment()
-    setCommentShow(true)
-    console.log(data)
+    // let data = await response.json()
+    if(response.status===200){
+      formRef.current.reset();
+      getPostComment()
+      setSpinner(false)
+      setCommentShow(true)
+    }
   };
 
   
@@ -187,15 +192,22 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
                 aria-label="search" 
                 aria-describedby="button-addon2"
             />
-            <button 
+            {/* <button 
                 className="btn btn-primary" 
                 type="submit" 
                 id="button-addon2"
-            >Add Comment</button>
+            >Add Comment</button> */}
+            {spinner ?
+                    <button className="btn btn-primary" type="button" disabled>
+                      <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      <span className="">Commenting...</span>
+                    </button>:
+                    <button type="submit" className="btn btn-primary" id="addon2">Add Commnet</button>
+            }
           </form>
         </div>
 
-            <DeletePopup isOpen2={isOpen2} onRequestClose={closeModal2} Delete={postDelete} post={post}/>
+            <DeletePopup isOpen2={isOpen2} onRequestClose={closeModal2} Delete={postDelete} post={post} spinner={spinner}/>
             <EditPopup isOpen={isOpen} onRequestClose={closeModal} post={post} session={session} sessionUpdate={sessionUpdate}/>
       </div>
   );

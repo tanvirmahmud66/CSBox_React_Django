@@ -1,15 +1,16 @@
 import Modal from 'react-modal';
-import React, { useContext, useState , useRef} from 'react';
+import React, { useContext, useState} from 'react';
 import AuthContext from '../../context/AuthContext';
-import TimeAgoComponent from '../TimeAgoComponent';
 
 function CommentDeletePopup({isOpen2, onRequestClose, comment, getPostComment}) {
    
     const baseUrl = 'http://127.0.0.1:8000';
     const {authTokens} = useContext(AuthContext)
     const {id, session, post_id} = comment
+    let[spinner, setSpinner] = useState(false)
 
     let deleteComment = async()=>{
+        setSpinner(true)
         let response = await fetch(`http://127.0.0.1:8000/api/post-comment/${session}/${post_id}/${id}/`, {
           method: "DELETE",
           headers: {
@@ -19,6 +20,7 @@ function CommentDeletePopup({isOpen2, onRequestClose, comment, getPostComment}) 
         })
         if(response.status===204){
           getPostComment()
+          setSpinner(false)
           onRequestClose()
         }
     }
@@ -60,7 +62,14 @@ function CommentDeletePopup({isOpen2, onRequestClose, comment, getPostComment}) 
 
         <div className='d-flex justify-content-end align-items-center mt-3'>
             <button className='btn btn-secondary' onClick={onRequestClose}>Cancel</button>
-            <button onClick={deleteComment} className="btn btn-custom-danger ms-2">Delete</button>
+            {/* <button onClick={deleteComment} className="btn btn-custom-danger ms-2">Delete</button> */}
+            {spinner ?
+                    <button className="btn btn-danger ms-2" type="button" disabled>
+                      <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      <span className="">Deleting...</span>
+                    </button>:
+                    <button onClick={deleteComment} className="btn btn-custom-danger ms-2">Delete</button>
+            }
         </div>
       </div>
       </Modal>

@@ -1,8 +1,7 @@
 import Modal from 'react-modal';
-import React, { useContext, useState , useRef} from 'react';
-import AuthContext from '../../context/AuthContext';
+import React from 'react';
 
-function LeavePopup({isOpen, onRequestClose, title,leaveSession}) {
+function LeavePopup({isOpen, onRequestClose, title,leaveSession, spinner}) {
    
     const leaveButtonHandle = ()=>{
         leaveSession()
@@ -26,7 +25,14 @@ function LeavePopup({isOpen, onRequestClose, title,leaveSession}) {
         </div>
         <div className='d-flex justify-content-end align-items-center mt-3'>
             <button className='btn btn-custom-danger' onClick={onRequestClose}>cancel</button>
-            <button onClick={leaveButtonHandle} className="btn btn-warning ms-2">Leave Session</button>
+            {/* <button onClick={leaveButtonHandle} className="btn btn-warning ms-2">Leave Session</button> */}
+            {spinner ?
+                <button className="btn btn-warning ms-2" type="button" disabled>
+                  <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  <span className="">Leaving...</span>
+                </button>:
+                <button onClick={leaveButtonHandle} className="btn btn-warning ms-2">Leave Session</button>
+            }
         </div>
       </div>
       </Modal>

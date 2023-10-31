@@ -6,10 +6,11 @@ function ManualFileUplaod({isOpen, onRequestClose, session_id, session_update}) 
 
   const formRef = useRef();
 
-  const {user,authTokens} = useContext(AuthContext)
+  const {authTokens} = useContext(AuthContext)
   
   const [files, setFiles] = useState([]);
 
+  let[spinner, setSpinner] = useState(false)
 
   const handleFileChange = (event) => {
     setFiles(Array.from(event.target.files));
@@ -22,6 +23,7 @@ function ManualFileUplaod({isOpen, onRequestClose, session_id, session_update}) 
 
   let uploadFiles = async(e)=>{
       e.preventDefault()
+      setSpinner(true)
       const formData = new FormData();
       const postPayload = {
         session: session_id,
@@ -44,6 +46,7 @@ function ManualFileUplaod({isOpen, onRequestClose, session_id, session_update}) 
         session_update()
         formRef.current.reset();
         setFiles([])
+        setSpinner(false)
       }
       onRequestClose()
       
@@ -90,7 +93,14 @@ function ManualFileUplaod({isOpen, onRequestClose, session_id, session_update}) 
             </div>
             <div className='d-flex justify-content-end align-items-center mt-3'>
                 <button className='btn btn-custom-danger' onClick={onRequestClose}>Cancel</button>
-                <button type="submit" className="btn btn-custom-green ms-2">Upload</button>
+                {/* <button type="submit" className="btn btn-custom-green ms-2">Upload</button> */}
+                {spinner ?
+                  <button className="btn btn-success ms-2" type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span className="">Uploading...</span>
+                  </button>:
+                  <button type="submit" className="btn btn-custom-green ms-2">Upload</button>
+                }
             </div>
           </form>
         </div>

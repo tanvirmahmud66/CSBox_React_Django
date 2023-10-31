@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import AuthContext from '../../context/AuthContext';
-import { Link } from 'react-router-dom';
 import DeletePopup from './DeletePopup';
 import LeavePopup from './LeavePopup';
 import EditModal from './EditPopup';
@@ -9,9 +8,11 @@ const SessionListItem = ({session, updateSession}) => {
     const {title, details, created, token} = session;
     const {id,first_name, last_name} = session.host;
     const {user, authTokens} = useContext(AuthContext)
+    const [spinner, setSpinner] = useState(false)
 
 
     let deleteSession = async()=>{
+        setSpinner(true)
         let response = await fetch(`http://127.0.0.1:8000/api/single-session/${session.id}/`, {
             method: "DELETE",
             headers: {
@@ -23,10 +24,12 @@ const SessionListItem = ({session, updateSession}) => {
         console.log(data)
         if (response.status===200){
             updateSession()
+            setSpinner(false)
         }
     }
 
     let leaveSession = async()=>{
+        setSpinner(true)
         let response = await fetch(`http://127.0.0.1:8000/api/leave-session/${session.id}/${token}/`, {
             method: "DELETE",
             headers: {
@@ -34,9 +37,10 @@ const SessionListItem = ({session, updateSession}) => {
                 'Authorization': 'Bearer '+ String(authTokens?.access)
             }
         })
-        let data = await response.json()
+        // let data = await response.json()
         if (response.status===200){
             updateSession()
+            setSpinner(false)
         }
     }
 
@@ -106,9 +110,9 @@ const SessionListItem = ({session, updateSession}) => {
             </div>
         </div>
         {/* </Link> */}
-        <DeletePopup isOpen={isOpen} onRequestClose={closeModal} title={title} deleteSession={deleteSession}/>
+        <DeletePopup isOpen={isOpen} onRequestClose={closeModal} title={title} deleteSession={deleteSession} spinner={spinner}/>
         <EditModal isOpen={editOpen} onRequestClose={editCloseModal} session={session} sessionUpdate={updateSession}/>
-        <LeavePopup isOpen={leaveOpen} onRequestClose={leaveCloseModal} title={title} leaveSession={leaveSession}/>
+        <LeavePopup isOpen={leaveOpen} onRequestClose={leaveCloseModal} title={title} leaveSession={leaveSession} spinner={spinner}/>
     </div>
     
   )

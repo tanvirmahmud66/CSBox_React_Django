@@ -1,8 +1,6 @@
 import Modal from 'react-modal';
-import React, { useEffect ,useContext, useState , useRef} from 'react';
+import React, { useContext, useState , useRef} from 'react';
 import AuthContext from '../../context/AuthContext';
-
-import { format, parseISO } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import TimeAgoComponent from '../TimeAgoComponent';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -34,6 +32,8 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
   const [instruction, setInstruction] = useState(true)
   const [submission, setSubmission] = useState(false)
 
+  let [spinner, setSpinner] = useState(false)
+
   let instructionHandle = ()=>{
     setInstruction(true)
     setSubmission(false)
@@ -51,6 +51,7 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
 
   let assignmentSubmit = async(e)=>{
     e.preventDefault()
+    setSpinner(true)
     const formData = new FormData();
     const postPayload = {
         session:session.id,
@@ -72,9 +73,11 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
     if (response.status===201){
         updateSession()
         formRef.current.reset();
+        setSpinner(false)
     }
     if(response.status===302){
         alert("You can't submit your answer papper double time.")
+        setSpinner(false)
     }
   }
 
@@ -136,7 +139,14 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
                                 <div className='form-group w-100'>
                                     <input className="form-control" type="file" id="formFile" onChange={handleFileChange} required/>
                                 </div>
-                                <button type="submit" className="btn btn-custom-green ms-2">Submit</button>
+                                {/* <button type="submit" className="btn btn-custom-green ms-2">Submit</button> */}
+                                {spinner ?
+                                    <button className="btn btn-success ms-2" type="button" disabled>
+                                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        <span className="visually-hidden">Submit...</span>
+                                    </button>:
+                                    <button type="submit" className="btn btn-custom-green ms-2">Submit</button>
+                                }
                             </div>
                         </form>
                     }
@@ -152,7 +162,7 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
                                         <li  className={`${user.user_id===each.submit_by.id? "custom-list-item2":"custom-list-item"} p-2 rounded`}>
                                             <div className='d-flex justify-content-between align-items-center'>
                                                 <div className='d-flex align-items-center'>
-                                                    <img className='avatar' src={baseUrl+each.submit_by.profile.profile_pic}/>
+                                                    <img className='avatar' src={baseUrl+each.submit_by.profile.profile_pic} alt='avatar'/>
                                                     <div className='text-decoration-none'>{each.submit_by.first_name} {each.submit_by.last_name}</div>
                                                 </div>
                                                 <DateTimeComponent dateTimeString={each.submit_at}/>
@@ -276,7 +286,7 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
                                         <li  className={`${user.user_id===each.submit_by.id? "custom-list-item2":"custom-list-item"} p-2 rounded`}>
                                             <div className='d-flex justify-content-between align-items-center'>
                                                 <div className='d-flex align-items-center'>
-                                                    <img className='avatar' src={baseUrl+each.submit_by.profile.profile_pic}/>
+                                                    <img className='avatar' src={baseUrl+each.submit_by.profile.profile_pic} alt='avatar'/>
                                                     <div className='text-decoration-none'>{each.submit_by.first_name} {each.submit_by.last_name}</div>
                                                 </div>
                                                 <DateTimeComponent dateTimeString={each.submit_at}/>

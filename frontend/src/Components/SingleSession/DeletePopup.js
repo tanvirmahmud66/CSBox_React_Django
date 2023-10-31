@@ -1,9 +1,8 @@
 import Modal from 'react-modal';
-import React, { useContext, useState , useRef} from 'react';
-import AuthContext from '../../context/AuthContext';
+import React from 'react';
 import TimeAgoComponent from '../TimeAgoComponent';
 
-function DeletePopup({isOpen2, onRequestClose, Delete, post}) {
+function DeletePopup({isOpen2, onRequestClose, Delete, post, spinner}) {
    
     const baseUrl = 'http://127.0.0.1:8000';
     const {post_body, created} = post
@@ -58,7 +57,14 @@ function DeletePopup({isOpen2, onRequestClose, Delete, post}) {
 
         <div className='d-flex justify-content-end align-items-center mt-3'>
             <button className='btn btn-secondary' onClick={onRequestClose}>Cancel</button>
-            <button onClick={DeleteButtonHandle} className="btn btn-custom-danger ms-2">Confirm</button>
+            {/* <button onClick={DeleteButtonHandle} className="btn btn-custom-danger ms-2">Confirm</button> */}
+            {spinner ?
+                <button className="btn btn-danger ms-2" type="button" disabled>
+                  <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  <span className="">Deleteing...</span>
+                </button>:
+                <button onClick={DeleteButtonHandle} className="btn btn-custom-danger ms-2">Confirm</button>
+            }
         </div>
       </div>
       </Modal>

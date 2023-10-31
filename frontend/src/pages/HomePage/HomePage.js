@@ -21,6 +21,7 @@ const HomePage = () => {
   
   let [notificaiton, setNotification] = useState(null)
   let [joinNotify, setJoinedNotify] = useState(null)
+  let [spinner, setSpinner] = useState(false)
 
   let [settings, setSettings] = useState(false)
 
@@ -90,6 +91,7 @@ const HomePage = () => {
 
   let joinSession = async(e)=>{
     e.preventDefault()
+    setSpinner(true)
     let response = await fetch('http://127.0.0.1:8000/api/join-session/',{
       method: 'POST',
       headers: {
@@ -106,8 +108,10 @@ const HomePage = () => {
 
     if(response.status !==200){
       setNotification(response.statusText)
+      setSpinner(false)
     }else{
       setJoinedNotify("Joining Accepted")
+      setSpinner(false)
       getSession()
     } 
   }
@@ -199,7 +203,14 @@ const HomePage = () => {
                   </div>
                 }
               </div>
-              <button type='submit' className='btn bg-primary text-white ms-2'>Join</button>
+              {/* <button type='submit' className='btn bg-primary text-white ms-2'>Join</button> */}
+              {spinner ?
+                  <button className="btn btn-primary ms-1" type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span className="visually-hidden">Joining..</span>
+                  </button>:
+                  <button type='submit' className='btn bg-primary text-white ms-2'>Join</button>
+                }
             </form>
             <button onClick={openModal} className='btn btn-custom2-green'>Create</button>
           </div>}

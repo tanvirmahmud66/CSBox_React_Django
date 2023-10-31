@@ -6,9 +6,11 @@ const EditModal = ({ isOpen, onRequestClose, session, sessionUpdate}) => {
 
     const formRef = useRef();
     const {title, details,} = session;
-    const {user, authTokens} = useContext(AuthContext)
+    const {authTokens} = useContext(AuthContext)
     const[sessionTitle, setSessionTitle] = useState(title)
     const[sessionDetails, setSessionDetails] = useState(details)
+
+    let [spinner, setSpinner] = useState(false)
 
     const handleSessionTitle = (event) =>{
         setSessionTitle(event.target.value)
@@ -19,6 +21,7 @@ const EditModal = ({ isOpen, onRequestClose, session, sessionUpdate}) => {
 
     let editSession = async(e)=>{
         e.preventDefault()
+        setSpinner(true)
         const formData = new FormData();
         const postPayload = {
             title: sessionTitle,
@@ -36,6 +39,7 @@ const EditModal = ({ isOpen, onRequestClose, session, sessionUpdate}) => {
         console.log(data)
         if (response.status===200){
             sessionUpdate()
+            setSpinner(false)
             formRef.current.reset();
         }
         onRequestClose()
@@ -82,7 +86,14 @@ const EditModal = ({ isOpen, onRequestClose, session, sessionUpdate}) => {
               
               <div className='d-flex justify-content-end align-items-center mt-3'>
                 <button className='btn btn-custom-danger' onClick={onRequestClose}>Cancel</button>
-                <button type="submit" className="btn btn-custom-green ms-2">Edit Session</button>
+                {/* <button type="submit" className="btn btn-custom-green ms-2">Edit Session</button> */}
+                {spinner ?
+                    <button className="btn btn-success ms-2" type="button" disabled>
+                      <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      <span className="">Editing...</span>
+                    </button>:
+                    <button type="submit" className="btn btn-custom-green ms-2">Edit Session</button>
+                }
               </div>
             </form>
         </div>

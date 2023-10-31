@@ -1,7 +1,6 @@
 import Modal from 'react-modal';
-import React, { useContext, useState , useRef} from 'react';
+import React, { useContext, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
-import TimeAgoComponent from '../TimeAgoComponent';
 
 function CommentEditPopup({isOpen, onRequestClose, comment, getPostComment}) {
    
@@ -9,6 +8,7 @@ function CommentEditPopup({isOpen, onRequestClose, comment, getPostComment}) {
     const {authTokens} = useContext(AuthContext)
     const {id, session, post_id} = comment
     const [commentBody, setCommentBody] = useState(comment.comment_body)
+    let [spinner, setSpinner] = useState(false)
 
     const handleCommentBodyChange = (event) => {
         setCommentBody(event.target.value);
@@ -16,6 +16,7 @@ function CommentEditPopup({isOpen, onRequestClose, comment, getPostComment}) {
 
     let editComment = async(e)=>{
         e.preventDefault()
+        setSpinner(true)
         let response = await fetch(`http://127.0.0.1:8000/api/post-comment/${session}/${post_id}/${id}/`, {
           method: "PUT",
           headers: {
@@ -28,6 +29,7 @@ function CommentEditPopup({isOpen, onRequestClose, comment, getPostComment}) {
         })
         if(response.status===200){
           getPostComment()
+          setSpinner(false)
           onRequestClose()
         }
     }
@@ -74,7 +76,14 @@ function CommentEditPopup({isOpen, onRequestClose, comment, getPostComment}) {
                 />
                 <div className='d-flex justify-content-end align-items-center mt-3'>
                     <button className='btn btn-danger' onClick={onRequestClose}>Cancel</button>
-                    <button type='submit' className="btn btn-custom-green ms-2">Edit Comment</button>
+                    {/* <button type='submit' className="btn btn-custom-green ms-2">Edit Comment</button> */}
+                    {spinner ?
+                      <button className="btn btn-success ms-2" type="button" disabled>
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span className="">Editing...</span>
+                      </button>:
+                      <button type='submit' className="btn btn-custom-green ms-2">Edit Comment</button>
+                    }
                 </div>
             </form>
         </div>

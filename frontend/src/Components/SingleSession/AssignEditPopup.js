@@ -3,26 +3,28 @@ import React, { useContext, useState , useRef} from 'react';
 import AuthContext from '../../context/AuthContext';
 
 import DatePicker from 'react-datepicker';
-import { format, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 
-function getFileNameFromUrl(url) {
-    const parts = url.split('/');
-    return parts[parts.length - 1];
-}
+// function getFileNameFromUrl(url) {
+//     const parts = url.split('/');
+//     return parts[parts.length - 1];
+// }
 
 
 function AssignEditPopup({isOpen, onRequestClose, assignment, session, updateSession}) {
 
  
   const formRef = useRef();
-  const {user,authTokens} = useContext(AuthContext)
+  const {authTokens} = useContext(AuthContext)
   const {files} = assignment
   
   const[title, setTitle] = useState(assignment.title)
   const[body, setBody] = useState(assignment.body)
   const [selectedFile, setSelectedFile] = useState(files);
   const [deadline, setDeadline] = useState(parseISO(assignment.deadline));
+
+  let [spinner, setSpinner] = useState(false)
 
 
   const handleTitleChange = (event) =>{
@@ -49,6 +51,7 @@ function AssignEditPopup({isOpen, onRequestClose, assignment, session, updateSes
 
   let editAssignment = async(e)=>{
     e.preventDefault()
+    setSpinner(true)
     const formData = new FormData();
     const putPayload = {
         session:session.id,
@@ -71,6 +74,7 @@ function AssignEditPopup({isOpen, onRequestClose, assignment, session, updateSes
 
     if (response.status===200){
         updateSession()
+        setSpinner(false)
         onRequestClose()
     }
 
@@ -161,7 +165,14 @@ function AssignEditPopup({isOpen, onRequestClose, assignment, session, updateSes
 
             <div className='d-flex justify-content-end align-items-center mt-3'>
                 <button className='btn btn-custom-danger' onClick={handleCloseBtn}>Cancel</button>
-                <button type="submit" className="btn btn-custom-green ms-2">Update Assignment</button>
+                {/* <button type="submit" className="btn btn-custom-green ms-2">Update</button> */}
+                {spinner ?
+                  <button className="btn btn-success ms-2" type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span className="">Updating...</span>
+                  </button>:
+                  <button type="submit" className="btn btn-custom-green ms-2">Update</button>
+                }
             </div>
           </form>
         </div>

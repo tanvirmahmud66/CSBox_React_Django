@@ -10,6 +10,8 @@ function PostComponent({isOpen, onRequestClose, session_id, session_update}) {
   
   const [files, setFiles] = useState([]);
 
+  let [spinner, setSpinner] = useState(false)
+
 
   const handleFileChange = (event) => {
     setFiles(Array.from(event.target.files));
@@ -22,6 +24,7 @@ function PostComponent({isOpen, onRequestClose, session_id, session_update}) {
 
   let createPost = async(e)=>{
       e.preventDefault()
+      setSpinner(true)
       const formData = new FormData();
       const postPayload = {
         session: session_id,
@@ -46,6 +49,7 @@ function PostComponent({isOpen, onRequestClose, session_id, session_update}) {
         session_update()
         formRef.current.reset();
         setFiles([])
+        setSpinner(false)
       }
       onRequestClose()
       
@@ -105,7 +109,14 @@ function PostComponent({isOpen, onRequestClose, session_id, session_update}) {
             </div>
             <div className='d-flex justify-content-between align-items-center mt-3'>
                 <button className='btn btn-custom-danger' onClick={onRequestClose}>Cancel</button>
-                <button type="submit" className="btn btn-custom-green">Post</button>
+                {/* <button type="submit" className="btn btn-custom-green">Post</button> */}
+                {spinner ?
+                    <button className="btn btn-success" type="button" disabled>
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span className="">Posting...</span>
+                    </button>:
+                    <button type="submit" className="btn btn-custom-green">Post</button>
+                }
             </div>
           </form>
         </div>

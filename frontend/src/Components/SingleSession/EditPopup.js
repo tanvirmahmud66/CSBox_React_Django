@@ -12,6 +12,7 @@ function EditPopup({isOpen, onRequestClose, post, session, sessionUpdate}) {
   const {id,post_body,} = post
   const [postBody, setPostBody] = useState(post_body)
   const [files, setFiles] = useState([]);
+  let [spinner, setSpinner] = useState(false);
 
 
   const handlePostBodyChange = (event) => {
@@ -30,6 +31,7 @@ function EditPopup({isOpen, onRequestClose, post, session, sessionUpdate}) {
 
   let updatePost = async(e)=>{
       e.preventDefault()
+      setSpinner(true)
       const formData = new FormData();
       const postPayload = {
         post_body: postBody,
@@ -47,11 +49,12 @@ function EditPopup({isOpen, onRequestClose, post, session, sessionUpdate}) {
           },
           body: formData
       })
-      let data = await response.json()
+      // let data = await response.json()
       // console.log("data: ",data)
       if(response.status===200){
         sessionUpdate()
         formRef.current.reset();
+        setSpinner(false)
         setFiles([])
       }
       onRequestClose()
@@ -113,7 +116,14 @@ function EditPopup({isOpen, onRequestClose, post, session, sessionUpdate}) {
             </div>
             <div className='d-flex justify-content-end align-items-center mt-3'>
                 <button className='btn btn-custom-danger' onClick={onRequestClose}>Cancel</button>
-                <button type="submit" className="btn btn-custom-green ms-2">Update</button>
+                {/* <button type="submit" className="btn btn-custom-green ms-2">Update</button> */}
+                {spinner ?
+                    <button className="btn btn-success ms-2" type="button" disabled>
+                      <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      <span className="">Updating...</span>
+                    </button>:
+                    <button type="submit" className="btn btn-custom-green ms-2">Update</button>
+                }
             </div>
           </form>
         </div>
