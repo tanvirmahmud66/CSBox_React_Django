@@ -1,12 +1,12 @@
 import './App.css';
 
 import Navbar from './Components/navbar/Navbar';
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegistrattionPage from './pages/RegistrationPage/RegistrattionPage';
 import HomePage from './pages/HomePage/HomePage';
-import { useContext, useState } from 'react';
-import AuthContext, { AuthProvider } from './context/AuthContext';
+import { useContext} from 'react';
+import AuthContext from './context/AuthContext';
 import VerficationPage from './pages/VerificationPage/VerficationPage';
 import SingleSession from './pages/SingleSession/SingleSession';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
@@ -18,7 +18,7 @@ function App() {
   let {user} = useContext(AuthContext)
 
   return (
-      <Router>
+      <Router basename='/'>
         <UserProfileProvider className="">
           <Navbar/>
           <div className='container'>

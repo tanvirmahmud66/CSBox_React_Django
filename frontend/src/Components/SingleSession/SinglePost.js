@@ -7,6 +7,7 @@ import DeletePopup from './DeletePopup';
 import EditPopup from './EditPopup';
 import Comment from './Comment';
 import TimeAgoComponent from '../TimeAgoComponent';
+import { Link } from 'react-router-dom';
 
 const SinglePost = ({post, session ,files, sessionUpdate}) => {
 
@@ -140,9 +141,9 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
                 alt="User Avatar"
                 />
                 <div className="media-body">
-                  <a href={`/profile/${post.creator.id}`} className='text-decoration-none text-custom-black'>
+                  <Link to={`/profile/${post.creator.id}`} className='text-decoration-none text-custom-black'>
                     <h5 className="mb-0">{first_name} {last_name}</h5>
-                  </a>
+                  </Link>
                   
                   <div className='text-primary text-small'>
                     <TimeAgoComponent dateString={created}/>

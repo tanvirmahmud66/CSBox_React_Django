@@ -1,15 +1,13 @@
 import React, { useContext} from 'react'
-import Dropdown from 'react-bootstrap/Dropdown';
 import './Navbar.css'
 import brandLogo from '../../assets/BrandLogo/brand_logo2.png'
 import AuthContext from '../../context/AuthContext'
-import DefaultPic from '../../assets/defaultPic.jpeg'
 import ProfileContext from '../../context/ProfileContext';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     let {user,userLogout} = useContext(AuthContext)
-    let {userProfile, userProfilePic} = useContext(ProfileContext)
+    let {userProfilePic} = useContext(ProfileContext)
 
   return (
     <nav className="navbar p-1 navbar-expand-lg nav-custom-bg sticky-top">
@@ -33,20 +31,18 @@ const Navbar = () => {
                             </div>
 
                             {/* user toggle button */}
-                            <Dropdown className='p-1'>
-                                <Dropdown.Toggle className='btn btn-custom2-gray d-flex justify-content-center align-items-center p-1' variant="secondary" id="dropdown-basic">
+                            <div className="dropdown2">
+                                <button className="btn btn-custom2-green p-1 pe-3 ps-2 d-flex align-items-center" id="dropdown-basic">
                                     <div className="avatar">
                                         <img src={userProfilePic} alt="Profile Picture"/>
                                     </div>
-                                    <div className='me-1'>{user.first_name}</div>
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item>
-                                        <Link className='text-decoration-none' to={`/profile/${user.user_id}`}>Profile</Link>
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={userLogout}>Logout</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                                    <div className="username text-p">{user.username}</div>
+                                </button>
+                                <div className="dropdown-menu2">
+                                    <Link to={`/profile/${user.user_id}`} className="dropdown-item2">Profile</Link>
+                                    <div className="dropdown-item2 logout" onClick={userLogout}>Logout</div>
+                                </div>
+                            </div>
                         </>:
                         <>
                             <div></div>
@@ -72,8 +68,8 @@ const Navbar = () => {
                                 <li className="list-group-item text-center">
                                     <Link className='text-decoration-none text-black' to={`/profile/${user.user_id}`}>Profile</Link>
                                 </li>
-                                <li className="list-group-item text-center text-danger">
-                                    <Dropdown.Item onClick={userLogout}>Logout</Dropdown.Item>
+                                <li className="list-group-item text-center text-danger cursor-pointer" onClick={userLogout}>
+                                    Logout
                                 </li>
                             </ul>
                         </div>:

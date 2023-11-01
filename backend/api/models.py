@@ -55,13 +55,19 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 #================================== User Profile Model
+def profile_pic_upload_path(instance, filename):
+    profile_id = instance.id
+    file_extension = filename.split('.')[-1]
+    upload_path = os.path.join('User_Profile_Pic', str(profile_id))
+    return os.path.join(upload_path, f'profile_pic.{file_extension}')
+
 class UserProfile(models.Model):
 
     DEFAULT_PROFILE_PIC = 'default_profile_pic.webp'
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_verified = models.BooleanField(default=False)
-    profile_pic = models.ImageField(upload_to='profilePic/',default=DEFAULT_PROFILE_PIC,null=True, blank=True)
+    profile_pic = models.ImageField(upload_to=profile_pic_upload_path,default=DEFAULT_PROFILE_PIC,null=True, blank=True)
     bio = models.CharField(max_length=300, null=True, blank=True)
     gender = models.CharField(max_length=10, null=True, blank=True)
     profession = models.CharField(max_length=300, null=True, blank=True)
@@ -103,21 +109,6 @@ class SessionData(models.Model):
         return self.title
     
 
-@receiver(pre_save, sender=SessionData)
-def update_folder_name(sender, instance, **kwargs):
-    if instance.pk:
-        try:
-            old_instance = sender.objects.get(pk=instance.pk)
-        except sender.DoesNotExist:
-            return
-
-        if old_instance.title != instance.title:
-            old_folder_path = os.path.join(settings.MEDIA_ROOT, 'uploads', old_instance.title)
-            new_folder_path = os.path.join(settings.MEDIA_ROOT, 'uploads', instance.title)
-
-            if os.path.exists(old_folder_path):
-                os.rename(old_folder_path, new_folder_path)
-
 
 #======================================================= Session Member
 class SessionMember(models.Model):
@@ -152,12 +143,16 @@ class PostDB(models.Model):
 
 
 #======================================================= Assignment Model
+def assignment_file_upload_path(instance, filename):
+    session_id = instance.session.id
+    return os.path.join('All_Session', f'{session_id}', 'Assignment_files', filename)
+
 class AssignmentPostDB(models.Model):
     session = models.ForeignKey(SessionData, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=400)
     body = models.TextField(blank=True, null=True)
-    files = models.FileField(blank=True, null=True)
+    files = models.FileField(upload_to=assignment_file_upload_path, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     deadline = models.DateTimeField()
 
@@ -179,11 +174,15 @@ class AssignmentPostDB(models.Model):
     
 
 #====================================================== Assignment Submission Model
+def assign_submit_file_upload_path(instance, filename):
+    session_id = instance.session.id
+    return os.path.join('All_Session', f'{session_id}', 'Submission_files', filename)
+
 class AssignmentSubmissionDB(models.Model):
     session = models.ForeignKey(SessionData, on_delete=models.CASCADE)
     assignment = models.ForeignKey(AssignmentPostDB, on_delete=models.CASCADE)
     submit_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    file = models.FileField()
+    file = models.FileField(upload_to=assign_submit_file_upload_path)
     submitted = models.BooleanField(default=False)
     submit_at = models.DateTimeField(auto_now_add=True)
 
@@ -209,7 +208,7 @@ class AssignmentSubmissionDB(models.Model):
 #============================================= File Model
 
 def get_file_upload_path(instance, filename):
-    return os.path.join('uploads', instance.session.title, filename)
+    return os.path.join('All_Session', str(instance.session.id), filename)
 
 class FileDB(models.Model):
     session = models.ForeignKey(SessionData, on_delete=models.CASCADE)

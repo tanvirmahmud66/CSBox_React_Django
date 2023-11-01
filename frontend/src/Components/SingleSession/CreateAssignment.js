@@ -59,12 +59,12 @@ function CreateAssignmentPopup({isOpen, onRequestClose, session_id, session_upda
         session_update()
         setSpinner(false)
         formRef.current.reset();
-        
+        onRequestClose()
+        setSelectedFile(null);
+        setDeadline('')
       }
 
-      onRequestClose()
-      setSelectedFile(null);
-      setDeadline('')
+      
       
   };
 
