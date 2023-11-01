@@ -11,6 +11,7 @@ import CreateAssignmentPopup from '../../Components/SingleSession/CreateAssignme
 import SingleAssignment from '../../Components/SingleSession/SingleAssignment'
 import DeadlineComponent from '../../Components/DeadlineComponent'
 import menu from '../../assets/menu.png'
+import BaseUrl from '../../Components/BaseUrl'
 
 
 const SingleSession = () => {
@@ -46,7 +47,7 @@ const SingleSession = () => {
 
 
     let targetSession = async()=>{
-        let response = await fetch(`http://127.0.0.1:8000/api/single-session/${id}/`, {
+        let response = await fetch(`${BaseUrl.baseUrl}/api/single-session/${id}/`, {
             method: "GET",
             headers:{
                 "Content-Type": "application/json",
@@ -72,7 +73,7 @@ const SingleSession = () => {
 
     let getBlockMember = async()=>{
         if(session){
-            let response = await fetch(`http://127.0.0.1:8000/api/block-member/${session.id}/${session.token}/${user.user_id}/`, {
+            let response = await fetch(`${BaseUrl.baseUrl}/api/block-member/${session.id}/${session.token}/${user.user_id}/`, {
                 method: "GET",
                 headers:{
                     "Content-Type": "application/json",
