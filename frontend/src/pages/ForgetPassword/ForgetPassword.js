@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import BaseUrl from '../../Components/BaseUrl'
 
 const ForgetPassword = () => {
 
@@ -17,7 +18,7 @@ const ForgetPassword = () => {
     let sendcode = async(e)=>{
         e.preventDefault()
         setSpinner(true)
-        let response = await fetch('http://127.0.0.1:8000/api/forget-password/check-email/', {
+        let response = await fetch(`${BaseUrl.baseUrl}/api/forget-password/check-email/`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
@@ -43,7 +44,7 @@ const ForgetPassword = () => {
         console.log(token)
         console.log(validEmail)
         e.preventDefault()
-        let response = await fetch('http://127.0.0.1:8000/api/forget-password/check-code/', {
+        let response = await fetch(`${BaseUrl.baseUrl}/api/forget-password/check-code/`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -63,7 +64,7 @@ const ForgetPassword = () => {
 
     let resetPassword = async(e)=>{
         e.preventDefault()
-        let response = await fetch(`http://127.0.0.1:8000/api/forget-password/reset-password/`,{
+        let response = await fetch(`${BaseUrl.baseUrl}/api/forget-password/reset-password/`,{
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"

@@ -1,6 +1,7 @@
 import Modal from 'react-modal';
 import React, { useContext, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
+import BaseUrl from '../BaseUrl';
 
 function AssginDeletePopup({isOpen, onRequestClose, assignment, session, updateSession}) {
     
@@ -9,7 +10,7 @@ function AssginDeletePopup({isOpen, onRequestClose, assignment, session, updateS
 
     let deleteAssignment = async()=>{
         setSpinner(true)
-        let response = await fetch(`http://127.0.0.1:8000/api/session/single-assignment/${session.id}/${assignment.id}/`,{
+        let response = await fetch(`${BaseUrl.baseUrl}/api/session/single-assignment/${session.id}/${assignment.id}/`,{
             method: "DELETE",
             headers:{
                 'Content-Type': 'application/json',

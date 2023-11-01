@@ -8,8 +8,8 @@ import AssignmentExpend from './AssignmentExpend';
 import DeadlineComponent from '../DeadlineComponent';
 import { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
-import DateTimeComponent from '../DateTimeComponent';
-import { format, isBefore } from 'date-fns';
+import {isBefore } from 'date-fns';
+import BaseUrl from '../BaseUrl';
 
 
 // ===================================== Get File name
@@ -35,9 +35,7 @@ const SingleAssignment = ({assignment, submissions ,session, updateSession, subm
 
   const submissionsArray = submissions.filter((submission)=> submission.assignment===id)
 
-  const baseUrl = 'http://127.0.0.1:8000';
-
-
+  
   const openModal = () => {
     setIsOpen(true);
   };
@@ -103,7 +101,7 @@ const SingleAssignment = ({assignment, submissions ,session, updateSession, subm
             <div className='p-2 mb-2 ps-0'>{body}</div>
             {files &&
             <div className='d-flex mt-3 justify-content-between align-items-center alert alert-primary custom-alert'>
-              <div onClick={()=>openFile(baseUrl+files)} className='text-primary cursor-pointer w-100'>{getFileNameFromUrl(files)}</div>
+              <div onClick={()=>openFile(BaseUrl.baseUrl+files)} className='text-primary cursor-pointer w-100'>{getFileNameFromUrl(files)}</div>
               <Dropdown>
                 <Dropdown.Toggle
                  size='sm' 
@@ -119,7 +117,7 @@ const SingleAssignment = ({assignment, submissions ,session, updateSession, subm
                     >
                         Download
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={() => openFile(baseUrl+files)}>Open</Dropdown.Item>
+                    <Dropdown.Item onClick={() => openFile(BaseUrl.baseUrl+files)}>Open</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>}

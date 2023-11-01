@@ -1,6 +1,7 @@
 import Modal from 'react-modal';
 import React, { useContext, useState , useRef} from 'react';
 import AuthContext from '../../context/AuthContext';
+import BaseUrl from '../BaseUrl';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -45,7 +46,7 @@ function CreateAssignmentPopup({isOpen, onRequestClose, session_id, session_upda
       formData.append('post_data', JSON.stringify(postPayload));
       formData.append('file', selectedFile)
 
-      let response = await fetch(`http://127.0.0.1:8000/api/session/assignment/${session_id}/`,{
+      let response = await fetch(`${BaseUrl.baseUrl}/api/session/assignment/${session_id}/`,{
           method: "POST",
           headers: {
               'Authorization': 'Bearer '+ String(authTokens?.access)

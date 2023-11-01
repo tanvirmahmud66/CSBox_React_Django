@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import Modal from 'react-modal';
 import AuthContext from '../../context/AuthContext';
+import BaseUrl from '../BaseUrl';
 
 const EditModal = ({ isOpen, onRequestClose, session, sessionUpdate}) => {
 
@@ -28,7 +29,7 @@ const EditModal = ({ isOpen, onRequestClose, session, sessionUpdate}) => {
             details: sessionDetails 
         }
         formData.append('session_data', JSON.stringify(postPayload));
-        let response = await fetch(`http://127.0.0.1:8000/api/single-session/${session.id}/`,{
+        let response = await fetch(`${BaseUrl.baseUrl}/api/single-session/${session.id}/`,{
             method: "PUT",
             headers: {
                 'Authorization': 'Bearer '+String(authTokens?.access)

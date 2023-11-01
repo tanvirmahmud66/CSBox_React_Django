@@ -8,11 +8,10 @@ import EditPopup from './EditPopup';
 import Comment from './Comment';
 import TimeAgoComponent from '../TimeAgoComponent';
 import { Link } from 'react-router-dom';
+import BaseUrl from '../BaseUrl';
 
 const SinglePost = ({post, session ,files, sessionUpdate}) => {
 
-
-  const baseUrl = 'http://127.0.0.1:8000';
   const {user, authTokens} = useContext(AuthContext)
   const formRef = useRef()
   const session_id = session.id
@@ -34,7 +33,7 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
 
   let postDelete = async()=>{
     setSpinner(true)
-    let response = await fetch(`http://127.0.0.1:8000/api/single-post/${session_id}/${id}/`, {
+    let response = await fetch(`${BaseUrl.baseUrl}/api/single-post/${session_id}/${id}/`, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
@@ -50,7 +49,7 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
   }
 
   let getPostComment = async ()=>{
-    let response = await fetch(`http://127.0.0.1:8000/api/post-comment/${session_id}/${id}/`, {
+    let response = await fetch(`${BaseUrl.baseUrl}/api/post-comment/${session_id}/${id}/`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
@@ -67,7 +66,7 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
   const handleCommentSubmit = async (e) => {
     e.preventDefault()
     setSpinner(true)
-    let response = await fetch(`http://127.0.0.1:8000/api/post-comment/${session_id}/${id}/`, {
+    let response = await fetch(`${BaseUrl.baseUrl}/api/post-comment/${session_id}/${id}/`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -136,7 +135,7 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
           <div className="media d-flex justify-content-between align-items-center">
             <div className='d-flex align-items-center'>
                 <img
-                src={baseUrl+profile_pic}
+                src={BaseUrl.baseUrl+profile_pic}
                 className="avatar2"
                 alt="User Avatar"
                 />

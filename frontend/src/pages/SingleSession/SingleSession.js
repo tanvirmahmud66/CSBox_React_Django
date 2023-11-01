@@ -15,7 +15,6 @@ import menu from '../../assets/menu.png'
 
 const SingleSession = () => {
 
-    const baseUrl = 'http://127.0.0.1:8000';
     const {id} = useParams()
     const {user, authTokens} = useContext(AuthContext)
 

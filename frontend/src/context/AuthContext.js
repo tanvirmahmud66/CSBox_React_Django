@@ -1,6 +1,7 @@
 import React from 'react'
 import { createContext, useState, useEffect } from 'react'
 import jwt_decode from "jwt-decode";
+import BaseUrl from '../Components/BaseUrl';
 
 // ======================================= context Demo
 // const AuthContext = createContext()
@@ -32,7 +33,7 @@ export const AuthProvider = ({children}) =>{
 
     let userLogin = async(e)=>{
         e.preventDefault()
-        let response = await fetch('http://127.0.0.1:8000/api/token/', {
+        let response = await fetch(`${BaseUrl.baseUrl}/api/token/`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -66,7 +67,7 @@ export const AuthProvider = ({children}) =>{
 
     let getUserProfile = async()=>{
         if(user){
-            let response = await fetch(`http://127.0.0.1:8000/api/profile/${user.user_id}/`,{
+            let response = await fetch(`${BaseUrl.baseUrl}/api/profile/${user.user_id}/`,{
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,8 +78,7 @@ export const AuthProvider = ({children}) =>{
             // console.log(data)
             if (response.status===200){
                 setUserProfile(data)
-                const baseUrl = 'http://127.0.0.1:8000';
-                setUserProfilePic(baseUrl+data.profile_pic)
+                setUserProfilePic(BaseUrl.baseUrl+data.profile_pic)
             }
         }
 
@@ -94,7 +94,7 @@ export const AuthProvider = ({children}) =>{
 
     let updateToken = async()=>{
         // console.log("update token working")
-        let response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+        let response = await fetch(`${BaseUrl.baseUrl}/api/token/refresh/`, {
             method:'POST',
             headers: {
                 'Content-Type': 'application/json'

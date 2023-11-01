@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import AuthContext from '../../context/AuthContext';
+import BaseUrl from '../BaseUrl';
 
 // ===================================== Get File name
 function getFileNameFromUrl(url) {
@@ -22,7 +23,7 @@ function FileDownloadComponent({ files, post, session, sessionUpdate }) {
     const {user, authTokens} = useContext(AuthContext)
 
     let fileRemove = async(file_id)=>{
-      let response = await fetch(`http://127.0.0.1:8000/api/single-file/${file_id}/`, {
+      let response = await fetch(`${BaseUrl.baseUrl}/api/single-file/${file_id}/`, {
         method: "DELETE",
         headers: {
           'Content-Type': 'application/json',

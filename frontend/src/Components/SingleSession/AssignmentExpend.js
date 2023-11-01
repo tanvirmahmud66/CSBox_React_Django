@@ -6,6 +6,7 @@ import TimeAgoComponent from '../TimeAgoComponent';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DeadlineComponent from '../DeadlineComponent';
 import DateTimeComponent from '../DateTimeComponent';
+import BaseUrl from '../BaseUrl';
 
 
 // ===================================== Get File name
@@ -22,7 +23,6 @@ function openFile(url) {
 function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSession, allSubmission, expired}) {
 
     const {files, file_data} = assignment
-    const baseUrl = 'http://127.0.0.1:8000';
  
   const formRef = useRef();
   const {user,authTokens} = useContext(AuthContext)
@@ -62,7 +62,7 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
     formData.append('post_data', JSON.stringify(postPayload));
     formData.append('file', selectedFile)
 
-    let response = await fetch(`http://127.0.0.1:8000/api/submission/${session.id}/${assignment.id}/`,{
+    let response = await fetch(`${BaseUrl.baseUrl}/api/submission/${session.id}/${assignment.id}/`,{
         method:"POST",
         headers: {
             'Authorization': 'Bearer '+ String(authTokens?.access)
@@ -108,7 +108,7 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
                     
                     {files &&
                         <div className='d-flex mt-3 justify-content-between align-items-center alert alert-primary custom-alert'>
-                            <div onClick={()=>openFile(baseUrl+files)} className='text-primary cursor-pointer w-100'>{getFileNameFromUrl(files)}</div>
+                            <div onClick={()=>openFile(BaseUrl.baseUrl+files)} className='text-primary cursor-pointer w-100'>{getFileNameFromUrl(files)}</div>
                             <Dropdown>
                                 <Dropdown.Toggle
                                 size='sm' 
@@ -124,7 +124,7 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
                                     >
                                         Download
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => openFile(baseUrl+files)}>Open</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => openFile(BaseUrl.baseUrl+files)}>Open</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>}
@@ -162,7 +162,7 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
                                         <li  className={`${user.user_id===each.submit_by.id? "custom-list-item2":"custom-list-item"} p-2 rounded`}>
                                             <div className='d-flex justify-content-between align-items-center'>
                                                 <div className='d-flex align-items-center'>
-                                                    <img className='avatar' src={baseUrl+each.submit_by.profile.profile_pic} alt='avatar'/>
+                                                    <img className='avatar' src={BaseUrl.baseUrl+each.submit_by.profile.profile_pic} alt='avatar'/>
                                                     <div className='text-decoration-none'>{each.submit_by.first_name} {each.submit_by.last_name}</div>
                                                 </div>
                                                 <DateTimeComponent dateTimeString={each.submit_at}/>
@@ -170,7 +170,7 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
                                             <div className='mt-2'>
                                                 <div className='d-flex justify-content-between align-items-center custom-alert-primary custom-alert'>
                                                     <small onClick={()=>{
-                                                        if(user.user_id===each.submit_by.id || user.user_id===session.host.id){openFile(baseUrl+each.file)}     
+                                                        if(user.user_id===each.submit_by.id || user.user_id===session.host.id){openFile(BaseUrl.baseUrl+each.file)}     
                                                     }} className='text-primary cursor-pointer w-100'>{getFileNameFromUrl(each.file)}</small>
                                                     {(user.user_id===each.submit_by.id || user.user_id===session.host.id) && 
                                                         <Dropdown variant="small">
@@ -188,7 +188,7 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
                                                                 >
                                                                     Download
                                                                 </Dropdown.Item>
-                                                                <Dropdown.Item onClick={() => openFile(baseUrl+files)}>Open</Dropdown.Item>
+                                                                <Dropdown.Item onClick={() => openFile(BaseUrl.baseUrl+files)}>Open</Dropdown.Item>
                                                             </Dropdown.Menu>
                                                         </Dropdown>
                                                     }
@@ -236,7 +236,7 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
                     
                 {files &&
                     <div className='d-flex mt-3 justify-content-between align-items-center alert alert-primary custom-alert'>
-                        <div onClick={()=>openFile(baseUrl+files)} className='text-primary cursor-pointer w-100'>{getFileNameFromUrl(files)}</div>
+                        <div onClick={()=>openFile(BaseUrl.baseUrl+files)} className='text-primary cursor-pointer w-100'>{getFileNameFromUrl(files)}</div>
                         <Dropdown>
                             <Dropdown.Toggle
                                 size='sm' 
@@ -252,7 +252,7 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
                                 >
                                 Download
                                 </Dropdown.Item>
-                                <Dropdown.Item onClick={() => openFile(baseUrl+files)}>Open</Dropdown.Item>
+                                <Dropdown.Item onClick={() => openFile(BaseUrl.baseUrl+files)}>Open</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
@@ -286,7 +286,7 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
                                         <li  className={`${user.user_id===each.submit_by.id? "custom-list-item2":"custom-list-item"} p-2 rounded`}>
                                             <div className='d-flex justify-content-between align-items-center'>
                                                 <div className='d-flex align-items-center'>
-                                                    <img className='avatar' src={baseUrl+each.submit_by.profile.profile_pic} alt='avatar'/>
+                                                    <img className='avatar' src={BaseUrl.baseUrl+each.submit_by.profile.profile_pic} alt='avatar'/>
                                                     <div className='text-decoration-none'>{each.submit_by.first_name} {each.submit_by.last_name}</div>
                                                 </div>
                                                 <DateTimeComponent dateTimeString={each.submit_at}/>
@@ -294,7 +294,7 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
                                             <div className='mt-2'>
                                                 <div className='d-flex justify-content-between align-items-center custom-alert-primary custom-alert'>
                                                     <small onClick={()=>{
-                                                        if(user.user_id===each.submit_by.id || user.user_id===session.host.id){openFile(baseUrl+each.file)}     
+                                                        if(user.user_id===each.submit_by.id || user.user_id===session.host.id){openFile(BaseUrl.baseUrl+each.file)}     
                                                     }} className='text-primary cursor-pointer w-100'>{getFileNameFromUrl(each.file)}</small>
                                                     {(user.user_id===each.submit_by.id || user.user_id===session.host.id) && 
                                                         <Dropdown variant="small">
@@ -312,7 +312,7 @@ function AssignmentExpend({isOpen, onRequestClose, assignment, session, updateSe
                                                                 >
                                                                     Download
                                                                 </Dropdown.Item>
-                                                                <Dropdown.Item onClick={() => openFile(baseUrl+files)}>Open</Dropdown.Item>
+                                                                <Dropdown.Item onClick={() => openFile(BaseUrl.baseUrl+files)}>Open</Dropdown.Item>
                                                             </Dropdown.Menu>
                                                         </Dropdown>
                                                     }

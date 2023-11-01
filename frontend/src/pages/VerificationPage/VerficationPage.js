@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import BaseUrl from '../../Components/BaseUrl';
 
 const VerficationPage = () => {
     const{id, username} = useParams()
@@ -9,7 +10,7 @@ const VerficationPage = () => {
     console.log("username", username, typeof(username))
 
     let accountVerification = async ()=>{
-        let response = await fetch(`http://127.0.0.1:8000/api/verify-user/${id}/${username}/verified/`, {
+        let response = await fetch(`${BaseUrl.baseUrl}/api/verify-user/${id}/${username}/verified/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

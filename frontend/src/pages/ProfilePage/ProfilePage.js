@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
-import defaultPic from '../../assets/defaultPic.jpeg'
 import { useParams } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
 import ProfileChangePop from './ProfileChangePop'
+import BaseUrl from '../../Components/BaseUrl'
 
 const ProfilePage = () => {
 
@@ -25,7 +25,7 @@ const ProfilePage = () => {
     const[website, setWebsite] = useState('')
 
     let getProfile = async()=>{
-        let response = await fetch(`http://127.0.0.1:8000/api/profile/${id}/`, {
+        let response = await fetch(`${BaseUrl.baseUrl}/api/profile/${id}/`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -35,9 +35,8 @@ const ProfilePage = () => {
         let data = await response.json()
         // console.log(data)
         if (response.status===200){
-            const baseUrl = 'http://127.0.0.1:8000';
             setProfile(data)
-            setProfilePictrue(baseUrl+data.profile_pic)
+            setProfilePictrue(BaseUrl.baseUrl+data.profile_pic)
             setBio(data.bio)
             setProfession(data.profession)
             setGender(data.gender)
@@ -86,7 +85,7 @@ const ProfilePage = () => {
 
     let editProfileApi = async(e)=>{
         e.preventDefault()
-        let response = await fetch(`http://127.0.0.1:8000/api/profile/${id}/`,{
+        let response = await fetch(`${BaseUrl.baseUrl}/api/profile/${id}/`,{
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
@@ -107,7 +106,7 @@ const ProfilePage = () => {
             })
         })
 
-        let data = await response.json()
+        // let data = await response.json()
         if (response.status===200){
             getProfile()
             setEditProfile(false)

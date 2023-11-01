@@ -1,12 +1,13 @@
 import React, { useContext, useRef, useState } from 'react'
 import Modal from 'react-modal';
 import AuthContext from '../../context/AuthContext';
+import BaseUrl from '../../Components/BaseUrl';
 
 const ProfileChangePop = ({ isOpen, onRequestClose, profileID, getProfile}) => {
 
     const formRef = useRef()
 
-    const{user,authTokens} = useContext(AuthContext)
+    const{authTokens} = useContext(AuthContext)
     const [selectedImage, setSelectedImage] = useState(null);
 
     const handleImageChange = (e) => {
@@ -17,7 +18,7 @@ const ProfileChangePop = ({ isOpen, onRequestClose, profileID, getProfile}) => {
         e.preventDefault()
         const formData = new FormData();
         formData.append('profile_pic', selectedImage);
-        let response = await fetch(`http://127.0.0.1:8000/api/profile/${profileID}/`,{
+        let response = await fetch(`${BaseUrl.baseUrl}/api/profile/${profileID}/`,{
             method: "PUT",
             headers: {
                 // 'Content-Type': 'application/json',

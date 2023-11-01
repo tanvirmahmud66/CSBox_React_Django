@@ -5,11 +5,12 @@ import AuthContext from '../../context/AuthContext';
 import RemoveMemberPopup from './RemoveMemberPopup';
 import BlockMemberPopup from './BlockMemberPopup';
 import UnblockMemberPopup from './UnblockMemberPopup';
+import BaseUrl from '../BaseUrl';
 
 
 const MemberListItem = ({each, session, sessionUpdate, blocked}) => {
 
-    const baseUrl = 'http://127.0.0.1:8000';
+    
     const{user,authTokens} = useContext(AuthContext);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpen2, setIsOpen2] = useState(false);
@@ -19,7 +20,7 @@ const MemberListItem = ({each, session, sessionUpdate, blocked}) => {
     // console.log(user)
 
     let removeMember = async()=>{
-        let response = await fetch(`http://127.0.0.1:8000/api/remove-member/${each.session}/${each.token}/${each.member.id}/`,{
+        let response = await fetch(`${BaseUrl.baseUrl}/api/remove-member/${each.session}/${each.token}/${each.member.id}/`,{
             method: "DELETE",
             headers:{
                 "Content-Type": "application/json",
@@ -33,7 +34,7 @@ const MemberListItem = ({each, session, sessionUpdate, blocked}) => {
     }
 
     let blockMember = async()=>{
-        let response = await fetch(`http://127.0.0.1:8000/api/block-member/${each.session}/${each.token}/${each.member.id}/`, {
+        let response = await fetch(`${BaseUrl.baseUrl}/api/block-member/${each.session}/${each.token}/${each.member.id}/`, {
             method: "POST",
             headers:{
                 "Content-Type": "application/json",
@@ -47,7 +48,7 @@ const MemberListItem = ({each, session, sessionUpdate, blocked}) => {
     }
 
     let unblockMember = async()=>{
-        let response = await fetch(`http://127.0.0.1:8000/api/block-member/${each.session}/${each.token}/${each.member.id}/`, {
+        let response = await fetch(`${BaseUrl.baseUrl}/api/block-member/${each.session}/${each.token}/${each.member.id}/`, {
             method: "DELETE",
             headers:{
                 "Content-Type": "application/json",
@@ -91,7 +92,7 @@ const MemberListItem = ({each, session, sessionUpdate, blocked}) => {
     <>
         <li className="list-group-item d-flex justify-content-between align-items-center">
             <div className=''>
-                <img className='avatar' src={baseUrl+each.member.profile.profile_pic}/>
+                <img className='avatar' src={BaseUrl.baseUrl+each.member.profile.profile_pic} alt='avatar'/>
                 <Link to={`/profile/${each.member.id}`} className='text-decoration-none'>{each.member.first_name} {each.member.last_name}</Link>
             </div>
             {(session.host.id === user.user_id) &&

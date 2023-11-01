@@ -1,6 +1,7 @@
 import Modal from 'react-modal';
 import React, { useContext, useState , useRef} from 'react';
 import AuthContext from '../../context/AuthContext';
+import BaseUrl from '../BaseUrl';
 
 function PostComponent({isOpen, onRequestClose, session_id, session_update}) {
 
@@ -36,7 +37,7 @@ function PostComponent({isOpen, onRequestClose, session_id, session_update}) {
         formData.append('files', file)
       })
 
-      let response = await fetch(`http://127.0.0.1:8000/api/single-session/${session_id}/`,{
+      let response = await fetch(`${BaseUrl.baseUrl}/api/single-session/${session_id}/`,{
           method: "POST",
           headers: {
               'Authorization': 'Bearer '+ String(authTokens?.access)

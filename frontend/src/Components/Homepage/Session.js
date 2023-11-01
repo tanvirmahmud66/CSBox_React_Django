@@ -1,12 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, {useContext} from 'react'
 import AuthContext from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import TimeAgoComponent from '../TimeAgoComponent';
-import ProfileContext from '../../context/ProfileContext';
-import defaultPic from '../../assets/defaultPic.jpeg';
+import BaseUrl from '../BaseUrl';
 
 const Session = (props) => {
-    const baseUrl = 'http://127.0.0.1:8000';
     const {title, details, created} = props.session;
     const {id,first_name, last_name} = props.session.host;
     const {profile_pic} = props.session.hostProfile;
@@ -21,7 +19,7 @@ const Session = (props) => {
             <div className='card-body d-flex flex-column justify-content-between '>
                 <div className="card-text d-flex">
                     <div className="avatar2">
-                        <img src={baseUrl+profile_pic} alt="Profile Picture"/>
+                        <img src={BaseUrl.baseUrl+profile_pic} alt="Profile"/>
                     </div>
                     <div>
                         <h5 className='text-title'>{first_name} {last_name}</h5>

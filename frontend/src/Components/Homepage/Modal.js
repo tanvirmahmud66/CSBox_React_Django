@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Modal from 'react-modal';
 import AuthContext from '../../context/AuthContext';
+import BaseUrl from '../BaseUrl';
 
 const CustomModal = ({ isOpen, onRequestClose, get }) => {
 
@@ -10,7 +11,7 @@ const CustomModal = ({ isOpen, onRequestClose, get }) => {
     let createSession = async(e)=>{
         e.preventDefault()
         setSpinner(true)
-        let response = await fetch('http://127.0.0.1:8000/api/new-session/',{
+        let response = await fetch(`${BaseUrl.baseUrl}/api/new-session/`,{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

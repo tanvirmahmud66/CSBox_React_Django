@@ -5,6 +5,7 @@ import Session from '../../Components/Homepage/Session';
 import CreateSession,{EmptySession} from '../../Components/Homepage/EmptySession';
 import SessionListItem from '../../Components/Homepage/SessionListItem';
 import Dropdown from 'react-bootstrap/Dropdown';
+import BaseUrl from '../../Components/BaseUrl';
 
 
 
@@ -73,7 +74,7 @@ const HomePage = () => {
   
 
   let getSession = async()=>{
-    let response = await fetch('http://127.0.0.1:8000/api/new-session/',{
+    let response = await fetch(`${BaseUrl.baseUrl}/api/new-session/`,{
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -92,7 +93,7 @@ const HomePage = () => {
   let joinSession = async(e)=>{
     e.preventDefault()
     setSpinner(true)
-    let response = await fetch('http://127.0.0.1:8000/api/join-session/',{
+    let response = await fetch(`${BaseUrl.baseUrl}/api/join-session/`,{
       method: 'POST',
       headers: {
         "Content-Type":"application/json",

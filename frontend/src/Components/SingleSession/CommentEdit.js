@@ -1,10 +1,10 @@
 import Modal from 'react-modal';
 import React, { useContext, useState } from 'react';
 import AuthContext from '../../context/AuthContext';
+import BaseUrl from '../BaseUrl';
 
 function CommentEditPopup({isOpen, onRequestClose, comment, getPostComment}) {
    
-    const baseUrl = 'http://127.0.0.1:8000';
     const {authTokens} = useContext(AuthContext)
     const {id, session, post_id} = comment
     const [commentBody, setCommentBody] = useState(comment.comment_body)
@@ -17,7 +17,7 @@ function CommentEditPopup({isOpen, onRequestClose, comment, getPostComment}) {
     let editComment = async(e)=>{
         e.preventDefault()
         setSpinner(true)
-        let response = await fetch(`http://127.0.0.1:8000/api/post-comment/${session}/${post_id}/${id}/`, {
+        let response = await fetch(`${BaseUrl.baseUrl}/api/post-comment/${session}/${post_id}/${id}/`, {
           method: "PUT",
           headers: {
               'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ function CommentEditPopup({isOpen, onRequestClose, comment, getPostComment}) {
             <div className="d-flex justify-content-between align-items-center">
                 <div className="d-flex justify-content-start align-items-center">
                     <img
-                    src={baseUrl+comment.commenter.profile.profile_pic}
+                    src={BaseUrl.baseUrl+comment.commenter.profile.profile_pic}
                     className="rounded-circle avatar"
                     alt="User Profile"
                     />

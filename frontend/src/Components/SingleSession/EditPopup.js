@@ -1,6 +1,7 @@
 import Modal from 'react-modal';
 import React, { useContext, useState , useRef} from 'react';
 import AuthContext from '../../context/AuthContext';
+import BaseUrl from '../BaseUrl';
 
 function EditPopup({isOpen, onRequestClose, post, session, sessionUpdate}) {
 
@@ -42,7 +43,7 @@ function EditPopup({isOpen, onRequestClose, post, session, sessionUpdate}) {
         formData.append('files', file)
       })
 
-      let response = await fetch(`http://127.0.0.1:8000/api/single-post/${session_id}/${id}/`,{
+      let response = await fetch(`${BaseUrl.baseUrl}/api/single-post/${session_id}/${id}/`,{
           method: "PUT",
           headers: {
               'Authorization': 'Bearer '+ String(authTokens?.access)

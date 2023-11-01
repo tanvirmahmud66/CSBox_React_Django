@@ -1,10 +1,10 @@
 import Modal from 'react-modal';
 import React from 'react';
 import TimeAgoComponent from '../TimeAgoComponent';
+import BaseUrl from '../BaseUrl';
 
 function DeletePopup({isOpen2, onRequestClose, Delete, post, spinner}) {
    
-    const baseUrl = 'http://127.0.0.1:8000';
     const {post_body, created} = post
     const {first_name, last_name} = post.creator
     const{profile_pic} = post.creator.profile
@@ -28,7 +28,7 @@ function DeletePopup({isOpen2, onRequestClose, Delete, post, spinner}) {
           <div className="media d-flex justify-content-between align-items-center">
               <div className='d-flex align-items-center'>
                   <img
-                  src={baseUrl+profile_pic}
+                  src={BaseUrl.baseUrl+profile_pic}
                   className="avatar2"
                   alt="User Avatar"
                   />

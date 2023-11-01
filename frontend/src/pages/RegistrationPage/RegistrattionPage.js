@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import BaseUrl from '../../Components/BaseUrl';
 
 const RegistrattionPage = () => {
 
@@ -17,7 +18,7 @@ const RegistrattionPage = () => {
     setEmailErr('')
     setPasswordErr('')
     console.log("registration function working")
-    let response = await fetch('http://127.0.0.1:8000/api/user-reg/',{
+    let response = await fetch(`${BaseUrl.baseUrl}/api/user-reg/`,{
       method: 'POST',
       headers: {
         "Content-Type":"application/json",

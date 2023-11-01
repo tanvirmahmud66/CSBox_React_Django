@@ -1,6 +1,7 @@
 import Modal from 'react-modal';
 import React, { useContext, useState , useRef} from 'react';
 import AuthContext from '../../context/AuthContext';
+import BaseUrl from '../BaseUrl';
 
 import DatePicker from 'react-datepicker';
 import { parseISO } from 'date-fns';
@@ -64,7 +65,7 @@ function AssignEditPopup({isOpen, onRequestClose, assignment, session, updateSes
     formData.append('post_data', JSON.stringify(putPayload));
     formData.append('file', selectedFile)
 
-    let response = await fetch(`http://127.0.0.1:8000/api/session/single-assignment/${session.id}/${assignment.id}/`,{
+    let response = await fetch(`${BaseUrl.baseUrl}/api/session/single-assignment/${session.id}/${assignment.id}/`,{
         method:"PUT",
         headers: {
             'Authorization': 'Bearer '+ String(authTokens?.access)

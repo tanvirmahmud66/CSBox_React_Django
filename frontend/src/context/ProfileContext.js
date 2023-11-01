@@ -13,6 +13,7 @@
 import React, { useContext } from 'react'
 import { createContext, useState, useEffect } from 'react'
 import AuthContext from './AuthContext';
+import BaseUrl from '../Components/BaseUrl';
 
 const ProfileContext = createContext()
 export default ProfileContext;
@@ -27,7 +28,7 @@ export const UserProfileProvider = ({children}) => {
 
     let getUserProfile = async()=>{
         if(user){
-            let response = await fetch(`http://127.0.0.1:8000/api/profile/${user.user_id}/`,{
+            let response = await fetch(`${BaseUrl.baseUrl}/api/profile/${user.user_id}/`,{
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -38,8 +39,7 @@ export const UserProfileProvider = ({children}) => {
             // console.log(data)
             if (response.status===200){
                 setUserProfile(data)
-                const baseUrl = 'http://127.0.0.1:8000';
-                setUserProfilePic(baseUrl+data.profile_pic)
+                setUserProfilePic(BaseUrl.baseUrl+data.profile_pic)
             }
         }
 

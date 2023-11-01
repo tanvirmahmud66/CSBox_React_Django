@@ -3,6 +3,7 @@ import AuthContext from '../../context/AuthContext';
 import DeletePopup from './DeletePopup';
 import LeavePopup from './LeavePopup';
 import EditModal from './EditPopup';
+import BaseUrl from '../BaseUrl';
 
 const SessionListItem = ({session, updateSession}) => {
     const {title, details, created, token} = session;
@@ -13,7 +14,7 @@ const SessionListItem = ({session, updateSession}) => {
 
     let deleteSession = async()=>{
         setSpinner(true)
-        let response = await fetch(`http://127.0.0.1:8000/api/single-session/${session.id}/`, {
+        let response = await fetch(`${BaseUrl.baseUrl}/api/single-session/${session.id}/`, {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json',
@@ -30,7 +31,7 @@ const SessionListItem = ({session, updateSession}) => {
 
     let leaveSession = async()=>{
         setSpinner(true)
-        let response = await fetch(`http://127.0.0.1:8000/api/leave-session/${session.id}/${token}/`, {
+        let response = await fetch(`${BaseUrl.baseUrl}/api/leave-session/${session.id}/${token}/`, {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json',

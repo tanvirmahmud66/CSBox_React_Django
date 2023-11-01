@@ -1,17 +1,16 @@
 import React, { useContext, useState } from 'react';
 import './comment.css'
 import TimeAgoComponent from '../TimeAgoComponent'
-import DefaultPic from '../../assets/defaultPic.jpeg'
 import AuthContext from '../../context/AuthContext';
 import CommentDeletePopup from './CommentDelete';
 import CommentEditPopup from './CommentEdit';
+import BaseUrl from '../BaseUrl';
 
 const Comment = ({comment, getPostComment, session}) => {
 
   const {user} = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
-  const baseUrl = 'http://127.0.0.1:8000';
 
 
 
@@ -40,7 +39,7 @@ const Comment = ({comment, getPostComment, session}) => {
             <div className="d-flex justify-content-between align-items-center">
                 <div className="d-flex justify-content-start align-items-center">
                     <img
-                    src={baseUrl+comment.commenter.profile.profile_pic}
+                    src={BaseUrl.baseUrl+comment.commenter.profile.profile_pic}
                     className="rounded-circle avatar"
                     alt="User Profile"
                     />
