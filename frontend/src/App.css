@@ -153,3 +153,21 @@
       display: none; /* Show the div when the viewport width is 991px or less */
     }
   }
+
+  @media (max-width: 550px) {
+    .d-none-550 {
+      display: none;
+    }
+  }
+
+  @media (max-width: 550px) {
+    .deadline {
+      display: block;
+    }
+  }
+  
+  @media (min-width: 551px) {
+    .deadline {
+      display: none;
+    }
+  }

@@ -1,21 +1,12 @@
 import Modal from 'react-modal';
-import React, { useContext, useState , useRef} from 'react';
+import React, { useContext, useState , useRef, useEffect} from 'react';
 import AuthContext from '../../context/AuthContext';
 import BaseUrl from '../BaseUrl';
 
-import DatePicker from 'react-datepicker';
-import { parseISO } from 'date-fns';
-import 'react-datepicker/dist/react-datepicker.css';
-
-// function getFileNameFromUrl(url) {
-//     const parts = url.split('/');
-//     return parts[parts.length - 1];
-// }
 
 
 function AssignEditPopup({isOpen, onRequestClose, assignment, session, updateSession}) {
 
- 
   const formRef = useRef();
   const {authTokens} = useContext(AuthContext)
   const {files} = assignment
@@ -23,9 +14,18 @@ function AssignEditPopup({isOpen, onRequestClose, assignment, session, updateSes
   const[title, setTitle] = useState(assignment.title)
   const[body, setBody] = useState(assignment.body)
   const [selectedFile, setSelectedFile] = useState(files);
-  const [deadline, setDeadline] = useState(parseISO(assignment.deadline));
+
+  const [deadline, setDeadline] = useState('');
 
   let [spinner, setSpinner] = useState(false)
+
+  useEffect(() => {
+    if (assignment.deadline) {
+      const deadlineDate = new Date(assignment.deadline);
+      const formattedDeadline = deadlineDate.toISOString().slice(0, 16);
+      setDeadline(formattedDeadline);
+    }
+  }, [assignment.deadline]);
 
 
   const handleTitleChange = (event) =>{
@@ -45,10 +45,7 @@ function AssignEditPopup({isOpen, onRequestClose, assignment, session, updateSes
     setSelectedFile(null);
   };
 
-  const handleDateChange = (date) => {
-    setDeadline(date);
-  };
-
+  
 
   let editAssignment = async(e)=>{
     e.preventDefault()
@@ -60,7 +57,7 @@ function AssignEditPopup({isOpen, onRequestClose, assignment, session, updateSes
         body:body,
         creator: assignment.creator.id,
         files: selectedFile,
-        deadline: deadline.toISOString()
+        deadline: deadline
     }
     formData.append('post_data', JSON.stringify(putPayload));
     formData.append('file', selectedFile)
@@ -86,7 +83,7 @@ function AssignEditPopup({isOpen, onRequestClose, assignment, session, updateSes
     setTitle(assignment.title)
     setBody(assignment.body)
     setSelectedFile(files)
-    setDeadline(parseISO(assignment.deadline))
+    setDeadline(deadline)
     onRequestClose()
   }
 
@@ -149,17 +146,13 @@ function AssignEditPopup({isOpen, onRequestClose, assignment, session, updateSes
             </div>
                 
             <div className="form-group">
-                <label htmlFor="datePicker" className='text-danger'>Submission Deadline:</label>
-                <DatePicker
-                    selected={deadline}
-                    onChange={handleDateChange}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={1}
-                    timeCaption="Time"
-                    dateFormat="MMMM d, yyyy h:mm aa"
-                    className="form-control"
-                    placeholderText='Data and Time'
+                <label htmlFor="datetime" className='text-danger'>Submission Deadline:</label>
+                <input
+                    type="datetime-local" 
+                    id="datePicker"
+                    className='form-control'
+                    value={deadline}
+                    onChange={(e) => setDeadline(e.target.value)}
                     required
                 />
             </div>

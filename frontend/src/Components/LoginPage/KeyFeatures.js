@@ -13,7 +13,7 @@ const KeyFeatures = () => {
                 <li className="list-group-item">Bloging Mechanism</li>
                 <li className="list-group-item">File Upload and download</li>
                 <li className='list-group-item'>Task Mechanism</li>
-                <li className="list-group-item">Reat Time Conversation</li>
+                <li className="list-group-item">Real Time Conversation</li>
                 <li className="list-group-item">Open Source back-end Technology</li>
             </ul>
             </div>

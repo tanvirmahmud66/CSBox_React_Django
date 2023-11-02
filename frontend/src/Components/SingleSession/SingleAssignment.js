@@ -80,13 +80,17 @@ const SingleAssignment = ({assignment, submissions ,session, updateSession, subm
         <div className="card-header d-flex justify-content-between align-items-center">
             <div>
                 <div className='fs-4'>{title}</div>
+                <div className='deadline'>
+                  <DeadlineComponent dateTimeString={deadline}/>
+                </div>
                 <div className='text-primary text-small'>
                     <TimeAgoComponent dateString={created}/>
                 </div> 
             </div>
             <div className='d-flex align-items-center'>
-              {submitted ?<div className='text-green'>Sumitted</div>:<DeadlineComponent dateTimeString={deadline}/>}
-                
+                <div className='d-none-550'>
+                  {submitted ?<div className='text-green'>Sumitted</div>:<DeadlineComponent dateTimeString={deadline}/>}
+                </div>
                 {user.user_id===session.host.id &&
                 <Dropdown className='ms-1'>
                     <Dropdown.Toggle variant="" id="dropdown-basic"></Dropdown.Toggle>

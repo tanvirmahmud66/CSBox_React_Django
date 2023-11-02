@@ -3,9 +3,6 @@ import React, { useContext, useState , useRef} from 'react';
 import AuthContext from '../../context/AuthContext';
 import BaseUrl from '../BaseUrl';
 
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-
 function CreateAssignmentPopup({isOpen, onRequestClose, session_id, session_update}) {
 
   const formRef = useRef();
@@ -13,7 +10,7 @@ function CreateAssignmentPopup({isOpen, onRequestClose, session_id, session_upda
   const {user,authTokens} = useContext(AuthContext)
   
   const [selectedFile, setSelectedFile] = useState();
-  const [deadline, setDeadline] = useState();
+  const [deadline, setDeadline] = useState('');
   let [spinner, setSpinner] = useState(false);
 
 
@@ -24,10 +21,6 @@ function CreateAssignmentPopup({isOpen, onRequestClose, session_id, session_upda
 
   const handleFileRemove = (fileName) => {
     setSelectedFile(null);
-  };
-
-  const handleDateChange = (date) => {
-    setDeadline(date);
   };
 
 
@@ -41,7 +34,7 @@ function CreateAssignmentPopup({isOpen, onRequestClose, session_id, session_upda
         body: e.target.body.value,
         creator: user.user_id,
         files: selectedFile,
-        deadline: deadline.toISOString()
+        deadline: deadline
       }
       formData.append('post_data', JSON.stringify(postPayload));
       formData.append('file', selectedFile)
@@ -117,23 +110,15 @@ function CreateAssignmentPopup({isOpen, onRequestClose, session_id, session_upda
               </div>}
             </div>
             
-            {/* <div className="form-group mt-2">
-                <label htmlFor="datePicker" className='text-danger'>Submission Deadline :</label>
-                <input type="date" id="datePicker" className='w-100' value={deadline} onChange={handleDateChange} required/>
-            </div> */}
-                
+
             <div className="form-group">
                 <label htmlFor="datePicker" className='text-danger'>Submission Deadline:</label>
-                <DatePicker
-                    selected={deadline}
-                    onChange={handleDateChange}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={1}
-                    timeCaption="Time"
-                    dateFormat="MMMM d, yyyy h:mm aa"
-                    className="form-control"
-                    placeholderText='Data and Time'
+                <input
+                    type="datetime-local"  // Use datetime-local input type for date and time
+                    id="datePicker"
+                    className='form-control'
+                    value={deadline}
+                    onChange={(e) => setDeadline(e.target.value)}
                     required
                 />
             </div>

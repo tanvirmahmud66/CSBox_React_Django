@@ -336,7 +336,7 @@ const HomePage = () => {
               </div>
               <button type='submit' className='btn bg-primary text-white ms-2'>Join</button>
             </form>
-            <button onClick={openModal} className='btn btn-custom2-green'><FontAwesomeIcon icon={faPlus} /> Create</button>
+            <button onClick={openModal} className='btn btn-custom2-green'>Create</button>
       </div>
       
       <div>
