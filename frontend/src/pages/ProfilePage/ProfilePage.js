@@ -3,6 +3,11 @@ import { useParams } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
 import ProfileChangePop from './ProfileChangePop'
 import BaseUrl from '../../Components/BaseUrl'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faUserMd } from '@fortawesome/free-solid-svg-icons';
+import { faCheck ,faVenus, faMars, faBriefcase, faUniversity, faGraduationCap, faSchool, faEnvelope, faGlobe } from '@fortawesome/free-solid-svg-icons';
+
 
 const ProfilePage = () => {
 
@@ -23,6 +28,19 @@ const ProfilePage = () => {
     const[linkedIn, setLinkedIn] = useState('')
     const[github, setGithub] = useState('')
     const[website, setWebsite] = useState('')
+
+    let [editBio, setEditBio] = useState(false)
+    let [editprofession, setEditProfession] = useState(false)
+    let [editWorkingAt, setEditWorkingAt] = useState(false)
+    let [editGender, setEditGender] = useState(false)
+    let [editUniversity, setEditUniversity] = useState(false)
+    let [editCollege, setEditCollege] = useState(false)
+    let [editSchool, setEditSchool] = useState(false)
+    let [editLinkedIn, setEditLinkedIn] = useState(false)
+    let [editGithub, setEditGithub] = useState(false)
+    let [editWebsite, setEditWebsite] = useState(false)
+
+    let [disable, setDisable] = useState(false)
 
     let getProfile = async()=>{
         let response = await fetch(`${BaseUrl.baseUrl}/api/profile/${id}/`, {
@@ -109,7 +127,16 @@ const ProfilePage = () => {
         // let data = await response.json()
         if (response.status===200){
             getProfile()
-            setEditProfile(false)
+            setDisable(false)
+            setEditProfession(false)
+            setEditBio(false)
+            setEditWorkingAt(false)
+            setEditUniversity(false)
+            setEditCollege(false)
+            setEditSchool(false)
+            setEditLinkedIn(false)
+            setEditGithub(false)
+            setEditWebsite(false)
         }
     }
 
@@ -126,15 +153,68 @@ const ProfilePage = () => {
         setIsOpen(false);
     };
 
-    
+    // =======================
+    let editBioHandle=()=>{
+        setEditBio(true)
+        setDisable(true)
+    }
+
+    let editProfessionHandle=()=>{
+        setEditProfession(true)
+        setDisable(true)
+    }
+
+    let editGenderHandle=()=>{
+        setEditGender(true)
+        setDisable(true)
+    }
+
+    let editWorkingHandle = ()=>{
+        setEditWorkingAt(true)
+        setDisable(true)
+    }
+
+    let editUniversityHandle = ()=>{
+        setEditUniversity(true)
+        setDisable(true)
+    }
+
+    let editCollegeHandle = ()=>{
+        setEditCollege(true)
+        setDisable(true)
+    }
+
+    let editSchoolHandle = ()=>{
+        setEditSchool(true)
+        setDisable(true)
+    }
+
+    let editLinkedinHandle = ()=>{
+        setEditLinkedIn(true)
+        setDisable(true)
+    }
+
+    let editGithubHandle = ()=>{
+        setEditGithub(true)
+        setDisable(true)
+    }
+
+    let editWebsiteHandle = ()=>{
+        setEditWebsite(true)
+        setDisable(true)
+    }
+
+
+
+
 
   return (
     <>
     {!editProfile?
-    <div className='row mt-4'>
+    <div className='row '>
         {profile &&
         <>
-            <div className='col-xxl-3 p-0'>
+            <div className='col-xxl-3 p-0 mt-4'>
                 <div className='d-flex rounded flex-column justify-content-center align-items-center p-3'>
                     <div className='profile-avatar '>
                         <img src={profilePictrue} alt='profile pic position-relative'/>
@@ -146,73 +226,71 @@ const ProfilePage = () => {
                     <h3 className='mt-2 text-center'>{profile.user.first_name} {profile.user.last_name}</h3>
                     <p className='mt-1'>{profile.bio}</p>
                     {(user.user_id===profile.user.id) &&
-                    <button onClick={()=> setEditProfile(!editProfile)} className='btn btn-custom2-green'>Edit Profile</button>}
+                    <button onClick={()=> setEditProfile(!editProfile)} className='btn btn-custom2-green'><FontAwesomeIcon icon={faEdit}/> Edit Profile</button>}
                 </div>
             </div>
 
-            <div className='col-xxl-9 p-0'>
-                <div className='align-items-center rounded p-3'>
-                    <div className='p-2 mb-2 text-center'>Basic Information</div>
-
+            <div className='col-xxl-9 card mt-4'>
+                <div className='pt-3 pb-3'>
                     {profile.profession &&
-                    <div className='d-flex justify-content-start align-items-center row mb-3'>
-                        <div className='col-md-3 fs-5 '>Profession:</div>
+                    <div className='d-flex justify-content-start align-items-center row m-1'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faUserMd} /> Profession:</div>
                         <div className='col-md-9 value-div p-2'>
                             <div className='text-green'>{profile.profession}</div>
                         </div>
                     </div>}
 
-                    {profile.gender &&
-                    <div className='d-flex justify-content-between align-items-center row mb-3'>
-                        <div className='col-md-3 fs-5 '>Gender</div>
+                    {/* {profile.gender &&
+                    <div className='d-flex justify-content-between align-items-center row m-1 mt-3'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faVenus} /> Gender</div>
                         <div className='col-md-9 value-div'>
                             <div className='text-green'>{profile.gender}</div>
                         </div>
-                    </div>}
+                    </div>} */}
 
                     {profile.work_at &&
-                    <div className='d-flex justify-content-between align-items-center row mb-3'>
-                        <div className='col-md-3 fs-5 '>Currently Working:</div>
+                    <div className='d-flex justify-content-between align-items-center row m-1 mt-3'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faBriefcase} /> Working At:</div>
                         <div className='col-md-9 value-div'>
                             <div className='text-green'>{profile.work_at}</div>
                         </div>
                     </div>}
 
                     {profile.study_at &&
-                    <div className='d-flex justify-content-between align-items-center row mb-3'>
-                        <div className='col-md-3 fs-5 '>University: </div>
+                    <div className='d-flex justify-content-between align-items-center row m-1 mt-3'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faUniversity} /> University: </div>
                         <div className='col-md-9 value-div'>
                             <div className='text-green'>{profile.study_at}</div>
                         </div>
                     </div>}
                     
                     {profile.college && 
-                    <div className='d-flex justify-content-between align-items-center row mb-3'>
-                        <div className='col-md-3 fs-5 '>College: </div>
+                    <div className='d-flex justify-content-between align-items-center row m-1 mt-3'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faGraduationCap} /> College: </div>
                         <div className='col-md-9 value-div'>
                             <div className='text-green'>{profile.college}</div>
                         </div>
                     </div>}
 
                     {profile.school &&
-                    <div className='d-flex justify-content-between align-items-center row mb-3'>
-                        <div className='col-md-3 fs-5 '>School:</div>
+                    <div className='d-flex justify-content-between align-items-center row m-1 mt-3'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faSchool} /> School:</div>
                         <div className='col-md-9 value-div p-2'>
                             <div className='text-green'>{profile.school}</div>
                         </div>
                     </div>}
 
                     {profile.user.email &&
-                    <div className='d-flex justify-content-between align-items-center row mb-3'>
-                        <div className='col-md-3 fs-5'>Email</div>
+                    <div className='d-flex justify-content-between align-items-center row m-1 mt-3'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faEnvelope} /> Email</div>
                         <div className='col-md-9 value-div bg-white'>
                             <div className='text-primary'>{profile.user.email}</div>
                         </div>
                     </div>}
 
                     {profile.linkedIn && 
-                    <div className='d-flex justify-content-between align-items-center row mb-3'>
-                        <div className='col-md-3 fs-5'>LinkedIn:</div>
+                    <div className='d-flex justify-content-between align-items-center row m-1 mt-3'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faGlobe} /> LinkedIn:</div>
                         <div className='col-md-9 value-div bg-white'>
                             <div className='text-primary'>
                                 <a href={profile.linkedIn} target='_blank'>
@@ -223,8 +301,8 @@ const ProfilePage = () => {
                     </div>}
 
                     {profile.github &&
-                    <div className='d-flex justify-content-between align-items-center row mb-3'>
-                        <div className='col-md-3 fs-5 '>Github: </div>
+                    <div className='d-flex justify-content-between align-items-center row m-1 mt-3'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faGlobe} /> Github: </div>
                         <div className='col-md-9 value-div bg-white'>
                             <div className='text-primary'>
                                 <a href={profile.github} target='_blank'>
@@ -235,8 +313,8 @@ const ProfilePage = () => {
                     </div>}
 
                     {profile.website &&
-                    <div className='d-flex justify-content-between align-items-center row mb-3'>
-                        <div className='col-md-3 fs-5'>Website: </div>
+                    <div className='d-flex justify-content-between align-items-center row m-1 mt-3'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faGlobe} /> Website: </div>
                         <div className='col-md-9 value-div bg-white'>
                             <div className='text-primary'>
                                 <a href={profile.website} target='_blank'>
@@ -251,58 +329,325 @@ const ProfilePage = () => {
     </div>:
     <div className='mt-3 mb-3'>
         <div className='card p-3'>
-            <form onSubmit={editProfileApi}>
-                <div className='row'>
-                    <div className='col-xxl-6'>
-                        <div className='form-group mb-3'>
-                            <label htmlFor="bio" className="form-label">Bio</label>
-                            <input className="form-control" type="text" name='bio' id="bio" value={bio} onChange={bioChange}/>
-                        </div>
-                        <div className='form-group mb-3'>
-                            <label htmlFor="profession" className="form-label">Profession</label>
-                            <input className="form-control" type="text" name='profession' id="profession" value={profession} onChange={professionChange}/>
-                        </div>
-                        <div className='form-group mb-3'>
-                            <label htmlFor="gender" className="form-label">Gender</label>
-                            <input className="form-control" type="text" name='gender' id="gender" value={gender} onChange={genderChange}/>
-                        </div>
-                        <div className='form-group mb-3'>
-                            <label htmlFor="working" className="form-label">Currently Working</label>
-                            <input className="form-control" type="text" name='working' id="working" value={work} onChange={workChange}/>
-                        </div>
-                        <div className='form-group mb-3'>
-                            <label htmlFor="university" className="form-label">University</label>
-                            <input className="form-control" type="text" name='university' id="university" value={university} onChange={universityChange}/>
-                        </div>
+            <div className='card-title text-center'>Edit Profile</div>
+            <div className='row'>
+                <div className='col-xxl-6'>
+                    
+                    {/* Bio */}
+                    <div className='d-flex justify-content-start align-items-center row m-1'>
+                        <div className='col-md-3 fs-5 p-0'>Myself:</div>
+                        {(profile.bio && !editBio )&&
+                            <div className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between'>
+                                <div className='text-green'>{profile.bio}</div>
+                                {disable?
+                                    <button onClick={editBioHandle} className='btn btn-secondary' disabled><FontAwesomeIcon icon={faEdit}/></button>:
+                                    <button onClick={editBioHandle} className='btn btn-secondary'><FontAwesomeIcon icon={faEdit}/></button>
+                                }
+                            </div>
+                        }
+
+                        {(!profile.bio && !editBio)&&
+                            <button onClick={editBioHandle} className='col-md-3 btn btn-custom-green'>Add</button>
+                        }
+
+                        {editBio &&
+                            <form className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between' onSubmit={editProfileApi}>
+                               <div className='form-group w-100'>
+                                    <input 
+                                        className="form-control" 
+                                        type="text" 
+                                        name='profession' 
+                                        id="profession" 
+                                        value={bio} 
+                                        onChange={bioChange}
+                                    />
+                                </div>
+                                <button type='submit' className='btn btn-custom-green ms-2'><FontAwesomeIcon icon={faCheck}/></button> 
+                            </form>
+                        }
                     </div>
-                    <div className='col-xxl-6'>
-                        <div className='form-group mb-3'>
-                            <label htmlFor="college" className="form-label">College</label>
-                            <input className="form-control" type="text" name='college' id="college" value={college} onChange={collegeChange}/>
-                        </div>
-                        <div className='form-group mb-3'>
-                            <label htmlFor="school" className="form-label">School</label>
-                            <input className="form-control" type="text" name='school' id="school" value={school} onChange={schoolChange}/>
-                        </div>
-                        <div className='form-group mb-3'>
-                            <label htmlFor="linkedin" className="form-label">LinkedIn Profile Link</label>
-                            <input className="form-control" type="text" name='linkedin' id="linkedin" value={linkedIn} onChange={linkedInChange}/>
-                        </div>
-                        <div className='form-group mb-3'>
-                            <label htmlFor="github" className="form-label">Github Profile Link</label>
-                            <input className="form-control" type="text" name='github' id="github" value={github} onChange={githubChange}/>
-                        </div>
-                        <div className='form-group mb-3'>
-                            <label htmlFor="website" className="form-label">Website Link</label>
-                            <input className="form-control" type="text" name='website' id="website" value={website} onChange={websiteChange}/>
-                        </div>
+
+                    {/* Profession */}
+                    <div className='d-flex justify-content-start align-items-center row m-1 mt-4'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faUserMd} /> Profession:</div>
+                        {(profile.profession && !editprofession )&&
+                            <div className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between'>
+                            <div className='text-green'>{profile.profession}</div>
+                                {disable?
+                                    <button onClick={editProfessionHandle} className='btn btn-secondary' disabled><FontAwesomeIcon icon={faEdit}/></button>:
+                                    <button onClick={editProfessionHandle} className='btn btn-secondary'><FontAwesomeIcon icon={faEdit}/></button>
+                                }
+                            </div>
+                        }
+
+                        {(!profile.profession && !editprofession)&&
+                            <button onClick={editProfessionHandle} className='col-md-3 btn btn-custom-green'>Add</button>
+                        }
+
+                        {editprofession &&
+                            <form className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between' onSubmit={editProfileApi}>
+                               <div className='form-group w-100'>
+                                    <input 
+                                        className="form-control" 
+                                        type="text" 
+                                        name='profession' 
+                                        id="profession" 
+                                        value={profession} 
+                                        onChange={professionChange}
+                                    />
+                                </div>
+                                <button type='submit' className='btn btn-custom-green ms-2'><FontAwesomeIcon icon={faCheck}/></button> 
+                            </form>
+                        }
                     </div>
+                    
+                    {/* working at */}
+                    <div className='d-flex justify-content-start align-items-center row m-1 mt-4'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faBriefcase} /> Wroking At:</div>
+                        {(profile.work_at && !editWorkingAt)&&
+                            <div className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between'>
+                                <div className='text-green'>{profile.work_at}</div>
+                                {disable?
+                                    <button onClick={editWorkingHandle} className='btn btn-secondary' disabled><FontAwesomeIcon icon={faEdit}/></button>:
+                                    <button onClick={editWorkingHandle} className='btn btn-secondary'><FontAwesomeIcon icon={faEdit}/></button>
+                                }
+                            </div>
+                        }
+
+                        {(!profile.work_at && !editWorkingAt)&&
+                            <button onClick={editWorkingHandle} className='col-md-3 btn btn-custom-green'>Add</button>
+                        }
+
+                        {editWorkingAt &&
+                            <form className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between' onSubmit={editProfileApi}>
+                               <div className='form-group w-100'>
+                                    <input 
+                                        className="form-control" 
+                                        type="text" 
+                                        name='profession' 
+                                        id="profession" 
+                                        value={work} 
+                                        onChange={workChange}
+                                    />
+                                </div>
+                                <button type='submit' className='btn btn-custom-green ms-2'><FontAwesomeIcon icon={faCheck}/></button> 
+                            </form>
+                        }
+                    </div>
+
+                    {/* University */}
+                    <div className='d-flex justify-content-start align-items-center row m-1 mt-4'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faUniversity} /> University:</div>
+                        {(profile.study_at && !editUniversity)&&
+                            <div className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between'>
+                                <div className='text-green'>{profile.study_at}</div>
+                                {disable?
+                                    <button onClick={editUniversityHandle} className='btn btn-secondary' disabled><FontAwesomeIcon icon={faEdit}/></button>:
+                                    <button onClick={editUniversityHandle} className='btn btn-secondary'><FontAwesomeIcon icon={faEdit}/></button>
+                                }
+                            </div>
+                        }
+
+                        {(!profile.study_at && !editUniversity)&&
+                            <button onClick={editUniversityHandle} className='col-md-3 btn btn-custom-green'>Add</button>
+                        }
+
+                        {editUniversity &&
+                            <form className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between' onSubmit={editProfileApi}>
+                               <div className='form-group w-100'>
+                                    <input 
+                                        className="form-control" 
+                                        type="text" 
+                                        name='profession' 
+                                        id="profession" 
+                                        value={university} 
+                                        onChange={universityChange}
+                                    />
+                                </div>
+                                <button type='submit' className='btn btn-custom-green ms-2'><FontAwesomeIcon icon={faCheck}/></button> 
+                            </form>
+                        }
+                    </div>
+
+                     {/* College */}
+                     <div className='d-flex justify-content-start align-items-center row m-1 mt-4'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faGraduationCap} /> College:</div>
+                        {(profile.college && !editCollege)&&
+                            <div className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between'>
+                                <div className='text-green'>{profile.college}</div>
+                                {disable?
+                                    <button onClick={editCollegeHandle} className='btn btn-secondary' disabled><FontAwesomeIcon icon={faEdit}/></button>:
+                                    <button onClick={editCollegeHandle} className='btn btn-secondary'><FontAwesomeIcon icon={faEdit}/></button>
+                                }
+                            </div>
+                        }
+
+                        {(!profile.college && !editCollege)&&
+                            <button onClick={editCollegeHandle} className='col-md-3 btn btn-custom-green'>Add</button>
+                        }
+
+                        {editCollege &&
+                            <form className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between' onSubmit={editProfileApi}>
+                               <div className='form-group w-100'>
+                                    <input 
+                                        className="form-control" 
+                                        type="text" 
+                                        name='profession' 
+                                        id="profession" 
+                                        value={college} 
+                                        onChange={collegeChange}
+                                    />
+                                </div>
+                                <button type='submit' className='btn btn-custom-green ms-2'><FontAwesomeIcon icon={faCheck}/></button> 
+                            </form>
+                        }
+                    </div>
+
                 </div>
-                <div className='btn-custom-group'>
-                    <button onClick={()=>setEditProfile(!editProfile)} className='btn btn-custom-danger'>Cancel</button>
-                    <button type='submit' className='btn btn-custom-green'>Save</button>
-                </div>
-            </form>
+                <div className='col-xxl-6'>
+                     
+                     {/* School */}
+                     <div className='d-flex justify-content-start align-items-center row m-1'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faSchool} /> School:</div>
+                        {(profile.school && !editSchool)&&
+                            <div className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between'>
+                                <div className='text-green'>{profile.school}</div>
+                                {disable?
+                                    <button onClick={editSchoolHandle} className='btn btn-secondary' disabled><FontAwesomeIcon icon={faEdit}/></button>:
+                                    <button onClick={editSchoolHandle} className='btn btn-secondary'><FontAwesomeIcon icon={faEdit}/></button>
+                                }
+                            </div>
+                        }
+
+                        {(!profile.school && !editSchool)&&
+                            <button onClick={editSchoolHandle} className='col-md-3 btn btn-custom-green'>Add</button>
+                        }
+
+                        {editSchool &&
+                            <form className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between' onSubmit={editProfileApi}>
+                               <div className='form-group w-100'>
+                                    <input 
+                                        className="form-control" 
+                                        type="text" 
+                                        name='profession' 
+                                        id="profession" 
+                                        value={school} 
+                                        onChange={schoolChange}
+                                    />
+                                </div>
+                                <button type='submit' className='btn btn-custom-green ms-2'><FontAwesomeIcon icon={faCheck}/></button> 
+                            </form>
+                        }
+                    </div>
+
+                    {/* LinkedIn */}
+                    <div className='d-flex justify-content-start align-items-center row m-1 mt-4'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faGlobe} /> LinkedIn:</div>
+                        {(profile.linkedIn && !editLinkedIn)&&
+                            <div className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between'>
+                                <div className='text-green'>{profile.linkedIn}</div>
+                                {disable?
+                                    <button onClick={editLinkedinHandle} className='btn btn-secondary' disabled><FontAwesomeIcon icon={faEdit}/></button>:
+                                    <button onClick={editLinkedinHandle} className='btn btn-secondary'><FontAwesomeIcon icon={faEdit}/></button>
+                                }
+                            </div>
+                        }
+
+                        {(!profile.linkedIn && !editLinkedIn)&&
+                            <button onClick={editLinkedinHandle} className='col-md-3 btn btn-custom-green'>Add</button>
+                        }
+
+                        {editLinkedIn &&
+                            <form className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between' onSubmit={editProfileApi}>
+                               <div className='form-group w-100'>
+                                    <input 
+                                        className="form-control" 
+                                        type="text" 
+                                        name='profession' 
+                                        id="profession" 
+                                        value={linkedIn} 
+                                        onChange={linkedInChange}
+                                    />
+                                </div>
+                                <button type='submit' className='btn btn-custom-green ms-2'><FontAwesomeIcon icon={faCheck}/></button> 
+                            </form>
+                        }
+                    </div>
+
+                    {/* Github */}
+                    <div className='d-flex justify-content-start align-items-center row m-1 mt-4'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faGlobe} /> GitHub:</div>
+                        {(profile.github && !editGithub)&&
+                            <div className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between'>
+                                <div className='text-green'>{profile.github}</div>
+                                {disable?
+                                    <button onClick={editGithubHandle} className='btn btn-secondary' disabled><FontAwesomeIcon icon={faEdit}/></button>:
+                                    <button onClick={editGithubHandle} className='btn btn-secondary'><FontAwesomeIcon icon={faEdit}/></button>
+                                }
+                            </div>
+                        }
+
+                        {(!profile.github && !editGithub)&&
+                            <button onClick={editGithubHandle} className='col-md-3 btn btn-custom-green'>Add</button>
+                        }
+
+                        {editGithub &&
+                            <form className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between' onSubmit={editProfileApi}>
+                               <div className='form-group w-100'>
+                                    <input 
+                                        className="form-control" 
+                                        type="text" 
+                                        name='profession' 
+                                        id="profession" 
+                                        value={github} 
+                                        onChange={githubChange}
+                                    />
+                                </div>
+                                <button type='submit' className='btn btn-custom-green ms-2'><FontAwesomeIcon icon={faCheck}/></button> 
+                            </form>
+                        }
+                    </div>
+
+                    {/* website */}
+                    <div className='d-flex justify-content-start align-items-center row m-1 mt-4'>
+                        <div className='col-md-3 fs-5 p-0'><FontAwesomeIcon icon={faGlobe} /> Website:</div>
+                        
+                        {(profile.website && !editWebsite)&&
+                            <div className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between'>
+                                <div className='text-green'>{profile.website}</div>
+                                {disable?
+                                    <button onClick={editWebsiteHandle} className='btn btn-secondary' disabled><FontAwesomeIcon icon={faEdit}/></button>:
+                                    <button onClick={editWebsiteHandle} className='btn btn-secondary'><FontAwesomeIcon icon={faEdit}/></button>
+                                }
+                            </div>
+                        }
+
+                        {(!profile.website && !editWebsite)&&
+                            <button onClick={editWebsiteHandle} className='col-md-3 btn btn-custom-green'>Add</button>
+                        }
+
+                        {editWebsite &&
+                            <form className='col-md-9 value-div p-2 d-flex align-items-center justify-content-between' onSubmit={editProfileApi}>
+                               <div className='form-group w-100'>
+                                    <input 
+                                        className="form-control" 
+                                        type="text" 
+                                        name='profession' 
+                                        id="profession" 
+                                        value={website} 
+                                        onChange={websiteChange}
+                                    />
+                                </div>
+                                <button type='submit' className='btn btn-custom-green ms-2'><FontAwesomeIcon icon={faCheck}/></button> 
+                            </form>
+                        }
+                    </div>
+
+                </div> 
+            </div>
+            <div className='d-flex justify-content-end mt-3'>
+                <button onClick={()=>setEditProfile(!editProfile)} className='btn btn-custom-danger'>Close</button>
+            </div>
         </div>
     </div>}
 

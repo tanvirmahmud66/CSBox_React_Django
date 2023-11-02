@@ -4,6 +4,9 @@ import DeletePopup from './DeletePopup';
 import LeavePopup from './LeavePopup';
 import EditModal from './EditPopup';
 import BaseUrl from '../BaseUrl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const SessionListItem = ({session, updateSession}) => {
     const {title, details, created, token} = session;
@@ -102,10 +105,10 @@ const SessionListItem = ({session, updateSession}) => {
                 
                 {(user.user_id===id)?
                     <div className='btn-group'>
-                        <button onClick={editOpenModal} className='btn btn-warning'>Edit</button>
-                        <button onClick={openModal} className='btn btn-secondary'>Delete</button>
+                        <button onClick={editOpenModal} className='btn btn-warning'><FontAwesomeIcon icon={faEdit}/> Edit</button>
+                        <button onClick={openModal} className='btn btn-secondary'><FontAwesomeIcon icon={faTrash} /> Delete</button>
                     </div>:
-                    <button onClick={leaveOpenModal} className='btn btn-warning'>Leave session</button>
+                    <button onClick={leaveOpenModal} className='btn btn-warning'><FontAwesomeIcon icon={faSignOutAlt} /> Leave session</button>
                 }               
 
             </div>

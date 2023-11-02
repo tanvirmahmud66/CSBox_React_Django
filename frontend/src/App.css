@@ -30,7 +30,7 @@
 .btn-custom2-green{
     background: none;
     border: 2px solid #61b841;
-    color: white;
+    color: rgb(41, 41, 41);
     transition: all .2s ease;
 }
 .btn-custom2-green:hover{
@@ -41,7 +41,7 @@
 .btn-custom2-danger{
     background: none;
     border: 2px solid #FF1F35;
-    color: white;
+    color: rgb(41, 41, 41);
     transition: all .2s ease;
 }
 .btn-custom2-danger:hover{

@@ -1,5 +1,7 @@
 import Modal from 'react-modal';
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 function LeavePopup({isOpen, onRequestClose, title,leaveSession, spinner}) {
    
@@ -31,7 +33,7 @@ function LeavePopup({isOpen, onRequestClose, title,leaveSession, spinner}) {
                   <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   <span className="">Leaving...</span>
                 </button>:
-                <button onClick={leaveButtonHandle} className="btn btn-warning ms-2">Leave Session</button>
+                <button onClick={leaveButtonHandle} className="btn btn-warning ms-2"><FontAwesomeIcon icon={faSignOutAlt} /> Leave Session</button>
             }
         </div>
       </div>

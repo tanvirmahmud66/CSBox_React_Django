@@ -6,6 +6,11 @@ import CreateSession,{EmptySession} from '../../Components/Homepage/EmptySession
 import SessionListItem from '../../Components/Homepage/SessionListItem';
 import Dropdown from 'react-bootstrap/Dropdown';
 import BaseUrl from '../../Components/BaseUrl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 
 
 
@@ -215,7 +220,7 @@ const HomePage = () => {
             </form>
             <button onClick={openModal} className='btn btn-custom2-green'>Create</button>
           </div>}
-          <button onClick={(()=> setSettings(!settings))} className={`btn ${settings? 'btn-custom2-green':'btn-custom2-danger'}`}>{settings? "Back to Home":"Settings"}</button>
+          <button onClick={(()=> setSettings(!settings))} className={`btn ${settings? 'btn-custom2-green':'btn-custom2-danger'}`}>{settings? <><FontAwesomeIcon icon={faHome} /> Home</>:<><FontAwesomeIcon icon={faCog} /> Settings</>}</button>
         </div>
       </div>
       
@@ -259,8 +264,8 @@ const HomePage = () => {
               {/* <li onClick={()=>setBtnHandle("profile")} className={`mb-3 text-white btn ${profile?"btn-custom-green border-green":"btn-custom2-primary"}`}>Profile</li>
               <li onClick={()=>setBtnHandle("account")} className={`mb-3 text-white btn ${account?"btn-custom-green border-green":"btn-custom2-primary"}`}>Account</li>
               <li onClick={()=>setBtnHandle("conversation")} className={`mb-3 text-white btn ${conversation?"btn-custom-green border-green":"btn-custom2-primary"}`}>Conversation</li> */}
-              <li onClick={()=>setBtnHandle("createdSession")} className={`mb-3 text-white btn ${createdSession?"btn-custom-green border-green":"btn-custom2-primary"}`}>Created Session</li>
-              <li onClick={()=>setBtnHandle("joinedSession")} className={`mb-3 text-white btn ${joinedSession?"btn-custom-green border-green":"btn-custom2-primary"}`}>Joined Session</li>
+              <li onClick={()=>setBtnHandle("createdSession")} className={`mb-3 btn ${createdSession?"btn-custom-green border-green":"btn-custom2-primary"}`}>Created Session</li>
+              <li onClick={()=>setBtnHandle("joinedSession")} className={`mb-3 btn ${joinedSession?"btn-custom-green border-green":"btn-custom2-primary"}`}>Joined Session</li>
             </ul>
           </div>
 
@@ -331,7 +336,7 @@ const HomePage = () => {
               </div>
               <button type='submit' className='btn bg-primary text-white ms-2'>Join</button>
             </form>
-            <button onClick={openModal} className='btn btn-custom2-green'>Create</button>
+            <button onClick={openModal} className='btn btn-custom2-green'><FontAwesomeIcon icon={faPlus} /> Create</button>
       </div>
       
       <div>
@@ -348,7 +353,7 @@ const HomePage = () => {
             </Dropdown>
             <Dropdown>
               <Dropdown.Toggle className='btn btn-custom2-danger d-flex justify-content-center align-items-center p-1' variant="secondary" id="dropdown-basic">
-                <div className='me-1'>Settings</div>
+                <div className='me-1'><FontAwesomeIcon icon={faCog} /> Settings</div>
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item onClick={createdSettingHandle}>Created</Dropdown.Item>

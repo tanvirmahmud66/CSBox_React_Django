@@ -2,6 +2,8 @@ import React, { useContext, useRef, useState } from 'react';
 import Modal from 'react-modal';
 import AuthContext from '../../context/AuthContext';
 import BaseUrl from '../BaseUrl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const EditModal = ({ isOpen, onRequestClose, session, sessionUpdate}) => {
 
@@ -93,7 +95,7 @@ const EditModal = ({ isOpen, onRequestClose, session, sessionUpdate}) => {
                       <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                       <span className="">Editing...</span>
                     </button>:
-                    <button type="submit" className="btn btn-custom-green ms-2">Edit Session</button>
+                    <button type="submit" className="btn btn-custom-green ms-2"> <FontAwesomeIcon icon={faEdit}/> Edit Session</button>
                 }
               </div>
             </form>

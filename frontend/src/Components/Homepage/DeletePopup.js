@@ -1,5 +1,7 @@
 import Modal from 'react-modal';
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function DeletePopup({isOpen, onRequestClose, title, deleteSession, spinner}) {
    
@@ -24,14 +26,14 @@ function DeletePopup({isOpen, onRequestClose, title, deleteSession, spinner}) {
            "{title}" - Are You want to Delete this Session?
         </div>
         <div className='d-flex justify-content-end align-items-center mt-3'>
-            <button className='btn btn-primary' onClick={onRequestClose}>Cancel</button>
+            <button className='btn btn-secondary' onClick={onRequestClose}>Cancel</button>
             {/* <button onClick={DeleteButtonHandle} className="btn btn-custom-danger ms-2">Delete</button> */}
             {spinner ?
                 <button className="btn btn-danger ms-2" type="button" disabled>
                   <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   <span className="">Deleteing...</span>
                 </button>:
-                <button onClick={DeleteButtonHandle} className="btn btn-custom-danger ms-2">Delete</button>
+                <button onClick={DeleteButtonHandle} className="btn btn-custom-danger ms-2"><FontAwesomeIcon icon={faTrash} /> Delete</button>
             }
         </div>
       </div>

@@ -1,6 +1,11 @@
 .nav-custom-bg{
-    background-color: #087c9c;
-    color: white;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* You can adjust the values as needed */
+    transition: box-shadow 0.2s ease; /* Add a smooth transition effect */
+}
+.nav-custom-bg:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .search-bar{
@@ -14,6 +19,42 @@
     color: white;
 }
 
+.search-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.search-input {
+  border: none;
+  padding: 5px;
+  width: 80%;
+  outline: none;
+  /* color: black; */
+}
+
+.search-button {
+  padding: .4rem;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #333; /* Text color */
+}
+
+/* Add an icon to the button */
+.search-button img {
+  width: 20px; /* Adjust the icon size as needed */
+  height: 20px;
+  margin-right: 5px; /* Add spacing between the icon and text */
+}
+
 
 /* Dropdown container */
 .dropdown2 {
@@ -25,8 +66,11 @@
 
 /* Username */
 .username {
-  font-weight: bold;
+  font-weight:600;
+  font-size: .9rem;
+  color: black;
 }
+
 
 /* Dropdown menu */
 .dropdown-menu2 {

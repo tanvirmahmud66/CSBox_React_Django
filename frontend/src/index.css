@@ -6,27 +6,11 @@
 body{
     width: 100vw;
     min-height: 100vh;
-    background: #1f1f1f;
-    color: white;
+    background: #f1f1f1;
+    color: rgb(0, 0, 0);
+    font-family: sans-serif;
 }
 
-body {
-  background: linear-gradient(220deg,#051570,#032959,#024a65,#0b6d02fd);
-  background-size: 240% 240%;
-  animation: gradient-animation 20s ease infinite;
-}
-
-@keyframes gradient-animation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 
 
 .bg-text{
@@ -243,7 +227,7 @@ body {
 .btn-custom2-green{
     background: none;
     border: 2px solid #61b841;
-    color: white;
+    color: rgb(41, 41, 41);
     transition: all .2s ease;
 }
 .btn-custom2-green:hover{
@@ -254,7 +238,7 @@ body {
 .btn-custom2-danger{
     background: none;
     border: 2px solid #FF1F35;
-    color: white;
+    color: rgb(41, 41, 41);
     transition: all .2s ease;
 }
 .btn-custom2-danger:hover{
@@ -265,7 +249,7 @@ body {
 .btn-custom2-primary{
   background: none;
   border: 2px solid #4785FF;
-  color: white;
+  color: rgb(41, 41, 41);
   transition: all .2s ease;
 }
 .btn-custom2-primary:hover{
@@ -277,7 +261,7 @@ body {
 .btn-custom2-gray{
   background: none;
   border: 2px solid #7a7a7a;
-  color: white;
+  color: rgb(41, 41, 41);
   transition: all .2s ease;
 }
 .btn-custom2-gray:hover{
@@ -479,7 +463,8 @@ input {
 
 .fixed-height-card {
   height: 160px;
-  transition: all .3s ease; /* Set the desired height */
+  transition: all .3s ease;
+  box-shadow: 0 15px 16px rgb(0, 0, 0); /* Set the desired height */
 }
 .fixed-height-card:hover {
   background: #61b841;
@@ -608,6 +593,10 @@ input {
 
 .social-icon {
   font-size: 12px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.social-icon:hover{
+  transform: scale(1.25);
 }
 
 .border-left{
@@ -752,4 +741,8 @@ input {
 .custom-alert-primary{
   padding: .4rem;
   background: #087ff73d;
+}
+
+.shadow{
+  box-shadow: 0 4px 6px rgb(0, 0, 0);
 }

@@ -1,9 +1,15 @@
 import React, { useContext} from 'react'
 import './Navbar.css'
-import brandLogo from '../../assets/BrandLogo/brand_logo2.png'
+import brandLogo from '../../assets/BrandLogo/brand_logo3.png'
 import AuthContext from '../../context/AuthContext'
 import ProfileContext from '../../context/ProfileContext';
 import { Link } from 'react-router-dom';
+import search_icon from '../../assets/search.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
     let {user,userLogout} = useContext(AuthContext)
@@ -23,11 +29,14 @@ const Navbar = () => {
                     <div className='w-100 d-flex justify-content-between'>
                         {user?
                         <>
-                            <div className='w-40 d-flex align-items-center'>
-                                <div className="w-100 input-group">
-                                    <input type="search" className="input-bg w-75" placeholder="search" aria-label="search" aria-describedby="button-addon2"/>
-                                    <button className="btn btn-secondary w-25" type="button" id="button-addon2">Search</button>
-                                </div>
+                            <div className='d-flex align-items-center'>
+                                <form className="search-form" action="/search" method="GET">
+                                    <input type="text" className="search-input" name="q" placeholder="Search..."/>
+                                    <button type="submit" className="search-button">
+                                        <img src={search_icon} alt="Search"/>
+                                        <div>Search</div>
+                                    </button>
+                                </form>
                             </div>
 
                             {/* user toggle button */}
@@ -39,16 +48,16 @@ const Navbar = () => {
                                     <div className="username text-p">{user.username}</div>
                                 </button>
                                 <div className="dropdown-menu2">
-                                    <Link to={`/profile/${user.user_id}`} className="dropdown-item2">Profile</Link>
-                                    <div className="dropdown-item2 logout" onClick={userLogout}>Logout</div>
+                                    <Link to={`/profile/${user.user_id}`} className="dropdown-item2"><FontAwesomeIcon icon={faUser} /> Profile</Link>
+                                    <div className="dropdown-item2 logout" onClick={userLogout}><FontAwesomeIcon icon={faSignOutAlt} /> Logout</div>
                                 </div>
                             </div>
                         </>:
                         <>
                             <div></div>
                             <div className='nav-item btn-custom-group'>
-                                <Link className='btn btn-custom2-green' to='/new-user'>Signup</Link>
-                                <Link className='btn btn-custom2-primary' to='/login'>Login</Link>
+                                <Link className='btn btn-warning' to='/new-user'>Signup</Link>
+                                <Link className='btn btn-custom-green' to='/login'>Login</Link>
                             </div>
                         </>
                         }
@@ -57,25 +66,32 @@ const Navbar = () => {
                 <div className='responsive-div'>
                     {user? 
                         <div>
-                            <div className="w-100 input-group mt-2 mb-2">
-                                <input type="search" className="input-bg w-75" placeholder="search" aria-label="search" aria-describedby="button-addon2"/>
-                                <button className="btn btn-secondary w-25" type="button" id="button-addon2">Search</button>
-                            </div>
+                            <form className="mt-2 mb-2 search-form" action="/search" method="GET">
+                                    <input type="text" className="search-input" name="q" placeholder="Search..."/>
+                                    <button type="submit" className="search-button">
+                                        <img src={search_icon} alt="Search"/>
+                                        <div>Search</div>
+                                    </button>
+                            </form>
                             <ul className="list-group mb-2">
-                                <li className='list-group-item text-center'>
-                                    <a className='text-decoration-none text-black' href='/'>Home</a>
-                                </li>
-                                <li className="list-group-item text-center">
-                                    <Link className='text-decoration-none text-black' to={`/profile/${user.user_id}`}>Profile</Link>
-                                </li>
+                                <a className='text-decoration-none text-black' href='/'>
+                                    <li className='list-group-item text-center'>
+                                        <FontAwesomeIcon icon={faHome} /> Home
+                                    </li>
+                                </a>
+                                <Link className='text-decoration-none text-black' to={`/profile/${user.user_id}`}>
+                                    <li className="list-group-item text-center">
+                                    <FontAwesomeIcon icon={faUser} /> Profile
+                                    </li>
+                                </Link>
                                 <li className="list-group-item text-center text-danger cursor-pointer" onClick={userLogout}>
-                                    Logout
+                                    <FontAwesomeIcon icon={faSignOutAlt} /> Logout
                                 </li>
                             </ul>
                         </div>:
                         <div className='w-100 d-flex flex-column mt-2 mb-2'>
-                            <Link className='btn btn-custom-green' to='/new-user'>Signup</Link>
-                            <Link className='btn btn-primary mt-2' to='/login'>Login</Link>
+                            <Link className='btn btn-warning' to='/new-user'>Signup</Link>
+                            <Link className='btn btn-custom-green mt-2' to='/login'>Login</Link>
                         </div>
                     }
                 </div>
