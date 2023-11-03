@@ -164,7 +164,7 @@ const SingleSession = () => {
 
             {/* ==========================left sidebar===================== */}
             <div className='col-xxl-3 mt-3'>
-                <div className='card'>
+                <div className='card shadow'>
                     {session &&
                     <>
                         <div className='card-header d-flex justify-content-between align-items-center'>
@@ -226,7 +226,7 @@ const SingleSession = () => {
 
                 <div className='mt-4 member-height d-none-1400'>
                     <Dropdown className='mb-3'>
-                        <Dropdown.Toggle className='btn btn-custom2-green d-flex justify-content-center align-items-center p-1' variant="success" id="dropdown-basic">
+                        <Dropdown.Toggle className='btn btn-custom2-green shadow d-flex justify-content-center align-items-center p-1' variant="success" id="dropdown-basic">
                             <div className='me-1'>{sessionMember? "Session Member": "Block Member"}</div>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
@@ -236,17 +236,21 @@ const SingleSession = () => {
                             }
                         </Dropdown.Menu>
                     </Dropdown>
-                    {blockMember? 
-                        <ul className="list-group member-container">
-                            {blockList.map((each,index)=>(
-                                <MemberListItem key={index} each={each} session={session} sessionUpdate={targetSession} blocked={blockMember}/>
-                            ))}
-                        </ul>:
-                        <ul className="list-group member-container">
-                            {member.map((each,index)=>(
-                                <MemberListItem key={index} each={each} session={session} sessionUpdate={targetSession}/>
-                            ))}
-                        </ul>
+                    {blockMember?
+                        <div className='member-container'> 
+                            <ul className="list-group shadow">
+                                {blockList.map((each,index)=>(
+                                    <MemberListItem key={index} each={each} session={session} sessionUpdate={targetSession} blocked={blockMember}/>
+                                ))}
+                            </ul>
+                        </div>:
+                        <div className='member-container'>
+                            <ul className="list-group shadow">
+                                {member.map((each,index)=>(
+                                    <MemberListItem key={index} each={each} session={session} sessionUpdate={targetSession}/>
+                                ))}
+                            </ul>
+                        </div>
                     }
                     
                 </div>
@@ -266,16 +270,20 @@ const SingleSession = () => {
                                 </Dropdown.Menu>
                             </Dropdown>
                             {blockMember? 
-                                <ul className="list-group member-container">
-                                    {blockList.map((each,index)=>(
-                                        <MemberListItem key={index} each={each} session={session} sessionUpdate={targetSession} blocked={blockMember}/>
-                                    ))}
-                                </ul>:
-                                <ul className="list-group member-container">
-                                    {member.map((each,index)=>(
-                                        <MemberListItem key={index} each={each} session={session} sessionUpdate={targetSession}/>
-                                    ))}
-                                </ul>
+                                <div className=''> 
+                                    <ul className="list-group shadow">
+                                        {blockList.map((each,index)=>(
+                                            <MemberListItem key={index} each={each} session={session} sessionUpdate={targetSession} blocked={blockMember}/>
+                                        ))}
+                                    </ul>
+                                </div>:
+                                <div className=''>
+                                    <ul className="list-group shadow">
+                                        {member.map((each,index)=>(
+                                            <MemberListItem key={index} each={each} session={session} sessionUpdate={targetSession}/>
+                                        ))}
+                                    </ul>
+                                </div>
                             }
                         </div>
                     </div>
@@ -290,7 +298,7 @@ const SingleSession = () => {
                 {/* ----------------- Normal Post section */}
                 {postSection &&
                     <div className={`${memberSection && "d-none-1400"}`}>
-                        <button className='btn btn-custom-green w-100 mt-3' onClick={openModal}>Create New Post</button>
+                        <button className='btn btn-custom-green shadow w-100 mt-3' onClick={openModal}>Create New Post</button>
                         {posts.length!==0 ?
                         <>
                             {posts.map((each, index)=>{
@@ -307,8 +315,8 @@ const SingleSession = () => {
                 {/* ----------------------- all files and upload file manually */}
                 {uploadedFilesSection &&
                     <div className={`mt-3 ${memberSection && "d-none-1400"}`}>
-                        <button onClick={openFileUplaodModal} className='w-100 btn btn-custom-green mb-3'>Upload Files Manually</button>
-                        <div className='uploaded-container card'>
+                        <button onClick={openFileUplaodModal} className='w-100 btn btn-custom-green shadow mb-3'>Upload Files Manually</button>
+                        <div className='uploaded-container shadow card'>
                             {files.length!==0?
                                 <FileDownloadComponent files={files} session={session} sessionUpdate={targetSession}/>:
                                 <div className='no-files'>Upload files</div>
@@ -322,7 +330,7 @@ const SingleSession = () => {
                 {(assignmentSection && user.user_id!==session.host.id) &&
                     <div className={`mt-3 ${memberSection && "d-none-1400"}`}>
                         {user.user_id===session.host.id ?
-                            <button onClick={openCreateAssignmentModal} className='btn btn-custom-green w-100'>Create Assignment</button>:
+                            <button onClick={openCreateAssignmentModal} className='btn btn-custom-green shadow w-100'>Create Assignment</button>:
                             <div className='w-100 row ms-0'>
                                 <div onClick={dueButtonHandle} className={`col btn  ${due?"btn-custom-danger":"btn-custom2-danger"}`}>Due ({unsubmittedAssignments.length})</div>
                                 <div onClick={submitButtonHandle} className={`col btn ms-1 ${submitted?"btn-custom-green":"btn-custom2-green"}`}>Submitted ({submittedAssignments.length})</div>
@@ -354,7 +362,7 @@ const SingleSession = () => {
                 {(assignmentSection && user.user_id===session.host.id) &&
                     <div className={`mt-3 ${memberSection && "d-none-1400"}`}>
                         {user.user_id===session.host.id &&
-                            <button onClick={openCreateAssignmentModal} className='btn btn-custom-green w-100'>Create Assignment</button>
+                            <button onClick={openCreateAssignmentModal} className='btn btn-custom-green shadow w-100'>Create Assignment</button>
                         }
                         {assignments.length!==0?
                             <>
@@ -376,7 +384,7 @@ const SingleSession = () => {
 
             {/* ====================================== Right secton handling list */}
             <div className='col-3 mt-3 d-none-1400'>
-                <div className='list-group'>
+                <div className='list-group shadow'>
                     <div onClick={()=>{
                         setPostSection(true)
                         setUploadedFilesSection(false)
@@ -397,7 +405,7 @@ const SingleSession = () => {
                 <div className='mt-4'>
                     <h5>Calendar</h5>
                     {((assignments && user && session) && user.user_id===session.host.id) &&
-                        <ul className='list-group'>
+                        <ul className='list-group shadow'>
                             {assignments.map((each, index)=>{
                                 return(
                                     <li className='list-group-item' key={index}>
@@ -409,7 +417,7 @@ const SingleSession = () => {
                         </ul>
                     }
                     {((unsubmittedAssignments && user && session) && user.user_id!==session.host.id)&&
-                        <ul className='list-group'>
+                        <ul className='list-group shadow'>
                         {unsubmittedAssignments.map((each, index)=>{
                             return(
                                 <li className='list-group-item' key={index}>

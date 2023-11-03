@@ -1,4 +1,4 @@
-import React, { useContext} from 'react'
+import React, { useContext, useState} from 'react'
 import './Navbar.css'
 import brandLogo from '../../assets/BrandLogo/brand_logo3.png'
 import AuthContext from '../../context/AuthContext'
@@ -10,10 +10,23 @@ import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
+import PreviewModal from './PreviewModal';
 
 const Navbar = () => {
     let {user,userLogout} = useContext(AuthContext)
     let {userProfilePic} = useContext(ProfileContext)
+
+    let [isOpen, setIsOpen] = useState(false)
+
+    const openModal = () => {
+        setIsOpen(true);
+      };
+    
+      const closeModal = () => {
+        setIsOpen(false);
+      };
+
+    
 
   return (
     <nav className="navbar p-1 navbar-expand-lg nav-custom-bg sticky-top">
@@ -54,10 +67,12 @@ const Navbar = () => {
                             </div>
                         </>:
                         <>
-                            <div></div>
+                            <div>
+                                <button onClick={openModal} className='btn btn-danger shadow'>Get Free Access</button>
+                            </div>
                             <div className='nav-item btn-custom-group'>
-                                <Link className='btn btn-warning' to='/new-user'>Signup</Link>
-                                <Link className='btn btn-custom-green' to='/login'>Login</Link>
+                                <Link className='btn btn-warning shadow' to='/new-user'>Signup</Link>
+                                <Link className='btn btn-custom-green shadow' to='/login'>Login</Link>
                             </div>
                         </>
                         }
@@ -66,14 +81,14 @@ const Navbar = () => {
                 <div className='responsive-div'>
                     {user? 
                         <div>
-                            <form className="mt-2 mb-2 search-form" action="/search" method="GET">
+                            <form className="mt-2 mb-2 search-form shadow" action="/search" method="GET">
                                     <input type="text" className="search-input" name="q" placeholder="Search..."/>
                                     <button type="submit" className="search-button">
                                         <img src={search_icon} alt="Search"/>
                                         <div>Search</div>
                                     </button>
                             </form>
-                            <ul className="list-group mb-2">
+                            <ul className="list-group shadow mb-2">
                                 <a className='text-decoration-none text-black' href='/'>
                                     <li className='list-group-item text-center'>
                                         <FontAwesomeIcon icon={faHome} /> Home
@@ -89,14 +104,16 @@ const Navbar = () => {
                                 </li>
                             </ul>
                         </div>:
-                        <div className='w-100 d-flex flex-column mt-2 mb-2'>
-                            <Link className='btn btn-warning' to='/new-user'>Signup</Link>
-                            <Link className='btn btn-custom-green mt-2' to='/login'>Login</Link>
+                        <div className='w-100 d-flex flex-column mt-3 mb-2'>
+                            <button onClick={openModal} className='btn btn-danger shadow'>Get Free Access</button>
+                            <Link className='btn btn-warning shadow mt-2' to='/new-user'>Signup</Link>
+                            <Link className='btn btn-custom-green shadow mt-2' to='/login'>Login</Link>
                         </div>
                     }
                 </div>
             </div>
         </div>
+        <PreviewModal isOpen={isOpen} onRequestClose={closeModal}/>
     </nav>
   )
 }

@@ -76,20 +76,20 @@ const SingleAssignment = ({assignment, submissions ,session, updateSession, subm
   }, [])
 
   return (
-      <div className="card mt-3 mb-3">
+      <div className="card shadow mt-3 mb-3">
         <div className="card-header d-flex justify-content-between align-items-center">
-            <div>
+            <div className=''>
                 <div className='fs-4'>{title}</div>
-                <div className='deadline'>
+                {/* <div className='deadline'>
                   <DeadlineComponent dateTimeString={deadline}/>
-                </div>
+                </div> */}
                 <div className='text-primary text-small'>
                     <TimeAgoComponent dateString={created}/>
                 </div> 
             </div>
             <div className='d-flex align-items-center'>
                 <div className='d-none-550'>
-                  {submitted ?<div className='text-green'>Sumitted</div>:<DeadlineComponent dateTimeString={deadline}/>}
+                  {submitted &&<div className='text-green'>Sumitted</div>}
                 </div>
                 {user.user_id===session.host.id &&
                 <Dropdown className='ms-1'>
@@ -102,6 +102,7 @@ const SingleAssignment = ({assignment, submissions ,session, updateSession, subm
             </div>
         </div>
         <div className="card-body pb-0">
+            <DeadlineComponent dateTimeString={deadline}/>
             <div className='p-2 mb-2 ps-0'>{body}</div>
             {files &&
             <div className='d-flex mt-3 justify-content-between align-items-center alert alert-primary custom-alert'>

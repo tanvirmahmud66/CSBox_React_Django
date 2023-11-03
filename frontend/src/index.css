@@ -356,7 +356,7 @@ input {
     border-radius: 50%;
     overflow: hidden;
     margin-right: 10px;
-    border: 2px solid gray;
+    border: 1px solid gray;
   }
 
   .avatar img {
@@ -503,7 +503,7 @@ input {
 }
 
 .scroll-container {
-  height: 640px;
+  height: 645px;
   padding:0 30px 20px 20px;
   overflow: scroll;/* Set the desired height */
   scrollbar-width: none;
@@ -635,7 +635,7 @@ input {
 }
 
 .member-height{
-  height: 52vh;
+  height: 59vh;
 }
 .member-container{
   height: 100%;
@@ -655,7 +655,7 @@ input {
 }
 
 .uploaded-container{
-  height: 86vh;
+  height: 84vh;
   overflow: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;

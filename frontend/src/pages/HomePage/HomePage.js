@@ -193,10 +193,10 @@ const HomePage = () => {
         <div className='d-flex justify-content-between align-items-center'>
           {!settings && 
           <div className='d-flex justify-content-between align-items-center'>
-            <div className='text-capitalize fs-5'>session :</div>
+            <div className='text-capitalize fs-5'>session </div>
             <form className='d-flex ms-2 me-2' onSubmit={joinSession}>
               <div className='from-group '>
-                <input type='text' name='token' className='form-control position-relative' id='token' placeholder='token' required></input>
+                <input type='text' name='token' className='form-control position-relative shadow' id='token' placeholder='token' required></input>
                 {notificaiton!==null &&
                   <div className="position-absolute pt-0 pb-0 ps-0 pe-0 top-1 text-danger start-2 p-3">
                     {notificaiton}
@@ -214,12 +214,12 @@ const HomePage = () => {
                     <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     <span className="visually-hidden">Joining..</span>
                   </button>:
-                  <button type='submit' className='btn bg-primary text-white ms-2'>Join</button>
+                  <button type='submit' className='btn bg-primary text-white ms-2 shadow'>Join</button>
                 }
             </form>
-            <button onClick={openModal} className='btn btn-custom2-green'>Create</button>
+            <button onClick={openModal} className='btn btn-custom2-green shadow'>Create</button>
           </div>}
-          <button onClick={(()=> setSettings(!settings))} className={`btn ${settings? 'btn-custom2-green':'btn-custom2-danger'}`}>{settings? <><FontAwesomeIcon icon={faHome} /> Home</>:<><FontAwesomeIcon icon={faCog} /> Settings</>}</button>
+          <button onClick={(()=> setSettings(!settings))} className={`btn shadow ${settings? 'btn-custom2-green':'btn-custom2-danger'}`}>{settings? <><FontAwesomeIcon icon={faHome} /> Home</>:<><FontAwesomeIcon icon={faCog} /> Settings</>}</button>
         </div>
       </div>
       
@@ -255,16 +255,16 @@ const HomePage = () => {
       }
 
       {settings && 
-        <div className='mt-2 vh-80 row'>
+        <div className='mt-3 vh-80 row'>
           {/* =============================== operation button list */}
           <div className='col-3'>
-            <div className='card fs-5 text-danger text-center p-2 mb-3'>Settings</div>
+            <div className='card fs-5 text-danger text-center shadow p-2 mb-3'>Settings</div>
             <ul className="list-group">
               {/* <li onClick={()=>setBtnHandle("profile")} className={`mb-3 text-white btn ${profile?"btn-custom-green border-green":"btn-custom2-primary"}`}>Profile</li>
               <li onClick={()=>setBtnHandle("account")} className={`mb-3 text-white btn ${account?"btn-custom-green border-green":"btn-custom2-primary"}`}>Account</li>
               <li onClick={()=>setBtnHandle("conversation")} className={`mb-3 text-white btn ${conversation?"btn-custom-green border-green":"btn-custom2-primary"}`}>Conversation</li> */}
-              <li onClick={()=>setBtnHandle("createdSession")} className={`mb-3 btn ${createdSession?"btn-custom-green border-green":"btn-custom2-primary"}`}>Created Session</li>
-              <li onClick={()=>setBtnHandle("joinedSession")} className={`mb-3 btn ${joinedSession?"btn-custom-green border-green":"btn-custom2-primary"}`}>Joined Session</li>
+              <li onClick={()=>setBtnHandle("createdSession")} className={`mb-3 btn shadow ${createdSession?"btn-custom-green border-green":"btn-custom2-primary"}`}>Created Session</li>
+              <li onClick={()=>setBtnHandle("joinedSession")} className={`mb-3 btn shadow ${joinedSession?"btn-custom-green border-green":"btn-custom2-primary"}`}>Joined Session</li>
             </ul>
           </div>
 
@@ -321,7 +321,7 @@ const HomePage = () => {
       <div className='d-flex justify-content-between aling-items-center mt-2'>
             <form className='d-flex me-2' onSubmit={joinSession}>
               <div className='from-group '>
-                <input type='text' name='token' className='form-control position-relative' id='token' placeholder='token' required></input>
+                <input type='text' name='token' className='form-control position-relative shadow' id='token' placeholder='token' required></input>
                 {notificaiton!==null &&
                   <div className="position-absolute pt-0 pb-0 ps-0 pe-0 top-1 text-danger start-2 p-3">
                     {notificaiton}
@@ -333,16 +333,16 @@ const HomePage = () => {
                   </div>
                 }
               </div>
-              <button type='submit' className='btn bg-primary text-white ms-2'>Join</button>
+              <button type='submit' className='btn bg-primary text-white ms-2 shadow'>Join</button>
             </form>
-            <button onClick={openModal} className='btn btn-custom2-green'>Create</button>
+            <button onClick={openModal} className='btn btn-custom2-green shadow'>Create</button>
       </div>
       
       <div>
         <div className='mt-4 mb-4'>
           <div className='d-flex justify-content-between align-items-center'>
             <Dropdown>
-              <Dropdown.Toggle className='btn btn-custom2-gray d-flex justify-content-center align-items-center p-1' variant="secondary" id="dropdown-basic">
+              <Dropdown.Toggle className='btn btn-custom2-gray d-flex justify-content-center align-items-center p-1 shadow' variant="secondary" id="dropdown-basic">
                 <div className='me-1'>{created?"Created Session": "Joined Session"}</div>
               </Dropdown.Toggle>
               <Dropdown.Menu>
@@ -351,7 +351,7 @@ const HomePage = () => {
               </Dropdown.Menu>
             </Dropdown>
             <Dropdown>
-              <Dropdown.Toggle className='btn btn-custom2-danger d-flex justify-content-center align-items-center p-1' variant="secondary" id="dropdown-basic">
+              <Dropdown.Toggle className='btn btn-custom2-danger d-flex justify-content-center align-items-center p-1 shadow' variant="secondary" id="dropdown-basic">
                 <div className='me-1'><FontAwesomeIcon icon={faCog} /> Settings</div>
               </Dropdown.Toggle>
               <Dropdown.Menu>
@@ -381,8 +381,8 @@ const HomePage = () => {
 
               {createdSetting &&
                 <>
-                  <div className='mt-2 mb-2 p-2 text-center fs-3 text-danger bg-white'>Created Session Setting</div>
-                  <div className='mt-2'>
+                  <div className='mt-3 mb-2 p-2 text-center fs-3 text-danger rounded bg-white shadow'>Created Session Setting</div>
+                  <div className='mt-3'>
                     {session && session.map((each)=>{return (<SessionListItem key={each.id} session={each} updateSession={getSession}/>)})}
                     {session.length===0 && <CreateSession/>}
                   </div>
@@ -391,8 +391,8 @@ const HomePage = () => {
 
               {joinedSetting &&
                 <>
-                  <div className='mt-2 mb-2 p-2 text-center fs-3 text-danger bg-white'>Joined Session Setting</div>
-                  <div className='mt-2'>
+                  <div className='mt-3 mb-2 p-2 text-center fs-3 text-danger rounded bg-white shadow'>Joined Session Setting</div>
+                  <div className='mt-3'>
                     {sessionJoin!==undefined?
                       sessionJoin.map((each)=>{return (<SessionListItem key={each.id} session={each} updateSession={getSession}/>)}):
                       <EmptySession/>

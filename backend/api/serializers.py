@@ -34,7 +34,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
 
         # Sending welcome email and email confirmation linke to the user
-        link = f"http://127.0.0.1:3000/account/{user.id}/{user.username}/verified"
+        link = f"http://127.0.0.1:3000/#/account/{user.id}/{user.username}/verified"
         subject = 'Welcome to Our Website'
         html_message = render_to_string('welcome.html', {'username': user.username, 'link': link})
         body = strip_tags(html_message)
