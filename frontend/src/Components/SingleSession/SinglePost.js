@@ -9,6 +9,8 @@ import Comment from './Comment';
 import TimeAgoComponent from '../TimeAgoComponent';
 import { Link } from 'react-router-dom';
 import BaseUrl from '../BaseUrl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const SinglePost = ({post, session ,files, sessionUpdate}) => {
 
@@ -130,15 +132,13 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
 
 
   return (
-      <div className="card mt-3 mb-3">
+      <div className="card mt-3 mb-3 shadow">
         <div className="p-2">
           <div className="media d-flex justify-content-between align-items-center">
             <div className='d-flex align-items-center'>
-                <img
-                src={BaseUrl.baseUrl+profile_pic}
-                className="avatar2"
-                alt="User Avatar"
-                />
+                <div className="avatar2">
+                    <img src={BaseUrl.baseUrl+profile_pic} alt="Profile"/>
+                </div>
                 <div className="media-body">
                   <Link to={`/profile/${post.creator.id}`} className='text-decoration-none text-custom-black'>
                     <h5 className="mb-0">{first_name} {last_name}</h5>
@@ -153,8 +153,8 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
                 <Dropdown>
                     <Dropdown.Toggle variant="" id="dropdown-basic"></Dropdown.Toggle>
                     <Dropdown.Menu>
-                        {user.user_id===creator.id && <Dropdown.Item onClick={openModal} href="#">Edit</Dropdown.Item>}
-                        <Dropdown.Item onClick={openModal2} href="#">Delete</Dropdown.Item>
+                        {user.user_id===creator.id && <Dropdown.Item onClick={openModal} href="#"><FontAwesomeIcon icon={faEdit}/> Edit</Dropdown.Item>}
+                        <Dropdown.Item onClick={openModal2} href="#"><FontAwesomeIcon icon={faTrash}/> Delete</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             }
@@ -171,10 +171,10 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
         {filesArray.length!==0 && <button className='btn btn-secondary' onClick={handleShow}>{show? "Hide files":`${filesArray.length} files show`}</button> }
         
         {comments && 
-        <div className="card-footer bg-offwhite ">
+        <div className="card-footer ">
           <div className='d-flex justify-content-between align-items-center'>
             <div onClick={commentsButtonHandle} className="custom-cursor-pointer text-primary">{!commentShow?`All comments`: "Hide comments"} </div>
-            <div className='text-white'>{comments.length} comments</div>
+            <div className=''>{comments.length} comments</div>
           </div>
           {commentShow && comments.map((comment, index) => (
                <Comment key={index} comment={comment} getPostComment={getPostComment} session={session}/>
@@ -182,7 +182,7 @@ const SinglePost = ({post, session ,files, sessionUpdate}) => {
         </div>}
 
 
-        <div className="card-footer bg-offwhite">
+        <div className="card-footer">
           <form onSubmit={handleCommentSubmit} className="input-group" ref={formRef}>
             <input 
                 type="text" 

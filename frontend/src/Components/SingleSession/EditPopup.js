@@ -2,6 +2,8 @@ import Modal from 'react-modal';
 import React, { useContext, useState , useRef} from 'react';
 import AuthContext from '../../context/AuthContext';
 import BaseUrl from '../BaseUrl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 function EditPopup({isOpen, onRequestClose, post, session, sessionUpdate}) {
 
@@ -74,7 +76,7 @@ function EditPopup({isOpen, onRequestClose, post, session, sessionUpdate}) {
     >
       <div className="card my-card">
         <div className="card-body">
-          <h2 className="card-title text-center text-green mb-3">Edit Post</h2>
+          <h2 className="card-title text-center text-green mb-3"><FontAwesomeIcon icon={faEdit} /> Edit Post</h2>
           <form onSubmit={updatePost} ref={formRef}>
             <div className="form-group">
               <textarea

@@ -226,7 +226,7 @@ const SingleSession = () => {
 
                 <div className='mt-4 member-height d-none-1400'>
                     <Dropdown className='mb-3'>
-                        <Dropdown.Toggle className='btn btn-custom2-gray d-flex justify-content-center align-items-center p-1' variant="secondary" id="dropdown-basic">
+                        <Dropdown.Toggle className='btn btn-custom2-green d-flex justify-content-center align-items-center p-1' variant="success" id="dropdown-basic">
                             <div className='me-1'>{sessionMember? "Session Member": "Block Member"}</div>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>

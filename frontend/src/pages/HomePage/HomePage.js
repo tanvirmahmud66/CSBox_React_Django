@@ -9,7 +9,6 @@ import BaseUrl from '../../Components/BaseUrl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 

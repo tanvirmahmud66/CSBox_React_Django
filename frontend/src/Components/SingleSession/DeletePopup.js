@@ -2,6 +2,8 @@ import Modal from 'react-modal';
 import React from 'react';
 import TimeAgoComponent from '../TimeAgoComponent';
 import BaseUrl from '../BaseUrl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function DeletePopup({isOpen2, onRequestClose, Delete, post, spinner}) {
    
@@ -23,7 +25,7 @@ function DeletePopup({isOpen2, onRequestClose, Delete, post, spinner}) {
     overlayClassName="modal-overlay custom-backdrop"
     >
       <div className="card my-card p-2">
-        <h2 className="card-title text-center text-danger mb-3">Delete Post</h2>
+        <h2 className="card-title text-center text-danger mb-3"><FontAwesomeIcon icon={faTrash} /> Delete Post</h2>
         <div className='card p-2'>
           <div className="media d-flex justify-content-between align-items-center">
               <div className='d-flex align-items-center'>
