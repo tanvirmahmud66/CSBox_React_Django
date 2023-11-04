@@ -68,7 +68,7 @@ const Navbar = () => {
                         </>:
                         <>
                             <div>
-                                <button onClick={openModal} className='btn btn-danger shadow'>Get Free Access</button>
+                                <button onClick={openModal} className='btn btn-danger shadow'>Quick Access</button>
                             </div>
                             <div className='nav-item btn-custom-group'>
                                 <Link className='btn btn-warning shadow' to='/new-user'>Signup</Link>
@@ -105,7 +105,7 @@ const Navbar = () => {
                             </ul>
                         </div>:
                         <div className='w-100 d-flex flex-column mt-3 mb-2'>
-                            <button onClick={openModal} className='btn btn-danger shadow'>Get Free Access</button>
+                            <button onClick={openModal} className='btn btn-danger shadow'>Quick Access</button>
                             <Link className='btn btn-warning shadow mt-2' to='/new-user'>Signup</Link>
                             <Link className='btn btn-custom-green shadow mt-2' to='/login'>Login</Link>
                         </div>
