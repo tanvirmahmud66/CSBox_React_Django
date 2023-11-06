@@ -29,7 +29,7 @@ const VerficationPage = () => {
 
   return (
     <div className="notification-container">
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success shadow" role="alert">
             <h4 className="alert-heading">Verified <FontAwesomeIcon icon={faCheckCircle} /></h4>
             <p className='mt-4'>Dear {username}, your account is Verified. Now! please <Link className='text-primary' to='/login'>login</Link> again.</p>
         </div>

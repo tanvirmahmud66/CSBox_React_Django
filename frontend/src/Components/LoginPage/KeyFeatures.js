@@ -3,7 +3,7 @@ import React from 'react'
 const KeyFeatures = () => {
   return (
     <>
-        <div className='card fixed-height2'>
+        <div className='card fixed-height2 shadow'>
             <div className='card-header'>
                 <h4>Key Features</h4>
             </div>

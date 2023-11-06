@@ -58,7 +58,7 @@ const RegistrattionPage = () => {
 
   return (
     <div className='container vh-90 d-flex justify-content-center align-items-center'>
-        <div className="card custom-card p-2">
+        <div className="card custom-card shadow p-2">
           <div className='card-header p-0 text-center'>
             <h4>Registration Form</h4>
           </div>

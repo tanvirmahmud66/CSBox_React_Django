@@ -24,7 +24,7 @@ const LoginForm = () => {
 
   return (
     <>
-        <div className="card fixed-height2 mw-50">
+        <div className="card fixed-height2 shadow mw-50">
             <div className="card-header p-0 text-center">
                 {(loginError.error && loginError.status==='NOT VERIFIED') &&
                     <div className="alert mb-0 alert-warning" role="alert">

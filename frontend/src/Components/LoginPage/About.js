@@ -6,7 +6,7 @@ import rest from '../../assets/rest_logo.png'
 
 const About = () => {
   return (
-    <div className='card fixed-height2'>
+    <div className='card fixed-height2 shadow'>
         <div className='card-header text-center'>
             <h4>About CSBox</h4>
         </div>

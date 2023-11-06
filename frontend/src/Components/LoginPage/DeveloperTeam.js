@@ -5,7 +5,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 const DeveloperTeam = () => {
   return (
-    <div className='card fixed-height2'>
+    <div className='card fixed-height2 shadow'>
         <div className='card-header text-center'>
             <h4>Developer Team</h4>
         </div>
